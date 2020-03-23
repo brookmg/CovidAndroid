@@ -41,7 +41,7 @@ public class HomeFragment extends BaseFragment {
 
         tabAdapter = new TabAdapter(getChildFragmentManager());
         tabAdapter.addFragment(BlankFragment.newInstance(), getString(R.string.statistics_menu_title));
-        tabAdapter.addFragment(BlankFragment.newInstance(), getString(R.string.covid19_menu_title));
+        tabAdapter.addFragment(DetailFragment.newInstance(), getString(R.string.covid19_menu_title));
         tabAdapter.addFragment(BlankFragment.newInstance(), getString(R.string.news_menu_title));
         tabAdapter.addFragment(BlankFragment.newInstance(), getString(R.string.contact_menu_title));
 
