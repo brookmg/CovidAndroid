@@ -1,11 +1,80 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/purple_1</item>
+        <item name="colorPrimaryDark">@color/purple_0</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="CustomBottomSheetDialog" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomModalStyle</item>
+    </style>
+
+    <style name="CustomModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/round_dialogs</item>
+    </style>
+
+    <style name="CustomBottomSheetDialogDark" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomModalStyleDark</item>
+    </style>
+
+    <style name="CustomModalStyleDark" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/round_dialogs_dark</item>
+    </style>
+
+    <style name="LightTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="lollipop">true</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/white_0y</item>
+        <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialog</item>
+
+        <item name="appIndicatorColor">@color/purple_1</item>
+        <item name="appIndicatorTextColor">@color/white_0</item>
+
+        <item name="android:windowBackground">@color/white_0</item>
+        <item name="colorPrimary">@color/green_0</item>
+        <item name="colorPrimaryDark">@color/green_0</item>
+        <item name="colorAccent">@color/black_0</item>
+        <item name="appBackgroundColor">@color/white_0</item>
+        <item name="appBackgroundColorTransparent">@color/white_0y</item>
+        <item name="appCardColor">@color/white_0</item>
+        <item name="appTabColor">@color/green_0</item>
+        <item name="appTextColorPrimary">@color/black_0</item>
+        <item name="appAccentColor">@color/green_0</item>
+        <item name="appTextColorSecondary">@color/black_1</item>
+        <item name="appSelectedTabColor">@color/black_0</item>
+        <item name="appHeaderBackground">@color/grey_0</item>
+        <item name="appBackgroundColorMoreTransparent">@color/white_0w</item>
+    </style>
+
+    <style name="DarkTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/black_1y</item>
+        <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="lollipop">true</item>
+        <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialogDark</item>
+
+        <item name="appIndicatorColor">@color/purple_1</item>
+        <item name="appIndicatorTextColor">@color/white_0</item>
+
+        <item name="android:windowBackground">@color/black_1</item>
+        <item name="colorPrimary">@color/green_0</item>
+        <item name="colorPrimaryDark">@color/black_0</item>
+        <item name="colorAccent">@color/white_0</item>
+        <item name="appBackgroundColor">@color/black_1</item>
+        <item name="appCardColor">@color/black_1</item>
+        <item name="appBackgroundColorTransparent">@color/black_1y</item>
+        <item name="appTabColor">@color/green_0</item>
+        <item name="appTextColorPrimary">@color/white_0</item>
+        <item name="appAccentColor">@color/green_0</item>
+        <item name="appTextColorSecondary">@color/white_1</item>
+        <item name="appSelectedTabColor">@color/white_0</item>
+        <item name="appHeaderBackground">@color/black_1</item>
+        <item name="appBackgroundColorMoreTransparent">@color/black_1x</item>
+    </style>
+
 
 </resources>
