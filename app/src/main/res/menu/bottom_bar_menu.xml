@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/stat_item"
+        android:title="@string/statistics_menu_title"
+        android:icon="@drawable/ic_stat"/>
+
+    <item
+        android:id="@+id/detail_item"
+        android:title="@string/covid19_menu_title"
+        android:icon="@drawable/ic_details"/>
+
+    <item
+        android:id="@+id/news_item"
+        android:title="@string/news_menu_title"
+        android:icon="@drawable/ic_news"/>
+
+    <item
+        android:id="@+id/contact_item"
+        android:title="@string/contact_menu_title"
+        android:icon="@drawable/ic_contact"/>
+
+</menu>

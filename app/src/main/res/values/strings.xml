@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">CoVid.Et</string>
+
+    <string name="statistics_menu_title">Statistics</string>
+    <string name="covid19_menu_title">Covid19</string>
+    <string name="news_menu_title">News</string>
+    <string name="contact_menu_title">Contact</string>
+
 </resources>
