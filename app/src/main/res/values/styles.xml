@@ -66,14 +66,14 @@
         <item name="colorAccent">@color/white_0</item>
         <item name="appBackgroundColor">@color/black_1</item>
         <item name="appCardColor">@color/black_1</item>
-        <item name="appBackgroundColorTransparent">@color/black_1y</item>
+        <item name="appBackgroundColorTransparent">@color/black_1x</item>
         <item name="appTabColor">@color/green_0</item>
         <item name="appTextColorPrimary">@color/white_0</item>
         <item name="appAccentColor">@color/green_0</item>
         <item name="appTextColorSecondary">@color/white_1</item>
         <item name="appSelectedTabColor">@color/white_0</item>
         <item name="appHeaderBackground">@color/black_1</item>
-        <item name="appBackgroundColorMoreTransparent">@color/black_1x</item>
+        <item name="appBackgroundColorMoreTransparent">@color/black_1y</item>
     </style>
 
 
