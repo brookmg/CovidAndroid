@@ -1,6 +1,5 @@
 package ethiopia.covid.android.ui.fragment;
 
-import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,12 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.AppBarLayout;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 import ethiopia.covid.android.R;
-import ethiopia.covid.android.data.DetailItem;
-import ethiopia.covid.android.ui.adapter.DetailRecyclerAdapter;
+import ethiopia.covid.android.data.CovidStatItem;
+import ethiopia.covid.android.data.StatRecyclerItem;
+import ethiopia.covid.android.ui.adapter.StatRecyclerAdapter;
 
 import static ethiopia.covid.android.util.Utils.getCurrentTheme;
 
@@ -81,14 +80,40 @@ public class StatFragment extends BaseFragment {
 
         themeButton.setOnClickListener(v -> changeTheme());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.VERTICAL , false));
+        recyclerView.setAdapter(new StatRecyclerAdapter(Arrays.asList(
+                new StatRecyclerItem(
+                        0,
+                        Arrays.asList(
+                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
+                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
+                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
+                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
+                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
+                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
+                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
+                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63)
+                        ),
+                        Arrays.asList("Id" , "Infected", "Active", "Death", "Recovered" , "Critical", "Minor", "Suspected"),
+                        1
+                ),
+                new StatRecyclerItem(
+                        0,
+                        Arrays.asList(
+                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
+                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
+                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
+                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
+                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
+                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
+                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
+                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
+                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
+                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63)                        ),
+                        Arrays.asList("Id" , "Infected", "Active", "Death", "Recovered" , "Critical", "Minor", "Suspected"),
+                        2
+                )
+        )));
 
-        List<DetailItem> details = new ArrayList<>();
-        details.add(new DetailItem("What is corona virus", R.drawable.covid_virus_icon, true, ""));
-        details.add(new DetailItem("Wear a mask where in crowded place", R.drawable.wear_masks ,true, ""));
-        details.add(new DetailItem("Wash your hands for 20+ seconds", R.drawable.wash_hands, true, ""));
-        details.add(new DetailItem("Cover your mouth and nose when coughing or sneezing", R.drawable.cover_face_coughing, true, ""));
-
-        recyclerView.setAdapter(new DetailRecyclerAdapter(details));
         return mainView;
     }
 
