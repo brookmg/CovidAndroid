@@ -7,5 +7,6 @@ package ethiopia.covid.android.util;
 public class Constant {
 
     public static final String TAG_HOME = "tag_home";
+    public static final String PREFERENCE_THEME = "pref_theme";
 
 }
