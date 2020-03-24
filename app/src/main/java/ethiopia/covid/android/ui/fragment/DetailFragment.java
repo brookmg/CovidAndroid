@@ -11,7 +11,11 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ethiopia.covid.android.R;
+import ethiopia.covid.android.data.DetailItem;
 import ethiopia.covid.android.ui.adapter.DetailRecyclerAdapter;
 
 /**
@@ -36,8 +40,14 @@ public class DetailFragment extends BaseFragment {
         View mainView = inflater.inflate(R.layout.detail_fragment, container, false);
         recyclerView = mainView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.VERTICAL , false));
-        recyclerView.setAdapter(new DetailRecyclerAdapter());
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+
+        List<DetailItem> details = new ArrayList<>();
+        details.add(new DetailItem("What is corona virus", R.drawable.covid_virus_icon, true, ""));
+        details.add(new DetailItem("Wear a mask where in crowded place", R.drawable.wear_masks ,true, ""));
+        details.add(new DetailItem("Wash your hands for 20+ seconds", R.drawable.wash_hands, true, ""));
+        details.add(new DetailItem("Cover your mouth and nose when coughing or sneezing", R.drawable.cover_face_coughing, true, ""));
+
+        recyclerView.setAdapter(new DetailRecyclerAdapter(details));
         return mainView;
     }
 

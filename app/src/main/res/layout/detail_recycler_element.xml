@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    android:id="@+id/main_card_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardBackgroundColor="@color/purple_0"
+    app:cardBackgroundColor="?appBackgroundColor"
     app:cardElevation="6dp"
     app:cardCornerRadius="6dp"
     android:layout_margin="8dp"
@@ -17,22 +19,38 @@
             android:id="@+id/detail_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="11.1pt"
-            android:padding="8dp"
             android:autoSizeTextType="uniform"
-            android:textColor="@color/purple_1"
-            android:text="Wash your hands for atleast 20 seconds"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="16dp"
+            android:textColor="?appTextColorSecondary"
+            android:textSize="11.1pt"
             app:layout_constraintBottom_toBottomOf="@+id/image_view"
             app:layout_constraintEnd_toStartOf="@+id/image_view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/read_more"
+            app:layout_constraintTop_toBottomOf="@id/detail_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:backgroundTint="?appAccentColor"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_margin="5dp"
+            android:padding="16dp"
+            android:textColor="?appTextColorPrimary"
+            android:text="@string/read_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/image_view"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/tchala" />
+            app:srcCompat="@drawable/covid_virus_icon" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

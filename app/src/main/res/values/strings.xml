@@ -5,5 +5,6 @@
     <string name="covid19_menu_title">Covid19</string>
     <string name="news_menu_title">News</string>
     <string name="contact_menu_title">Contact</string>
+    <string name="read_more">Read More</string>
 
 </resources>
