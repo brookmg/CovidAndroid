@@ -31,4 +31,7 @@
     <color name="black_1x">#f80f0f0f</color>
     <color name="black_1y">#bb0f0f0f</color>
     <color name="black_1z">#990f0f0f</color>
+
+    <color name="white_2">#c2c3c4</color>
+    <color name="black_2">#242424</color>
 </resources>

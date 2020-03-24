@@ -35,15 +35,15 @@
         <item name="appIndicatorTextColor">@color/white_0</item>
 
         <item name="android:windowBackground">@color/white_0</item>
-        <item name="colorPrimary">@color/green_0</item>
-        <item name="colorPrimaryDark">@color/green_0</item>
-        <item name="colorAccent">@color/black_0</item>
+        <item name="colorPrimary">@color/purple_1</item>
+        <item name="colorPrimaryDark">@color/purple_0</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="appBackgroundColor">@color/white_0</item>
         <item name="appBackgroundColorTransparent">@color/white_0y</item>
         <item name="appCardColor">@color/white_0</item>
-        <item name="appTabColor">@color/green_0</item>
+        <item name="appTabColor">@color/colorAccent</item>
         <item name="appTextColorPrimary">@color/black_0</item>
-        <item name="appAccentColor">@color/green_0</item>
+        <item name="appAccentColor">@color/colorAccent</item>
         <item name="appTextColorSecondary">@color/black_1</item>
         <item name="appSelectedTabColor">@color/black_0</item>
         <item name="appHeaderBackground">@color/grey_0</item>
@@ -61,15 +61,15 @@
         <item name="appIndicatorTextColor">@color/white_0</item>
 
         <item name="android:windowBackground">@color/black_1</item>
-        <item name="colorPrimary">@color/green_0</item>
-        <item name="colorPrimaryDark">@color/black_0</item>
-        <item name="colorAccent">@color/white_0</item>
+        <item name="colorPrimary">@color/purple_1</item>
+        <item name="colorPrimaryDark">@color/purple_0</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="appBackgroundColor">@color/black_1</item>
-        <item name="appCardColor">@color/black_1</item>
+        <item name="appCardColor">@color/black_2</item>
         <item name="appBackgroundColorTransparent">@color/black_1x</item>
-        <item name="appTabColor">@color/green_0</item>
+        <item name="appTabColor">@color/colorAccent</item>
         <item name="appTextColorPrimary">@color/white_0</item>
-        <item name="appAccentColor">@color/green_0</item>
+        <item name="appAccentColor">@color/colorAccent</item>
         <item name="appTextColorSecondary">@color/white_1</item>
         <item name="appSelectedTabColor">@color/white_0</item>
         <item name="appHeaderBackground">@color/black_1</item>
