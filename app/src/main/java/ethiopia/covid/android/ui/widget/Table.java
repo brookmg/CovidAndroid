@@ -62,18 +62,23 @@ public class Table extends LinearLayout {
         addRows(scrollableTableLayout, null, generateTableRow(0, headers.subList(fixedColumnCount , headers.size()), null));
 
         for (List<String> stat : rowItems) {
-            addRows(fixedColumnTableLayout, stat.get(0), generateTableRow(1,headers.subList(0 , fixedColumnCount), stat.subList(0 , fixedColumnCount)));
-            addRows(scrollableTableLayout, stat.get(0), generateTableRow(1,headers.subList(fixedColumnCount+1 , headers.size()), stat.subList(fixedColumnCount , stat.size())));
+            if (fixedColumn && fixedColumnCount > 0)
+                addRows(fixedColumnTableLayout, stat.get(0), generateTableRow(1,headers.subList(0 , fixedColumnCount), stat.subList(0 , fixedColumnCount)));
+
+            addRows(scrollableTableLayout, stat.get(0), generateTableRow(1,headers.subList(fixedColumnCount , headers.size()),fixedColumnCount > 0 ? stat.subList(fixedColumnCount , stat.size()) : stat));
         }
 
-        addView(fixedColumnTableLayout);
+        if (fixedColumn && fixedColumnCount > 0) {
+            addView(fixedColumnTableLayout);
+            LinearLayout.LayoutParams params = (LayoutParams) fixedColumnTableLayout.getLayoutParams();
+            params.width = dpToPx(getContext() , fixedColumnCount * 100);
+            params.height = LayoutParams.MATCH_PARENT;
+            fixedColumnTableLayout.setLayoutParams(params);
+        }
+
         scrollableTableContainer.addView(scrollableTableLayout);
         addView(scrollableTableContainer);
 
-        LinearLayout.LayoutParams params = (LayoutParams) fixedColumnTableLayout.getLayoutParams();
-        params.width = dpToPx(getContext() , 100);
-        params.height = LayoutParams.MATCH_PARENT;
-        fixedColumnTableLayout.setLayoutParams(params);
 
     }
 
