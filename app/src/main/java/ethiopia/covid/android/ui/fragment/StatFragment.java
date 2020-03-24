@@ -81,6 +81,7 @@ public class StatFragment extends BaseFragment {
         themeButton.setOnClickListener(v -> changeTheme());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.VERTICAL , false));
         recyclerView.setAdapter(new StatRecyclerAdapter(Arrays.asList(
+                new StatRecyclerItem("Ethiopia" , 1200, 0, 1200),
                 new StatRecyclerItem(
                         0,
                         Arrays.asList(

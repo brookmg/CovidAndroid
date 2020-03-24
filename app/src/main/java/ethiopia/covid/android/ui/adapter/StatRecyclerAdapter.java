@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
@@ -12,6 +13,7 @@ import com.google.android.material.card.MaterialCardView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import ethiopia.covid.android.R;
 import ethiopia.covid.android.data.CovidStatItem;
@@ -27,6 +29,7 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int HEADER = 0;
     private final int STAT_TABLE = 1;
     private final int PIE_CHART = 2;
+    private final int STATUS_CARD = 3;
 
     private List<StatRecyclerItem> statRecyclerItemList;
 
@@ -43,6 +46,10 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case STAT_TABLE:
                 return new CovidStatisticTableViewHolder(
                         LayoutInflater.from(parent.getContext()).inflate(R.layout.stat_table_recycler_element, parent, false)
+                );
+            case STATUS_CARD:
+                return new StatusCardViewHolder(
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.status_card_recycler_element, parent, false)
                 );
         }
 
@@ -78,6 +85,19 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     statRecyclerItemList.get(position).getFixedHeaderCount()
             );
 
+        } else if (getItemViewType(position) == STATUS_CARD) {
+            position -= 1;
+            ((StatusCardViewHolder) holder).country.setText(statRecyclerItemList.get(position).getCountry());
+
+            ((StatusCardViewHolder) holder).infected.setText(String.format(Locale.US, "%d",
+                    statRecyclerItemList.get(position).getTotalInfected()));
+
+            ((StatusCardViewHolder) holder).recovered.setText(String.format(Locale.US, "%d",
+                    statRecyclerItemList.get(position).getTotalRecovered()));
+
+            ((StatusCardViewHolder) holder).death.setText(String.format(Locale.US, "%d",
+                    statRecyclerItemList.get(position).getTotalDeath()));
+
         } else {
 //            ViewGroup.LayoutParams params = ((HeaderViewHolder) holder).blankView.getLayoutParams();
 //            params.height = dpToPx(holder.itemView.getContext(), 116);
@@ -87,7 +107,15 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-        return position == 0 ? HEADER : (statRecyclerItemList.get(position -1).getType() == 0 ? STAT_TABLE : PIE_CHART);
+        if (position == 0) return HEADER;
+        else {
+            switch (statRecyclerItemList.get(position -1).getType()) {
+                case 0: return STAT_TABLE;
+                case 1: return PIE_CHART;
+                case 2: return STATUS_CARD;
+                default: return HEADER;
+            }
+        }
     }
 
     @Override
@@ -112,6 +140,18 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         HeaderViewHolder(@NonNull View itemView) {
             super(itemView);
             blankHeader = itemView.findViewById(R.id.blank_view);
+        }
+    }
+
+    private static class StatusCardViewHolder extends RecyclerView.ViewHolder {
+        AppCompatTextView infected, recovered, death, country;
+
+        StatusCardViewHolder(@NonNull View itemView) {
+            super(itemView);
+            country = itemView.findViewById(R.id.country_name);
+            infected = itemView.findViewById(R.id.infected);
+            recovered = itemView.findViewById(R.id.recovered);
+            death = itemView.findViewById(R.id.death);
         }
     }
 

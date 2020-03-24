@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class StatRecyclerItem {
 
-    private int type = 0;  // 0 -> Table , 1 -> Pie
+    private int type = 0;  // 0 -> Table , 1 -> Pie , 2 -> Status card
 
     // Table stuff
     private List<CovidStatItem> tableItems;
@@ -16,6 +16,21 @@ public class StatRecyclerItem {
     private int fixedHeaderCount = 0;
 
     // todo: Pie stuff
+
+
+    // Status Card
+    private String country;
+    private int totalInfected;
+    private int totalDeath;
+    private int totalRecovered;
+
+    public StatRecyclerItem(String country, int totalInfected, int totalDeath, int totalRecovered) {
+        this.type = 2;
+        this.country = country;
+        this.totalInfected = totalInfected;
+        this.totalDeath = totalDeath;
+        this.totalRecovered = totalRecovered;
+    }
 
     public StatRecyclerItem(List<CovidStatItem> tableItems, List<String> headers) {
         this(0, tableItems, headers, 0);
@@ -62,5 +77,37 @@ public class StatRecyclerItem {
 
     public void setFixedHeaderCount(int fixedHeaderCount) {
         this.fixedHeaderCount = fixedHeaderCount;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public int getTotalInfected() {
+        return totalInfected;
+    }
+
+    public void setTotalInfected(int totalInfected) {
+        this.totalInfected = totalInfected;
+    }
+
+    public int getTotalDeath() {
+        return totalDeath;
+    }
+
+    public void setTotalDeath(int totalDeath) {
+        this.totalDeath = totalDeath;
+    }
+
+    public int getTotalRecovered() {
+        return totalRecovered;
+    }
+
+    public void setTotalRecovered(int totalRecovered) {
+        this.totalRecovered = totalRecovered;
     }
 }
