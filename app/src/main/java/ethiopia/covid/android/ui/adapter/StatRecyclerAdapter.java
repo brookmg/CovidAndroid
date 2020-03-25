@@ -17,8 +17,10 @@ import java.util.Locale;
 
 import ethiopia.covid.android.R;
 import ethiopia.covid.android.data.CovidStatItem;
+import ethiopia.covid.android.data.PatientItem;
 import ethiopia.covid.android.data.StatRecyclerItem;
 import ethiopia.covid.android.ui.widget.Table;
+import ethiopia.covid.android.util.Constant;
 
 /**
  * Created by BrookMG on 3/24/2020 in ethiopia.covid.android.ui.adapter
@@ -30,6 +32,7 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int STAT_TABLE = 1;
     private final int PIE_CHART = 2;
     private final int STATUS_CARD = 3;
+    private final int PATIENT_TABLE = 4;
 
     private List<StatRecyclerItem> statRecyclerItemList;
 
@@ -98,6 +101,31 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((StatusCardViewHolder) holder).death.setText(String.format(Locale.US, "%d",
                     statRecyclerItemList.get(position).getTotalDeath()));
 
+        } else if (getItemViewType(position) == PATIENT_TABLE) {
+            position -= 1;
+            ((CovidStatisticTableViewHolder) holder).mainCardView.setContentPadding(0,0,0,0);
+
+            List<List<String>> rowItems = new ArrayList<>();
+            for (PatientItem item : statRecyclerItemList.get(position).getPatientItems()) {
+                rowItems.add(Arrays.asList(
+                        String.valueOf(item.getId()),
+                        String.valueOf(item.getName()),
+                        String.valueOf(item.getLocation()),
+                        String.valueOf(item.getAge()),
+                        String.valueOf(item.getGender()),
+                        String.valueOf(item.getPatient_nationality()),
+                        String.valueOf(item.getRecent_travel_to()),
+                        Constant.statusIdentifierMap.get(item.getStatus())
+                ));
+            }
+
+            ((CovidStatisticTableViewHolder) holder).mainTable.populateTable(
+                    statRecyclerItemList.get(position).getHeaders(),
+                    rowItems,
+                    statRecyclerItemList.get(position).getFixedHeaderCount() > 0,
+                    statRecyclerItemList.get(position).getFixedHeaderCount()
+            );
+
         } else {
 //            ViewGroup.LayoutParams params = ((HeaderViewHolder) holder).blankView.getLayoutParams();
 //            params.height = dpToPx(holder.itemView.getContext(), 116);
@@ -113,6 +141,7 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 case 0: return STAT_TABLE;
                 case 1: return PIE_CHART;
                 case 2: return STATUS_CARD;
+                case 3: return PATIENT_TABLE;
                 default: return HEADER;
             }
         }
