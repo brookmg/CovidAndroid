@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:fitsSystemWindows">false</item>
+        <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialog</item>
+    </style>
+
+    <style name="DarkTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/black_1y</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:fitsSystemWindows">false</item>
+        <item name="android:navigationBarColor">@color/black_0</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
+        <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialogDark</item>
+
+        <item name="appIndicatorColor">@color/purple_1</item>
+        <item name="appIndicatorTextColor">@color/white_0</item>
+
+        <item name="android:windowBackground">@color/black_1</item>
+        <item name="colorPrimary">@color/purple_1</item>
+        <item name="colorPrimaryDark">@color/purple_0</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="appBackgroundColor">@color/black_1</item>
+        <item name="appCardColor">@color/black_2</item>
+        <item name="appBackgroundColorTransparent">@color/black_1x</item>
+        <item name="appTabColor">@color/colorAccent</item>
+        <item name="appTextColorPrimary">@color/white_0</item>
+        <item name="appAccentColor">@color/colorAccent</item>
+        <item name="appTextColorSecondary">@color/white_1</item>
+        <item name="appSelectedTabColor">@color/white_0</item>
+        <item name="appHeaderBackground">@color/black_1</item>
+        <item name="appBackgroundColorMoreTransparent">@color/black_1y</item>
+    </style>
+
+</resources>

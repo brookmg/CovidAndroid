@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Covid19ETAppTheme">
+        <attr name="appBackgroundColor" format="color" />
+        <attr name="appBackgroundColorTransparent" format="color" />
+        <attr name="appBackgroundColorMoreTransparent" format="color" />
+        <attr name="appCardColor" format="color" />
+        <attr name="appTextColorPrimary" format="color" />
+        <attr name="appAccentColor" format="color" />
+        <attr name="appAccentColorLight" format="color" />
+        <attr name="appTextColorSecondary" format="color" />
+        <attr name="appTabColor" format="color" />
+        <attr name="appSelectedTabColor" format="color" />
+        <attr name="appHeaderBackground" format="color" />
+        <attr name="appIndicatorColor" format="color" />
+        <attr name="appIndicatorTextColor" format="color" />
+    </declare-styleable>
+</resources>

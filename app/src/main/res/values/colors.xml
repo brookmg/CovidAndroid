@@ -3,4 +3,35 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+    <color name="white_0">#ffffff</color>
+    <color name="white_0w">#99ffffff</color>
+    <color name="white_0x">#bbffffff</color>
+    <color name="white_0y">#f9ffffff</color>
+    <color name="grey_0">#666666</color>
+    <color name="red_0">#fd5152</color>
+    <color name="yellow_0">#fad84d</color>
+    <color name="text_grey_0">#6c757a</color>
+    <color name="blue_0">#2a359a</color>
+    <color name="green_0">#00b67c</color>
+    <color name="green_0x">#6600b67c</color>
+    <color name="purple_0">#3700B3</color>
+    <color name="black_0">#000000</color>
+    <color name="black_0x">#99000000</color>
+    <color name="black_0y">#bb000000</color>
+    <color name="black_0z">#e4000000</color>
+
+    <color name="white_1">#e4e5e6</color>
+    <color name="red_1">#e4494a</color>
+    <color name="green_1">#2afa8a</color>
+    <color name="blue_1">#2196F3</color>
+    <color name="grey_1x">#22d3d4d5</color>
+    <color name="purple_1">#6200EE</color>
+    <color name="black_1">#0f0f0f</color>
+    <color name="black_1x">#f80f0f0f</color>
+    <color name="black_1y">#bb0f0f0f</color>
+    <color name="black_1z">#990f0f0f</color>
+
+    <color name="white_2">#c2c3c4</color>
+    <color name="black_2">#242424</color>
 </resources>

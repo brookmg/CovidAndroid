@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    android:id="@+id/main_card_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="?appCardColor"
+    app:cardElevation="6dp"
+    app:cardCornerRadius="6dp"
+    android:layout_margin="8dp"
+    app:contentPadding="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/country_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="18sp"
+            android:textColor="?appTextColorSecondary"
+            android:text="Status for"
+            android:padding="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/country_name"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/country_text"
+            android:textSize="18sp"
+            android:paddingVertical="8dp"
+            android:textColor="?appTextColorPrimary"
+            android:text="Ethiopia"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/infected"
+            app:layout_constraintTop_toBottomOf="@id/country_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/recovered"
+            android:textSize="13pt"
+            android:textStyle="bold"
+            android:layout_marginTop="0dp"
+            android:textColor="?appTextColorSecondary"
+            android:text="600K"
+            android:padding="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/infected_text"
+            app:layout_constraintTop_toBottomOf="@id/infected"
+            app:layout_constraintStart_toStartOf="@id/infected"
+            app:layout_constraintEnd_toEndOf="@id/infected"
+            android:textSize="14sp"
+            android:textColor="?appTextColorSecondary"
+            android:alpha="0.8"
+            android:text="Infected"
+            android:paddingBottom="16dp"
+            android:paddingHorizontal="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/recovered"
+            app:layout_constraintTop_toBottomOf="@id/country_text"
+            app:layout_constraintStart_toEndOf="@+id/infected"
+            app:layout_constraintEnd_toStartOf="@+id/death"
+            android:textSize="13pt"
+            android:textColor="?appTextColorSecondary"
+            android:text="599K"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/recovered_text"
+            app:layout_constraintTop_toBottomOf="@id/recovered"
+            app:layout_constraintStart_toStartOf="@id/recovered"
+            app:layout_constraintEnd_toEndOf="@id/recovered"
+            android:textSize="14sp"
+            android:textColor="?appTextColorSecondary"
+            android:alpha="0.8"
+            android:text="Recovered"
+            android:paddingBottom="16dp"
+            android:paddingHorizontal="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/death"
+            app:layout_constraintTop_toBottomOf="@id/country_text"
+            app:layout_constraintStart_toEndOf="@+id/recovered"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="13pt"
+            android:textColor="?appTextColorSecondary"
+            android:text="1"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/death_text"
+            app:layout_constraintTop_toBottomOf="@id/death"
+            app:layout_constraintStart_toStartOf="@id/death"
+            app:layout_constraintEnd_toEndOf="@id/death"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp"
+            android:textColor="?appTextColorSecondary"
+            android:alpha="0.8"
+            android:text="Death"
+            android:paddingBottom="16dp"
+            android:paddingHorizontal="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
