@@ -54,16 +54,16 @@ public class Table extends LinearLayout {
         scrollableTableContainer = new HorizontalScrollView(getContext());
 
         scrollableTableLayout.setStretchAllColumns(true);
-        fixedColumnTableLayout.setStretchAllColumns(true);
+        fixedColumnTableLayout.setStretchAllColumns(false);
 
         if (fixedColumn && fixedColumnCount > 0)
-            addRows(fixedColumnTableLayout, null, generateTableRow(0, headers.subList(0 , fixedColumnCount), null));
+            addRows(fixedColumnTableLayout, null, generateTableRow(0, headers.subList(0 , fixedColumnCount), null, false));
 
         addRows(scrollableTableLayout, null, generateTableRow(0, headers.subList(fixedColumnCount , headers.size()), null));
 
         for (List<String> stat : rowItems) {
             if (fixedColumn && fixedColumnCount > 0)
-                addRows(fixedColumnTableLayout, stat.get(0), generateTableRow(1,headers.subList(0 , fixedColumnCount), stat.subList(0 , fixedColumnCount)));
+                addRows(fixedColumnTableLayout, stat.get(0), generateTableRow(1,headers.subList(0 , fixedColumnCount), stat.subList(0 , fixedColumnCount), false));
 
             addRows(scrollableTableLayout, stat.get(0), generateTableRow(1,headers.subList(fixedColumnCount , headers.size()),fixedColumnCount > 0 ? stat.subList(fixedColumnCount , stat.size()) : stat));
         }
@@ -71,7 +71,7 @@ public class Table extends LinearLayout {
         if (fixedColumn && fixedColumnCount > 0) {
             addView(fixedColumnTableLayout);
             LinearLayout.LayoutParams params = (LayoutParams) fixedColumnTableLayout.getLayoutParams();
-            params.width = dpToPx(getContext() , fixedColumnCount * 100);
+            params.width = LayoutParams.WRAP_CONTENT;
             params.height = LayoutParams.MATCH_PARENT;
             fixedColumnTableLayout.setLayoutParams(params);
         }
@@ -111,14 +111,18 @@ public class Table extends LinearLayout {
         scrollableTableLayout.removeAllViews();
     }
 
-    private TableRow generateTableRow (int position, List<String> headers, List<String> items) {
+    private TableRow generateTableRow (int position, List<String> centeredHeaders, List<String> centeredItems){
+        return generateTableRow(position, centeredHeaders, centeredItems, true);
+    }
+
+    private TableRow generateTableRow (int position, List<String> headers, List<String> items, boolean centered) {
 
         if (position == 0) {
             TableRow headerRow = new TableRow(getContext());
             for (String header : headers) {
                 AppCompatTextView textView = new AppCompatTextView(getContext());
                 applyToAllViews((textview) -> {
-                    ((AppCompatTextView) textview).setGravity(Gravity.CENTER);
+                    if (centered) ((AppCompatTextView) textview).setGravity(Gravity.CENTER);
                     ((AppCompatTextView) textview).setTextColor(ContextCompat.getColor(getContext(), getCurrentTheme(getContext()) == 0 ? R.color.black_0 : R.color.white_0));
                     ((AppCompatTextView) textview).setTypeface(null, Typeface.BOLD);
                     textview.setPadding(dpToPx(getContext(), 16) , dpToPx(getContext(), 12),
@@ -138,7 +142,7 @@ public class Table extends LinearLayout {
 
                 applyToAllViews(
                         textview -> {
-                            ((AppCompatTextView) textview).setGravity(Gravity.CENTER);
+                            if (centered) ((AppCompatTextView) textview).setGravity(Gravity.CENTER);
                             ((AppCompatTextView) textview).setTextColor(
                                     getCurrentTheme(getContext()) == 0 ?
                                             ContextCompat.getColor(getContext(), R.color.black_0) :
