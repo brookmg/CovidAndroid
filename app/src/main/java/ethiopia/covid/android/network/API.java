@@ -6,12 +6,16 @@ import android.os.Looper;
 import androidx.annotation.UiThread;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import ethiopia.covid.android.data.Case;
+import ethiopia.covid.android.data.CovidStatItem;
 import ethiopia.covid.android.data.Patients;
+import ethiopia.covid.android.data.StatRecyclerItem;
 import ethiopia.covid.android.data.WorldCovid;
 import okhttp3.OkHttpClient;
 import retrofit2.Response;
@@ -114,6 +118,73 @@ public class API {
                 }
             } catch (IOException e) {
                 mainHandler.post(() -> onItemReady.onItem(null , e.toString()));
+                e.printStackTrace();
+            }
+        });
+    }
+
+    @UiThread
+    public void getStatRecyclerContents(OnItemReady<List<StatRecyclerItem>> onItemReady) {
+
+        conjure(() -> {
+            List<StatRecyclerItem> returnable = new ArrayList<>();
+
+            try {
+                Case caseItem = getPmoCovidAPI().getCases().execute().body().get(0);
+                returnable.add(new StatRecyclerItem("Ethiopia" , caseItem.getTotal(), caseItem.getDeceased(), caseItem.getStable()));
+            } catch (Exception ignored) {}
+
+            try {
+                Patients patients = getPmoCovidAPI().getPatients().execute().body();
+                returnable.add(
+                        new StatRecyclerItem(
+                                Arrays.asList("ID" , "Name", "Location", "Age", "Gender" , "Nationality", "RecentTravel", "Status"),
+                                1,
+                                patients.getResults()
+                        )
+                );
+            } catch (Exception ignored) {}
+
+            try {
+                WorldCovid worldStat = getWorldCovidAPI().getListOfStat().execute().body();
+                List<CovidStatItem> worldStatItems = new ArrayList<>();
+                for (WorldCovid location : worldStat.getAreas()) {
+                    worldStatItems.add(
+                            new CovidStatItem(
+                                    location.getDisplayName().replace(" ", ""),
+                                    location.getTotalConfirmed(),
+                                    (location.getTotalConfirmed() - (location.getTotalDeaths() + location.getTotalRecovered())),
+                                    location.getTotalDeaths(),
+                                    location.getTotalRecovered(),
+                                    0, 0, 0
+                            )
+                    );
+                }
+
+                returnable.add(new StatRecyclerItem(
+                        0,
+                        worldStatItems,
+                        Arrays.asList("Country" , "Infected", "Active", "Death", "Recovered" , "Critical", "Minor", "Suspected"),
+                        1
+                ));
+            } catch (Exception ignored) {}
+
+            return returnable;
+        }, (content, err) -> onItemReady.onItem(content, err != null ? err.toString() : ""));
+
+    }
+
+    public interface ConjureBackground<T> { T blockToRunInBackground(); }
+    public interface ConjureForeground<T> { void blockToRunOnMainThread(T content, Throwable err); }
+
+    public static <T> void conjure(ConjureBackground<T> onBackground, ConjureForeground<T> onForeground) {
+        Handler mainHandler = new Handler(Looper.getMainLooper());
+        executors.execute(() -> {
+            try {
+                T returnable = onBackground.blockToRunInBackground();
+                mainHandler.post(() -> onForeground.blockToRunOnMainThread(returnable, null));
+            } catch (Exception e) {
+                mainHandler.post(() -> onForeground.blockToRunOnMainThread(null, e));
                 e.printStackTrace();
             }
         });
