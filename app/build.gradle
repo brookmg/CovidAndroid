@@ -37,7 +37,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation('com.github.bumptech.glide:glide:4.11.0') { exclude group: "com.android.support" }
     implementation "androidx.palette:palette:1.0.0"
-    implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7'
+    implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.1'
     implementation 'com.google.android.material:material:1.2.0-alpha05'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
