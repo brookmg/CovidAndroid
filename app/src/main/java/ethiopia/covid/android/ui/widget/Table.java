@@ -1,8 +1,10 @@
 package ethiopia.covid.android.ui.widget;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +15,13 @@ import android.widget.TableRow;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 
 import java.util.List;
 import java.util.Locale;
 
 import ethiopia.covid.android.R;
+import ethiopia.covid.android.util.Utils;
 
 import static ethiopia.covid.android.util.Utils.dpToPx;
 import static ethiopia.covid.android.util.Utils.getCurrentTheme;
@@ -51,7 +55,14 @@ public class Table extends LinearLayout {
 
         fixedColumnTableLayout = new TableLayout(getContext());
         scrollableTableLayout = new TableLayout(getContext());
-        scrollableTableContainer = new HorizontalScrollView(getContext());
+        scrollableTableContainer = new HorizontalScrollView(getContext()) {
+            @Override
+            protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+                super.onScrollChanged(l, t, oldl, oldt);
+                fixedColumnTableLayout.setBackgroundColor(Utils.getCurrentTheme(getContext()) == 0 ? Color.WHITE : Color.BLACK);
+                ViewCompat.setElevation(fixedColumnTableLayout , Math.min(l * 0.4f , 10));
+            }
+        };
 
         scrollableTableLayout.setStretchAllColumns(true);
         fixedColumnTableLayout.setStretchAllColumns(false);
