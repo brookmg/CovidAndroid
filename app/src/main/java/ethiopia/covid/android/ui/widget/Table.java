@@ -51,7 +51,7 @@ public class Table extends LinearLayout {
         super(context, attrs);
     }
 
-    public void populateTable(List<String> headers, List<List<String>> rowItems, boolean fixedColumn, int fixedColumnCount) {
+    public void populateTable(List<String> headers, List<List<String>> rowItems, boolean fixedColumn, int fixedColumnCount, int headerTextLengthLimit) {
         setOrientation(HORIZONTAL);
 
         fixedColumnTableLayout = new TableLayout(getContext());
@@ -70,13 +70,13 @@ public class Table extends LinearLayout {
         fixedColumnTableLayout.setStretchAllColumns(false);
 
         if (fixedColumn && fixedColumnCount > 0)
-            addRows(fixedColumnTableLayout, null, generateTableRow(0, headers.subList(0 , fixedColumnCount), null, false));
+            addRows(fixedColumnTableLayout, null, generateTableRow(0, headers.subList(0 , fixedColumnCount), null, false, headerTextLengthLimit));
 
         addRows(scrollableTableLayout, null, generateTableRow(0, headers.subList(fixedColumnCount , headers.size()), null));
 
         for (List<String> stat : rowItems) {
             if (fixedColumn && fixedColumnCount > 0)
-                addRows(fixedColumnTableLayout, stat.get(0), generateTableRow(1,headers.subList(0 , fixedColumnCount), stat.subList(0 , fixedColumnCount), false));
+                addRows(fixedColumnTableLayout, stat.get(0), generateTableRow(1,headers.subList(0 , fixedColumnCount), stat.subList(0 , fixedColumnCount), false, headerTextLengthLimit));
 
             addRows(scrollableTableLayout, stat.get(0), generateTableRow(1,headers.subList(fixedColumnCount , headers.size()),fixedColumnCount > 0 ? stat.subList(fixedColumnCount , stat.size()) : stat));
         }
@@ -125,10 +125,10 @@ public class Table extends LinearLayout {
     }
 
     private TableRow generateTableRow (int position, List<String> centeredHeaders, List<String> centeredItems){
-        return generateTableRow(position, centeredHeaders, centeredItems, true);
+        return generateTableRow(position, centeredHeaders, centeredItems, true, -1);
     }
 
-    private TableRow generateTableRow (int position, List<String> headers, List<String> items, boolean centered) {
+    private TableRow generateTableRow (int position, List<String> headers, List<String> items, boolean centered, int maxHeaderLength) {
 
         if (position == 0) {
             TableRow headerRow = new TableRow(getContext());
@@ -136,12 +136,17 @@ public class Table extends LinearLayout {
                 AppCompatTextView textView = new AppCompatTextView(getContext());
                 applyToAllViews((textview) -> {
                     if (centered) ((AppCompatTextView) textview).setGravity(Gravity.CENTER);
-                    ((AppCompatTextView) textview).setTextColor(ContextCompat.getColor(getContext(), getCurrentTheme(getContext()) == 0 ? R.color.black_0 : R.color.white_0));
+                    ((AppCompatTextView) textview).setTextColor(ContextCompat.getColor(getContext(),
+                            currentTheme == 0 ? R.color.black_0 : R.color.white_0));
                     ((AppCompatTextView) textview).setTypeface(null, Typeface.BOLD);
                     textview.setPadding(dpToPx(getContext(), 16) , dpToPx(getContext(), 12),
                             dpToPx(getContext(), 16), dpToPx(getContext(), 12));
                 }, textView);
-                textView.setText(header);
+
+                textView.setText(String.format("%s%s", header.substring(0,
+                        maxHeaderLength > 0 && maxHeaderLength < header.length() ?
+                                maxHeaderLength : header.length()
+                ), maxHeaderLength < 0 || maxHeaderLength > header.length()? "" : "..."));
                 headerRow.addView(textView);
             }
             headerRow.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.grey_1x));
@@ -151,7 +156,10 @@ public class Table extends LinearLayout {
 
             for (String content : items) {
                 AppCompatTextView contentTextView = new AppCompatTextView(getContext());
-                contentTextView.setText(String.format(Locale.US, "%s", content));
+                contentTextView.setText(String.format("%s%s", content.substring(0,
+                        maxHeaderLength > 0 && maxHeaderLength < content.length() ?
+                                maxHeaderLength : content.length()
+                ), maxHeaderLength < 0 || maxHeaderLength > content.length()? "" : "..."));
 
                 applyToAllViews(
                         textview -> {

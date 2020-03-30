@@ -85,7 +85,8 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     statRecyclerItemList.get(position).getHeaders(),
                     rowItems,
                     statRecyclerItemList.get(position).getFixedHeaderCount() > 0,
-                    statRecyclerItemList.get(position).getFixedHeaderCount()
+                    statRecyclerItemList.get(position).getFixedHeaderCount(),
+                    8
             );
 
         } else if (getItemViewType(position) == STATUS_CARD) {
@@ -123,7 +124,7 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     statRecyclerItemList.get(position).getHeaders(),
                     rowItems,
                     statRecyclerItemList.get(position).getFixedHeaderCount() > 0,
-                    statRecyclerItemList.get(position).getFixedHeaderCount()
+                    statRecyclerItemList.get(position).getFixedHeaderCount(), 8
             );
 
         } else {
