@@ -19,6 +19,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        app:cornerRadius="20dp"
         app:indicatorColor="?appIndicatorColor"
         app:iconTint="?appTextColorPrimary"
         app:iconTintActive="?appIndicatorTextColor"

@@ -2,6 +2,7 @@ package ethiopia.covid.android.ui.fragment;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +17,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.AppBarLayout;
 
-import java.util.Arrays;
+import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import ethiopia.covid.android.App;
 import ethiopia.covid.android.R;
+import ethiopia.covid.android.data.Case;
 import ethiopia.covid.android.data.CovidStatItem;
+import ethiopia.covid.android.data.PatientItem;
 import ethiopia.covid.android.data.StatRecyclerItem;
+import ethiopia.covid.android.data.WorldCovid;
+import ethiopia.covid.android.network.API;
 import ethiopia.covid.android.ui.adapter.StatRecyclerAdapter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static ethiopia.covid.android.util.Utils.getCurrentTheme;
 
@@ -34,6 +49,7 @@ public class StatFragment extends BaseFragment {
     private AppBarLayout appBarLayout;
     private RecyclerView recyclerView;
     private AppCompatImageButton themeButton;
+    private StatRecyclerAdapter statRecyclerAdapter;
 
     public static StatFragment newInstance() {
         Bundle args = new Bundle();
@@ -79,41 +95,23 @@ public class StatFragment extends BaseFragment {
         );
 
         themeButton.setOnClickListener(v -> changeTheme());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.VERTICAL , false));
-        recyclerView.setAdapter(new StatRecyclerAdapter(Arrays.asList(
-                new StatRecyclerItem("Ethiopia" , 1200, 0, 1200),
-                new StatRecyclerItem(
-                        0,
-                        Arrays.asList(
-                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
-                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
-                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
-                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
-                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
-                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
-                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
-                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63)
-                        ),
-                        Arrays.asList("Id" , "Infected", "Active", "Death", "Recovered" , "Critical", "Minor", "Suspected"),
-                        1
-                ),
-                new StatRecyclerItem(
-                        0,
-                        Arrays.asList(
-                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
-                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
-                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
-                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
-                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
-                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
-                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
-                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
-                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63),
-                                new CovidStatItem("Ethiopia" , 12, 8, 0, 4, 1, 7, 63)                        ),
-                        Arrays.asList("Id" , "Infected", "Active", "Death", "Recovered" , "Critical", "Minor", "Suspected"),
-                        2
-                )
-        )));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.VERTICAL , false) {
+            @Override
+            public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
+                try {
+                    super.onLayoutChildren(recycler, state);
+                } catch (IndexOutOfBoundsException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
+
+
+
+        App.getInstance().getMainAPI().getStatRecyclerContents((recyclerItems, err) -> {
+            statRecyclerAdapter = new StatRecyclerAdapter(recyclerItems);
+            recyclerView.setAdapter(statRecyclerAdapter);
+        });
 
         return mainView;
     }
