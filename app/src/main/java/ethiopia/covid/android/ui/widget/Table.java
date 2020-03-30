@@ -31,6 +31,7 @@ public class Table extends LinearLayout {
     private TableLayout fixedColumnTableLayout;
     private TableLayout scrollableTableLayout;
     private HorizontalScrollView scrollableTableContainer;
+    private int currentTheme = getCurrentTheme(getContext());
 
     private interface ApplyProperty {
         void apply(View item);
@@ -59,7 +60,8 @@ public class Table extends LinearLayout {
             @Override
             protected void onScrollChanged(int l, int t, int oldl, int oldt) {
                 super.onScrollChanged(l, t, oldl, oldt);
-                fixedColumnTableLayout.setBackgroundColor(Utils.getCurrentTheme(getContext()) == 0 ? Color.WHITE : Color.BLACK);
+                fixedColumnTableLayout.setBackgroundColor(ContextCompat.getColor(getContext(),
+                        currentTheme == 0 ? R.color.white_0 : R.color.black_2));
                 ViewCompat.setElevation(fixedColumnTableLayout , Math.min(l * 0.4f , 10));
             }
         };
@@ -155,7 +157,7 @@ public class Table extends LinearLayout {
                         textview -> {
                             if (centered) ((AppCompatTextView) textview).setGravity(Gravity.CENTER);
                             ((AppCompatTextView) textview).setTextColor(
-                                    getCurrentTheme(getContext()) == 0 ?
+                                    currentTheme == 0 ?
                                             ContextCompat.getColor(getContext(), R.color.black_0) :
                                             ContextCompat.getColor(getContext(), R.color.white_0)
                             );
