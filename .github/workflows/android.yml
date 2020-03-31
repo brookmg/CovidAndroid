@@ -13,8 +13,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Delete merged branch
-      uses: SvanBoxel/delete-merged-branch@v1.3.3
     - name: Cache
       uses: actions/cache@v1.1.2
       with:
