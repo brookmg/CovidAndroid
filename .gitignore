@@ -16,3 +16,4 @@
 .idea
 app/build
 app/src/main/java/ethiopia/covid/android/util/Secrets.java
+secrets.properties

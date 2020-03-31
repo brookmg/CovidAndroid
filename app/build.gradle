@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+def secretsPropertiesFile = rootProject.file("secrets.properties");
+def secretsProperties = new Properties()
+secretsProperties.load(new FileInputStream(secretsPropertiesFile))
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -12,6 +16,7 @@ android {
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "bindDataAPIKey", secretsProperties['bindDataAPIKey'])
     }
 
     buildTypes {

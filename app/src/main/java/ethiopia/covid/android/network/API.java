@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import ethiopia.covid.android.BuildConfig;
 import ethiopia.covid.android.data.Case;
 import ethiopia.covid.android.data.CovidStatItem;
 import ethiopia.covid.android.data.Patients;
@@ -104,7 +105,7 @@ public class API {
         Handler mainHandler = new Handler(Looper.getMainLooper());
         executors.execute(() -> {
             try {
-                Response<WorldCovid> response = worldCovidAPI.getListOfStat().execute();
+                Response<WorldCovid> response = worldCovidAPI.getListOfStat(BuildConfig.bindDataAPIKey).execute();
                 if (response.body() != null) {
                     mainHandler.post(() -> onItemReady.onItem(response.body(), ""));
                 } else {
@@ -146,7 +147,7 @@ public class API {
             } catch (Exception ignored) {}
 
             try {
-                WorldCovid worldStat = getWorldCovidAPI().getListOfStat().execute().body();
+                WorldCovid worldStat = getWorldCovidAPI().getListOfStat(BuildConfig.bindDataAPIKey).execute().body();
                 List<CovidStatItem> worldStatItems = new ArrayList<>();
                 for (WorldCovid location : worldStat.getAreas()) {
                     worldStatItems.add(
