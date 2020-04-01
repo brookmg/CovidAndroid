@@ -1,6 +1,7 @@
 package ethiopia.covid.android.ui.widget;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
@@ -13,9 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
+
+import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 import java.util.Locale;
@@ -30,6 +34,8 @@ public class Table extends LinearLayout {
 
     private TableLayout fixedColumnTableLayout;
     private TableLayout scrollableTableLayout;
+    private LinearLayout tableLayoutContainer;
+    private MaterialButton nextPageButton;
     private HorizontalScrollView scrollableTableContainer;
     private int currentTheme = getCurrentTheme(getContext());
 
@@ -51,11 +57,15 @@ public class Table extends LinearLayout {
         super(context, attrs);
     }
 
-    public void populateTable(List<String> headers, List<List<String>> rowItems, boolean fixedColumn, int fixedColumnCount, int headerTextLengthLimit) {
-        setOrientation(HORIZONTAL);
+    public void populateTable(List<String> headers, List<List<String>> rowItems,
+                              boolean fixedColumn, int fixedColumnCount, int headerTextLengthLimit) {
+        setOrientation(VERTICAL);
 
         fixedColumnTableLayout = new TableLayout(getContext());
         scrollableTableLayout = new TableLayout(getContext());
+        nextPageButton = new MaterialButton(new ContextThemeWrapper(getContext() , R.style.Widget_MaterialComponents_Button_OutlinedButton), null, 0);
+        tableLayoutContainer = new LinearLayout(getContext());
+
         scrollableTableContainer = new HorizontalScrollView(getContext()) {
             @Override
             protected void onScrollChanged(int l, int t, int oldl, int oldt) {
@@ -68,6 +78,15 @@ public class Table extends LinearLayout {
 
         scrollableTableLayout.setStretchAllColumns(true);
         fixedColumnTableLayout.setStretchAllColumns(false);
+        tableLayoutContainer.setOrientation(HORIZONTAL);
+
+        nextPageButton.setText("Next Page");
+        nextPageButton.setOnClickListener(v -> {});
+        nextPageButton.setCornerRadius(10);
+        nextPageButton.setTextColor(ContextCompat.getColor(getContext() , R.color.purple_1));
+        nextPageButton.setBackgroundTintList(ColorStateList.valueOf(
+                Color.TRANSPARENT
+        ));
 
         if (fixedColumn && fixedColumnCount > 0)
             addRows(fixedColumnTableLayout, null, generateTableRow(0, headers.subList(0 , fixedColumnCount), null, false, headerTextLengthLimit));
@@ -82,7 +101,7 @@ public class Table extends LinearLayout {
         }
 
         if (fixedColumn && fixedColumnCount > 0) {
-            addView(fixedColumnTableLayout);
+            tableLayoutContainer.addView(fixedColumnTableLayout);
             LinearLayout.LayoutParams params = (LayoutParams) fixedColumnTableLayout.getLayoutParams();
             params.width = LayoutParams.WRAP_CONTENT;
             params.height = LayoutParams.MATCH_PARENT;
@@ -90,8 +109,21 @@ public class Table extends LinearLayout {
         }
 
         scrollableTableContainer.addView(scrollableTableLayout);
-        addView(scrollableTableContainer);
+        tableLayoutContainer.addView(scrollableTableContainer);
 
+        addView(tableLayoutContainer);
+        addView(nextPageButton);
+
+        LinearLayout.LayoutParams params = (LayoutParams) nextPageButton.getLayoutParams();
+        params.width = LayoutParams.MATCH_PARENT;
+        params.height = LayoutParams.MATCH_PARENT;
+
+        params.leftMargin = dpToPx(getContext() , 10);
+        params.rightMargin = dpToPx(getContext() , 10);
+        params.topMargin = dpToPx(getContext() , 10);
+        params.bottomMargin = dpToPx(getContext() , 10);
+
+        nextPageButton.setLayoutParams(params);
 
     }
 
