@@ -24,12 +24,22 @@ public class StatRecyclerItem {
     private int totalDeath;
     private int totalRecovered;
 
+    // Patient table stuff
+    private List<PatientItem> patientItems;
+
     public StatRecyclerItem(String country, int totalInfected, int totalDeath, int totalRecovered) {
         this.type = 2;
         this.country = country;
         this.totalInfected = totalInfected;
         this.totalDeath = totalDeath;
         this.totalRecovered = totalRecovered;
+    }
+
+    public StatRecyclerItem(List<String> headers, int fixedHeaderCount, List<PatientItem> patientItems) {
+        this.type = 3;
+        this.headers = headers;
+        this.fixedHeaderCount = fixedHeaderCount;
+        this.patientItems = patientItems;
     }
 
     public StatRecyclerItem(List<CovidStatItem> tableItems, List<String> headers) {
@@ -109,5 +119,13 @@ public class StatRecyclerItem {
 
     public void setTotalRecovered(int totalRecovered) {
         this.totalRecovered = totalRecovered;
+    }
+
+    public List<PatientItem> getPatientItems() {
+        return patientItems;
+    }
+
+    public void setPatientItems(List<PatientItem> patientItems) {
+        this.patientItems = patientItems;
     }
 }

@@ -6,5 +6,9 @@
     <string name="news_menu_title">News</string>
     <string name="contact_menu_title">Contact</string>
     <string name="read_more">Read More</string>
+    <string name="stable">Stable</string>
+    <string name="infected">Infected</string>
+    <string name="status_for">Status for</string>
+    <string name="death">Death</string>
 
 </resources>
