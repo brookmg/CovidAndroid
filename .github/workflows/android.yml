@@ -29,6 +29,6 @@ jobs:
     - name: Decode secrets.properties file
       env: 
         SECRETS_PROPERTIES: ${{ secrets.SECRETS_PROPERTIES }}  
-      run: echo SECRETS_PROPERTIES > ./secrets.properties  
+      run: echo $SECRETS_PROPERTIES > ./secrets.properties  
     - name: Build with Gradle
       run: ./gradlew build
