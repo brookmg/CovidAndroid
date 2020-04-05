@@ -10,5 +10,7 @@
     <string name="infected">Infected</string>
     <string name="status_for">Status for</string>
     <string name="death">Death</string>
+    <string name="recovered">Recover</string>
+    <string name="tested">Tested</string>
 
 </resources>
