@@ -13,18 +13,18 @@ public class CovidStatItem {
     private int death;
     private int recovered;
     private int critical;
-    private int minor;
-    private int suspected;
+    private double casePMillion;
+    private double deathsPMillion;
 
-    public CovidStatItem(String identifier, int infected, int active, int death, int recovered, int critical, int minor, int suspected) {
+    public CovidStatItem(String identifier, int infected, int active, int death, int recovered, int critical, double casePMillion, double deathsPMillion) {
         this.identifier = identifier;
         this.infected = infected;
         this.active = active;
         this.death = death;
         this.recovered = recovered;
         this.critical = critical;
-        this.minor = minor;
-        this.suspected = suspected;
+        this.casePMillion = casePMillion;
+        this.deathsPMillion = deathsPMillion;
     }
 
     public String getIdentifier() {
@@ -75,19 +75,19 @@ public class CovidStatItem {
         this.critical = critical;
     }
 
-    public int getMinor() {
-        return minor;
+    public double getCasePMillion() {
+        return casePMillion;
     }
 
-    public void setMinor(int minor) {
-        this.minor = minor;
+    public void setCasePMillion(double casePMillion) {
+        this.casePMillion = casePMillion;
     }
 
-    public int getSuspected() {
-        return suspected;
+    public double getDeathsPMillion() {
+        return deathsPMillion;
     }
 
-    public void setSuspected(int suspected) {
-        this.suspected = suspected;
+    public void setDeathsPMillion(double deathsPMillion) {
+        this.deathsPMillion = deathsPMillion;
     }
 }

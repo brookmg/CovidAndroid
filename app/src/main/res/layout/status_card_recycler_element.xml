@@ -38,9 +38,36 @@
             android:layout_height="wrap_content" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/infected"
+            android:id="@+id/tested"
             app:layout_constraintTop_toBottomOf="@id/country_text"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/infected"
+            android:textSize="13pt"
+            android:textStyle="bold"
+            android:layout_marginTop="0dp"
+            android:textColor="?appTextColorSecondary"
+            android:padding="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tested_text"
+            app:layout_constraintTop_toBottomOf="@id/tested"
+            app:layout_constraintStart_toStartOf="@id/tested"
+            app:layout_constraintEnd_toEndOf="@id/tested"
+            android:textSize="14sp"
+            android:textColor="?appTextColorSecondary"
+            android:alpha="0.8"
+            android:text="@string/tested"
+            android:paddingBottom="16dp"
+            android:paddingHorizontal="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/infected"
+            app:layout_constraintTop_toBottomOf="@id/country_text"
+            app:layout_constraintStart_toEndOf="@+id/tested"
             app:layout_constraintEnd_toStartOf="@+id/recovered"
             android:textSize="13pt"
             android:textStyle="bold"
@@ -84,7 +111,7 @@
             android:textSize="14sp"
             android:textColor="?appTextColorSecondary"
             android:alpha="0.8"
-            android:text="@string/stable"
+            android:text="@string/recovered"
             android:paddingBottom="16dp"
             android:paddingHorizontal="8dp"
             android:layout_width="wrap_content"
