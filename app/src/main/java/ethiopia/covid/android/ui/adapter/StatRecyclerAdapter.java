@@ -93,6 +93,9 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             position -= 1;
             ((StatusCardViewHolder) holder).country.setText(statRecyclerItemList.get(position).getCountry());
 
+            ((StatusCardViewHolder) holder).tested.setText(String.format(Locale.US, "%d",
+                    statRecyclerItemList.get(position).getTotalTested()));
+
             ((StatusCardViewHolder) holder).infected.setText(String.format(Locale.US, "%d",
                     statRecyclerItemList.get(position).getTotalInfected()));
 
@@ -174,11 +177,12 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     private static class StatusCardViewHolder extends RecyclerView.ViewHolder {
-        AppCompatTextView infected, recovered, death, country;
+        AppCompatTextView infected, recovered, death, country, tested;
 
         StatusCardViewHolder(@NonNull View itemView) {
             super(itemView);
             country = itemView.findViewById(R.id.country_name);
+            tested = itemView.findViewById(R.id.tested);
             infected = itemView.findViewById(R.id.infected);
             recovered = itemView.findViewById(R.id.recovered);
             death = itemView.findViewById(R.id.death);
