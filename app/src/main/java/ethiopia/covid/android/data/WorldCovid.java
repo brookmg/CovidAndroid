@@ -10,120 +10,214 @@ import java.util.List;
 public class WorldCovid {
 
     /*
-            "id": "maldives",
-            "displayName": "Maldives",
-            "areas": [],
-            "totalConfirmed": 13,
-            "totalDeaths": null,
-            "totalRecovered": 3,
-            "lastUpdated": "2020-03-25T16:32:44.415Z",
-            "lat": 1.9123070240020752,
-            "long": 73.54009246826172,
-            "parentId": "world"
+            {
+                "country": "China",
+                "countryInfo": {
+                  "_id": 156,
+                  "iso2": "CN",
+                  "iso3": "CHN",
+                  "lat": 35,
+                  "long": 105,
+                  "flag": "https://raw.githubusercontent.com/NovelCOVID/API/master/assets/flags/cn.png"
+                },
+                "cases": 81669,
+                "todayCases": 30,
+                "deaths": 3329,
+                "todayDeaths": 3,
+                "recovered": 76964,
+                "active": 1376,
+                "critical": 295,
+                "casesPerOneMillion": 57,
+                "deathsPerOneMillion": 2,
+                "updated": 1586097475837
+            }
      */
 
-    private String id;
-    private String displayName;
-    private List<WorldCovid> areas;
-    private int totalConfirmed;
-    private int totalDeaths;
-    private int totalRecovered;
-    private Date lastUpdated;
-    private double lat;
-    private double lon;
-    private String parentId;
+    public static class CountryInfo {
+        private int _id;
+        private String iso2;
+        private String iso3;
+        private double lat, lon;
+        private String flag;
 
-    public WorldCovid(String id, String displayName, List<WorldCovid> areas, int totalConfirmed, int totalDeaths, int totalRecovered, Date lastUpdated, double lat, double lon, String parentId) {
-        this.id = id;
-        this.displayName = displayName;
-        this.areas = areas;
-        this.totalConfirmed = totalConfirmed;
-        this.totalDeaths = totalDeaths;
-        this.totalRecovered = totalRecovered;
-        this.lastUpdated = lastUpdated;
-        this.lat = lat;
-        this.lon = lon;
-        this.parentId = parentId;
+        public CountryInfo(int _id, String iso2, String iso3, double lat, double lon, String flag) {
+            this._id = _id;
+            this.iso2 = iso2;
+            this.iso3 = iso3;
+            this.lat = lat;
+            this.lon = lon;
+            this.flag = flag;
+        }
+
+        public int get_id() {
+            return _id;
+        }
+
+        public void set_id(int _id) {
+            this._id = _id;
+        }
+
+        public String getIso2() {
+            return iso2;
+        }
+
+        public void setIso2(String iso2) {
+            this.iso2 = iso2;
+        }
+
+        public String getIso3() {
+            return iso3;
+        }
+
+        public void setIso3(String iso3) {
+            this.iso3 = iso3;
+        }
+
+        public double getLat() {
+            return lat;
+        }
+
+        public void setLat(double lat) {
+            this.lat = lat;
+        }
+
+        public double getLon() {
+            return lon;
+        }
+
+        public void setLon(double lon) {
+            this.lon = lon;
+        }
+
+        public String getFlag() {
+            return flag;
+        }
+
+        public void setFlag(String flag) {
+            this.flag = flag;
+        }
     }
 
+    private String country;
+    private CountryInfo countryInfo;
+    private int cases;
+    private int todayCases;
+    private int deaths;
+    private int todayDeaths;
+    private int recovered;
+    private int active;
+    private int critical;
+    private double casesPerOneMillion;
+    private double deathsPerOnMillion;
+    private long updated;
 
-    public String getId() {
-        return id;
+    public WorldCovid(String country, int cases, int todayCases, int deaths, int todayDeaths, int recovered, int active, int critical, double casesPerOneMillion, double deathsPerOnMillion, long updated) {
+        this.country = country;
+        this.cases = cases;
+        this.todayCases = todayCases;
+        this.deaths = deaths;
+        this.todayDeaths = todayDeaths;
+        this.recovered = recovered;
+        this.active = active;
+        this.critical = critical;
+        this.casesPerOneMillion = casesPerOneMillion;
+        this.deathsPerOnMillion = deathsPerOnMillion;
+        this.updated = updated;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getCountry() {
+        return country;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
+    public CountryInfo getCountryInfo() {
+        return countryInfo;
     }
 
-    public List<WorldCovid> getAreas() {
-        return areas;
+    public void setCountryInfo(CountryInfo countryInfo) {
+        this.countryInfo = countryInfo;
     }
 
-    public void setAreas(List<WorldCovid> areas) {
-        this.areas = areas;
+    public int getCases() {
+        return cases;
     }
 
-    public int getTotalConfirmed() {
-        return totalConfirmed;
+    public void setCases(int cases) {
+        this.cases = cases;
     }
 
-    public void setTotalConfirmed(int totalConfirmed) {
-        this.totalConfirmed = totalConfirmed;
+    public int getTodayCases() {
+        return todayCases;
     }
 
-    public int getTotalDeaths() {
-        return totalDeaths;
+    public void setTodayCases(int todayCases) {
+        this.todayCases = todayCases;
     }
 
-    public void setTotalDeaths(int totalDeaths) {
-        this.totalDeaths = totalDeaths;
+    public int getDeaths() {
+        return deaths;
     }
 
-    public int getTotalRecovered() {
-        return totalRecovered;
+    public void setDeaths(int deaths) {
+        this.deaths = deaths;
     }
 
-    public void setTotalRecovered(int totalRecovered) {
-        this.totalRecovered = totalRecovered;
+    public int getTodayDeaths() {
+        return todayDeaths;
     }
 
-    public Date getLastUpdated() {
-        return lastUpdated;
+    public void setTodayDeaths(int todayDeaths) {
+        this.todayDeaths = todayDeaths;
     }
 
-    public void setLastUpdated(Date lastUpdated) {
-        this.lastUpdated = lastUpdated;
+    public int getRecovered() {
+        return recovered;
     }
 
-    public double getLat() {
-        return lat;
+    public void setRecovered(int recovered) {
+        this.recovered = recovered;
     }
 
-    public void setLat(double lat) {
-        this.lat = lat;
+    public int getActive() {
+        return active;
     }
 
-    public double getLon() {
-        return lon;
+    public void setActive(int active) {
+        this.active = active;
     }
 
-    public void setLon(double lon) {
-        this.lon = lon;
+    public int getCritical() {
+        return critical;
     }
 
-    public String getParentId() {
-        return parentId;
+    public void setCritical(int critical) {
+        this.critical = critical;
     }
 
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
+    public double getCasesPerOneMillion() {
+        return casesPerOneMillion;
+    }
+
+    public void setCasesPerOneMillion(double casesPerOneMillion) {
+        this.casesPerOneMillion = casesPerOneMillion;
+    }
+
+    public double getDeathsPerOnMillion() {
+        return deathsPerOnMillion;
+    }
+
+    public void setDeathsPerOnMillion(double deathsPerOnMillion) {
+        this.deathsPerOnMillion = deathsPerOnMillion;
+    }
+
+    public long getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(long updated) {
+        this.updated = updated;
     }
 }

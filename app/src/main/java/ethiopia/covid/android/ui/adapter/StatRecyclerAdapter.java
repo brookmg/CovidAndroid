@@ -76,8 +76,8 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         String.valueOf(item.getDeath()),
                         String.valueOf(item.getRecovered()),
                         String.valueOf(item.getCritical()),
-                        String.valueOf(item.getMinor()),
-                        String.valueOf(item.getSuspected())
+                        String.valueOf(item.getCasePMillion()),
+                        String.valueOf(item.getDeathsPMillion())
                 ));
             }
 

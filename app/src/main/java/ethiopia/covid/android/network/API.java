@@ -2,6 +2,7 @@ package ethiopia.covid.android.network;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import androidx.annotation.UiThread;
 
@@ -45,7 +46,7 @@ public class API {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        Retrofit retrofitWorld = new Retrofit.Builder().baseUrl("https://www.bing.com/covid/")
+        Retrofit retrofitWorld = new Retrofit.Builder().baseUrl("https://corona.lmao.ninja/")
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -106,11 +107,11 @@ public class API {
     }
     
     @UiThread
-    public void getWorldStat(OnItemReady<WorldCovid> onItemReady) {
+    public void getWorldStat(OnItemReady<List<WorldCovid>> onItemReady) {
         Handler mainHandler = new Handler(Looper.getMainLooper());
         executors.execute(() -> {
             try {
-                Response<WorldCovid> response = worldCovidAPI.getListOfStat(BuildConfig.bindDataAPIKey).execute();
+                Response<List<WorldCovid>> response = worldCovidAPI.getListOfStat().execute();
                 if (response.body() != null) {
                     mainHandler.post(() -> onItemReady.onItem(response.body(), ""));
                 } else {
@@ -152,17 +153,21 @@ public class API {
             } catch (Exception ignored) {}
 
             try {
-                WorldCovid worldStat = getWorldCovidAPI().getListOfStat(BuildConfig.bindDataAPIKey).execute().body();
+                Response<List<WorldCovid>> worldStatResponse = getWorldCovidAPI().getListOfStat().execute();
+                List<WorldCovid> worldStat = worldStatResponse.body();
                 List<CovidStatItem> worldStatItems = new ArrayList<>();
-                for (WorldCovid location : worldStat.getAreas()) {
+
+                for (WorldCovid location : worldStat != null ? worldStat : new ArrayList<WorldCovid>()) {
                     worldStatItems.add(
                             new CovidStatItem(
-                                    location.getDisplayName().replace(" ", ""),
-                                    location.getTotalConfirmed(),
-                                    (location.getTotalConfirmed() - (location.getTotalDeaths() + location.getTotalRecovered())),
-                                    location.getTotalDeaths(),
-                                    location.getTotalRecovered(),
-                                    0, 0, 0
+                                    location.getCountry().replace(" ", ""),
+                                    location.getTodayCases(),
+                                    location.getActive(),
+                                    location.getDeaths(),
+                                    location.getRecovered(),
+                                    location.getCritical(),
+                                    location.getCasesPerOneMillion(),
+                                    location.getDeathsPerOnMillion()
                             )
                     );
                 }
@@ -170,10 +175,12 @@ public class API {
                 returnable.add(new StatRecyclerItem(
                         0,
                         worldStatItems,
-                        Arrays.asList("Country" , "Infected", "Active", "Death", "Recovered" , "Critical", "Minor", "Suspected"),
+                        Arrays.asList("Country" , "Infected", "Active", "Death", "Recovered" , "Critical", "Case/1M", "Death/1M"),
                         1
                 ));
-            } catch (Exception ignored) {}
+            } catch (Exception err) {
+                Log.e("NETWORK" , err.getMessage());
+            }
 
             return returnable;
         }, (content, err) -> onItemReady.onItem(content, err != null ? err.toString() : ""));

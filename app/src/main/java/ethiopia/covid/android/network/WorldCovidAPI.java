@@ -1,5 +1,7 @@
 package ethiopia.covid.android.network;
 
+import java.util.List;
+
 import ethiopia.covid.android.data.WorldCovid;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -11,6 +13,6 @@ inside the project CoVidEt .
  */
 public interface WorldCovidAPI {
 
-    @GET("data") public Call<WorldCovid> getListOfStat(@Query("IG") String apiKey);
+    @GET("countries") public Call<List<WorldCovid>> getListOfStat();
 
 }
