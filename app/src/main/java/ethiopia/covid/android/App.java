@@ -16,8 +16,8 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        mainAPI = new API();
         instance = this;
+        mainAPI = new API();
     }
 
     public static App getInstance() {

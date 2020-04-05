@@ -5,6 +5,8 @@ import android.os.Looper;
 
 import androidx.annotation.UiThread;
 
+import com.chuckerteam.chucker.api.ChuckerInterceptor;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import ethiopia.covid.android.App;
 import ethiopia.covid.android.BuildConfig;
 import ethiopia.covid.android.data.Case;
 import ethiopia.covid.android.data.CovidStatItem;
@@ -33,7 +36,9 @@ public class API {
     private static ExecutorService executors;
 
     public API() {
-        OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addNetworkInterceptor(new ChuckerInterceptor(App.getInstance()))
+                .build();
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://api.pmo.gov.et/v1/")
                 .client(okHttpClient)
