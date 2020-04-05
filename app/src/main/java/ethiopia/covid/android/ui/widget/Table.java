@@ -39,6 +39,10 @@ public class Table extends LinearLayout {
     private HorizontalScrollView scrollableTableContainer;
     private int currentTheme = getCurrentTheme(getContext());
 
+    private List<List<String>> rowItems;
+    private int currentPageLimit = 10;
+    private int currentPage = 0;
+
     private interface ApplyProperty {
         void apply(View item);
     }
@@ -51,16 +55,16 @@ public class Table extends LinearLayout {
 
     public Table(Context context) {
         super(context);
+        init();
     }
 
     public Table(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
-    public void populateTable(List<String> headers, List<List<String>> rowItems,
-                              boolean fixedColumn, int fixedColumnCount, int headerTextLengthLimit) {
+    private void init() {
         setOrientation(VERTICAL);
-
         fixedColumnTableLayout = new TableLayout(getContext());
         scrollableTableLayout = new TableLayout(getContext());
         nextPageButton = new MaterialButton(new ContextThemeWrapper(getContext() , R.style.Widget_MaterialComponents_Button_OutlinedButton), null, 0);
@@ -81,23 +85,61 @@ public class Table extends LinearLayout {
         tableLayoutContainer.setOrientation(HORIZONTAL);
 
         nextPageButton.setText("Next Page");
-        nextPageButton.setOnClickListener(v -> {});
         nextPageButton.setCornerRadius(10);
         nextPageButton.setTextColor(ContextCompat.getColor(getContext() , R.color.purple_1));
         nextPageButton.setBackgroundTintList(ColorStateList.valueOf(
                 Color.TRANSPARENT
         ));
+    }
+
+    public void populateTable(List<String> headers, List<List<String>> rowItems,
+                              boolean fixedColumn, int fixedColumnCount, int headerTextLengthLimit) {
+        populateTable(headers, rowItems, fixedColumn, fixedColumnCount, headerTextLengthLimit,
+                true, null, 10, 0);
+    }
+
+    public void populateTable(List<String> headers, List<List<String>> rowItems,
+                              boolean fixedColumn, int fixedColumnCount, int headerTextLengthLimit,
+                              boolean enablePagination, OnClickListener onNextButtonClicked, int pageLimit,
+                              int page
+    ) {
+
+        this.rowItems = rowItems;
+        this.currentPageLimit = pageLimit;
+        this.currentPage = page;
+
+        nextPageButton.setOnClickListener( onNextButtonClicked != null ?
+                onNextButtonClicked :
+                (enablePagination ?
+                        v -> {
+                            clearTable();
+                            populateTable(
+                                    headers, rowItems, fixedColumn, fixedColumnCount, headerTextLengthLimit,
+                                    true, null, pageLimit,
+                                    ((page+1) * pageLimit) >= rowItems.size() ? 0 : page+1
+                            );
+                        } : null)
+        );
 
         if (fixedColumn && fixedColumnCount > 0)
-            addRows(fixedColumnTableLayout, null, generateTableRow(0, headers.subList(0 , fixedColumnCount), null, false, headerTextLengthLimit));
+            addRows(fixedColumnTableLayout, null, generateTableRow(0, headers.subList(0 , fixedColumnCount),
+                    null, false, headerTextLengthLimit));
 
-        addRows(scrollableTableLayout, null, generateTableRow(0, headers.subList(fixedColumnCount , headers.size()), null));
+        addRows(scrollableTableLayout, null, generateTableRow(0, headers.subList(fixedColumnCount , headers.size()),
+                null));
 
-        for (List<String> stat : rowItems) {
+        for (int i = currentPage * currentPageLimit;
+             i < (currentPage * currentPageLimit) + currentPageLimit && i < rowItems.size();
+             i++) {
+
+            List<String> stat = rowItems.get(i);
             if (fixedColumn && fixedColumnCount > 0)
-                addRows(fixedColumnTableLayout, stat.get(0), generateTableRow(1,headers.subList(0 , fixedColumnCount), stat.subList(0 , fixedColumnCount), false, headerTextLengthLimit));
+                addRows(fixedColumnTableLayout, stat.get(0), generateTableRow(1,headers.subList(0 , fixedColumnCount),
+                        stat.subList(0 , fixedColumnCount), false, headerTextLengthLimit));
 
-            addRows(scrollableTableLayout, stat.get(0), generateTableRow(1,headers.subList(fixedColumnCount , headers.size()),fixedColumnCount > 0 ? stat.subList(fixedColumnCount , stat.size()) : stat));
+            addRows(scrollableTableLayout, stat.get(0), generateTableRow(1,headers.subList(fixedColumnCount , headers.size()),
+                    fixedColumnCount > 0 ? stat.subList(fixedColumnCount , stat.size()) : stat));
+
         }
 
         if (fixedColumn && fixedColumnCount > 0) {
@@ -124,6 +166,9 @@ public class Table extends LinearLayout {
         params.bottomMargin = dpToPx(getContext() , 10);
 
         nextPageButton.setLayoutParams(params);
+        nextPageButton.setVisibility(
+                (!enablePagination && onNextButtonClicked == null) ? GONE : VISIBLE
+        );
 
     }
 
@@ -152,8 +197,12 @@ public class Table extends LinearLayout {
     }
 
     public void clearTable() {
+        tableLayoutContainer.removeAllViews();
         fixedColumnTableLayout.removeAllViews();
         scrollableTableLayout.removeAllViews();
+        scrollableTableContainer.removeAllViews();
+
+        removeAllViews();
     }
 
     private TableRow generateTableRow (int position, List<String> centeredHeaders, List<String> centeredItems){
