@@ -1,6 +1,23 @@
 # CovidAndroid
 `Android application for tracking and getting informed about the COVID19 virus`
 
+# Screenshots
+<p align="center">
+<table border="1">
+<tr>
+<td><img src="screenshots/1.png" width="150" /></td>
+<td><img src="screenshots/2.png" width="150" /></td>
+<td><img src="screenshots/3.png" width="150" /></td>
+<td><img src="screenshots/4.png" width="150" /></td>
+</tr>
+<tr>
+<td><p align="center">Dark - Current cases from PMO API</p></td>
+<td><p align="center">Dark - Current cases worldwide</p></td>
+<td><p align="center">Light - Current cases from PMO API</p></td>
+<td><p align="center">Light - Current cases worldwide</p></td>
+</tr>
+</table>
+
 ## Features
 
 * [X] Statistics on COVID19
