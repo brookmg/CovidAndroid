@@ -162,7 +162,7 @@ public class API {
                     worldStatItems.add(
                             new CovidStatItem(
                                     location.getCountry().replace(" ", ""),
-                                    location.getTodayCases(),
+                                    location.getCases(),
                                     location.getActive(),
                                     location.getDeaths(),
                                     location.getRecovered(),
