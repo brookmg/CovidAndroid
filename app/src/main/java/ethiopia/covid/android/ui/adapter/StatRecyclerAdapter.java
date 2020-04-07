@@ -21,6 +21,9 @@ import ethiopia.covid.android.data.PatientItem;
 import ethiopia.covid.android.data.StatRecyclerItem;
 import ethiopia.covid.android.ui.widget.Table;
 import ethiopia.covid.android.util.Constant;
+import ethiopia.covid.android.util.Utils;
+
+import static ethiopia.covid.android.util.Utils.formatNumber;
 
 /**
  * Created by BrookMG on 3/24/2020 in ethiopia.covid.android.ui.adapter
@@ -71,11 +74,11 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             for (CovidStatItem item : statRecyclerItemList.get(position).getTableItems()) {
                 rowItems.add(Arrays.asList(
                         String.valueOf(item.getIdentifier()),
-                        String.valueOf(item.getInfected()),
-                        String.valueOf(item.getActive()),
-                        String.valueOf(item.getDeath()),
-                        String.valueOf(item.getRecovered()),
-                        String.valueOf(item.getCritical()),
+                        formatNumber(item.getInfected()),
+                        formatNumber(item.getActive()),
+                        formatNumber(item.getDeath()),
+                        formatNumber(item.getRecovered()),
+                        formatNumber(item.getCritical()),
                         String.valueOf(item.getCasePMillion()),
                         String.valueOf(item.getDeathsPMillion())
                 ));
