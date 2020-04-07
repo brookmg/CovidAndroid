@@ -5,6 +5,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.UiThread;
+import androidx.core.content.ContextCompat;
 
 import com.chuckerteam.chucker.api.ChuckerInterceptor;
 
@@ -25,6 +26,8 @@ import ethiopia.covid.android.BuildConfig;
 import ethiopia.covid.android.R;
 import ethiopia.covid.android.data.Case;
 import ethiopia.covid.android.data.CovidStatItem;
+import ethiopia.covid.android.data.JohnsHopkinsItem;
+import ethiopia.covid.android.data.LineChartItem;
 import ethiopia.covid.android.data.PatientItem;
 import ethiopia.covid.android.data.Patients;
 import ethiopia.covid.android.data.Region;
@@ -197,7 +200,61 @@ public class API {
                                 patients.getResults()
                         )
                 );
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+
+            }
+
+            try {
+                Response<JohnsHopkinsItem> response = getWorldCovidAPI().getCountryHistoricalData("et").execute();
+                JohnsHopkinsItem johnsHopkinsItem = response.body();
+                List<Integer> caseNumbers = new ArrayList<>();
+                List<Integer> deathNumbers = new ArrayList<>();
+                List<Integer> recoveryNumbers = new ArrayList<>();
+                List<String> caseDate = new ArrayList<>();
+
+                for (Entry<String, Integer> item : johnsHopkinsItem.getTimeline().getCases().entrySet()) {
+                    caseDate.add(item.getKey());
+                    caseNumbers.add(item.getValue());
+                }
+
+                for (Entry<String, Integer> item : johnsHopkinsItem.getTimeline().getDeaths().entrySet()) {
+                    deathNumbers.add(item.getValue());
+                }
+
+                for (Entry<String, Integer> item : johnsHopkinsItem.getTimeline().getRecovered().entrySet()) {
+                    recoveryNumbers.add(item.getValue());
+                }
+
+                returnable.add(
+                        new StatRecyclerItem(
+                                "Ethiopia Covid Distribution",
+                                Arrays.asList(
+                                        new LineChartItem(
+                                                caseNumbers,
+                                                "Cases",
+                                                ContextCompat.getColor(App.getInstance() , R.color.purple_0),
+                                                ContextCompat.getColor(App.getInstance() , R.color.purple_1)
+                                        ),
+                                        new LineChartItem(
+                                                deathNumbers,
+                                                "Deaths",
+                                                ContextCompat.getColor(App.getInstance() , R.color.red_0),
+                                                ContextCompat.getColor(App.getInstance() , R.color.red_1)
+                                        ),
+                                        new LineChartItem(
+                                                recoveryNumbers,
+                                                "Recovery",
+                                                ContextCompat.getColor(App.getInstance() , R.color.green_0),
+                                                ContextCompat.getColor(App.getInstance() , R.color.green_1)
+                                        )
+                                ),
+                                caseDate
+                        )
+                );
+
+            } catch (Exception ignored) {
+                Log.e("Graph" , ignored.getMessage());
+            }
 
             try {
                 Response<List<WorldCovid>> worldStatResponse = getWorldCovidAPI().getListOfStat().execute();
