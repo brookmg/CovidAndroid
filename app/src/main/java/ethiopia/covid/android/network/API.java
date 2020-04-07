@@ -11,17 +11,27 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import ethiopia.covid.android.App;
 import ethiopia.covid.android.BuildConfig;
+import ethiopia.covid.android.R;
 import ethiopia.covid.android.data.Case;
 import ethiopia.covid.android.data.CovidStatItem;
+import ethiopia.covid.android.data.PatientItem;
 import ethiopia.covid.android.data.Patients;
+import ethiopia.covid.android.data.Region;
 import ethiopia.covid.android.data.StatRecyclerItem;
 import ethiopia.covid.android.data.WorldCovid;
+import ethiopia.covid.android.util.Constant;
+import ethiopia.covid.android.util.Utils;
 import okhttp3.OkHttpClient;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -143,7 +153,43 @@ public class API {
             } catch (Exception ignored) {}
 
             try {
+
+                Map<String, Region> regions = new HashMap<>();
                 Patients patients = getPmoCovidAPI().getPatients().execute().body();
+
+                for (PatientItem item : patients != null ?
+                        patients.getResults() : new ArrayList<PatientItem>()) {
+                    if (regions.containsKey(item.getLocation())) {
+                        regions.get(item.getLocation()).setNumberOfInfected(
+                                regions.get(item.getLocation()).getNumberOfInfected() + 1
+                        );
+                    } else {
+                        String location = item.getLocation();
+                        regions.put(item.getLocation() ,
+                                new Region(
+                                    item.getLocation(),
+                                    Constant.regionNameWithCodeMap.get(location),
+                                    1,
+                                    item.getStatus().equals("Deceased") ? 1 : 0
+                                )
+                        );
+                    }
+                }
+
+                List<Integer> values = new ArrayList<>();
+                List<String> regionCodes = new ArrayList<>();
+
+                for (Entry<String, Region> item : regions.entrySet()) {
+                    values.add(item.getValue().getNumberOfInfected());
+                    regionCodes.add(item.getValue().getRegionName());
+                }
+
+                returnable.add(
+                        new StatRecyclerItem(
+                                App.getInstance().getString(R.string.regions_affected) , values, regionCodes, Utils.generateColors(values.size())
+                        )
+                );
+
                 returnable.add(
                         new StatRecyclerItem(
                                 Arrays.asList("ID" , "Name", "Location", "Age", "Gender" , "Nationality", "RecentTravel", "Status"),
