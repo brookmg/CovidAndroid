@@ -12,5 +12,6 @@
     <string name="death">Death</string>
     <string name="recovered">Recover</string>
     <string name="tested">Tested</string>
+    <string name="regions_affected">Regions affected</string>
 
 </resources>
