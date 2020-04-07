@@ -8,18 +8,21 @@ import java.util.List;
  */
 public class StatRecyclerItem {
 
-    private int type = 0;  // 0 -> Table , 1 -> Pie , 2 -> Status card
+    private int type = 0;  // 0 -> Table , 1 -> Pie , 2 -> Status card, 3 -> Patients , 4 -> Line
 
     // Table stuff
     private List<CovidStatItem> tableItems;
     private List<String> headers;
     private int fixedHeaderCount = 0;
 
-    // todo: Pie stuff
     private String pieCardTitle;
     private List<Integer> pieValues;
     private List<String> pieLabels;
     private List<Integer> pieColors;
+
+    private String lineCardTitle;
+    private List<Integer> lineValues;
+    private List<String> lineLabels;
 
     // Status Card
     private String country;
@@ -30,6 +33,13 @@ public class StatRecyclerItem {
 
     // Patient table stuff
     private List<PatientItem> patientItems;
+
+    public StatRecyclerItem(String lineCardTitle, List<Integer> lineValues, List<String> lineLabels) {
+        this.type = 4;
+        this.lineCardTitle = lineCardTitle;
+        this.lineValues = lineValues;
+        this.lineLabels = lineLabels;
+    }
 
     public StatRecyclerItem(String pieCardTitle, List<Integer> pieValues, List<String> pieLabels, List<Integer> pieColors) {
         this.type = 1;
@@ -181,4 +191,29 @@ public class StatRecyclerItem {
     public void setPieCardTitle(String pieCardTitle) {
         this.pieCardTitle = pieCardTitle;
     }
+
+    public String getLineCardTitle() {
+        return lineCardTitle;
+    }
+
+    public void setLineCardTitle(String lineCardTitle) {
+        this.lineCardTitle = lineCardTitle;
+    }
+
+    public List<Integer> getLineValues() {
+        return lineValues;
+    }
+
+    public void setLineValues(List<Integer> lineValues) {
+        this.lineValues = lineValues;
+    }
+
+    public List<String> getLineLabels() {
+        return lineLabels;
+    }
+
+    public void setLineLabels(List<String> lineLabels) {
+        this.lineLabels = lineLabels;
+    }
+
 }

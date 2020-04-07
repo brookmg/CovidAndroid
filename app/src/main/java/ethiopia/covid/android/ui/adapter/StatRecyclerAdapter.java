@@ -1,6 +1,7 @@
 package ethiopia.covid.android.ui.adapter;
 
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +12,24 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LimitLine;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IFillFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.renderer.XAxisRenderer;
 import com.github.mikephil.charting.utils.MPPointF;
 import com.google.android.material.card.MaterialCardView;
 
@@ -46,6 +59,7 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int PIE_CHART = 2;
     private final int STATUS_CARD = 3;
     private final int PATIENT_TABLE = 4;
+    private final int LINE_CHART = 5;
 
     private List<StatRecyclerItem> statRecyclerItemList;
 
@@ -70,6 +84,10 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case PIE_CHART:
                 return new CovidStatisticPieViewHolder(
                         LayoutInflater.from(parent.getContext()).inflate(R.layout.stat_table_pie_element, parent, false)
+                );
+            case LINE_CHART:
+                return new CovidStatisticLineGraphViewHolder(
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.stat_table_graph_element, parent, false)
                 );
         }
 
@@ -106,7 +124,8 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     8
             );
 
-        } else if (getItemViewType(position) == STATUS_CARD) {
+        }
+        else if (getItemViewType(position) == STATUS_CARD) {
             position -= 1;
             ((StatusCardViewHolder) holder).country.setText(statRecyclerItemList.get(position).getCountry());
 
@@ -122,7 +141,8 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((StatusCardViewHolder) holder).death.setText(String.format(Locale.US, "%d",
                     statRecyclerItemList.get(position).getTotalDeath()));
 
-        } else if (getItemViewType(position) == PATIENT_TABLE) {
+        }
+        else if (getItemViewType(position) == PATIENT_TABLE) {
             position -= 1;
             ((CovidStatisticTableViewHolder) holder).mainCardView.setContentPadding(0,0,0,0);
 
@@ -147,7 +167,8 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     statRecyclerItemList.get(position).getFixedHeaderCount(), 8
             );
 
-        } else if (getItemViewType(position) == PIE_CHART) {
+        }
+        else if (getItemViewType(position) == PIE_CHART) {
             position -= 1;
 
             ((CovidStatisticPieViewHolder) holder).mainCardView.setContentPadding(0,0,0,0);
@@ -226,7 +247,113 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((CovidStatisticPieViewHolder) holder).mainPieChart.highlightValues(null);
 
             ((CovidStatisticPieViewHolder) holder).mainPieChart.invalidate();
-        } else {
+        }
+        else if (getItemViewType(position) == LINE_CHART) {
+            position -= 1;
+
+            ((CovidStatisticLineGraphViewHolder) holder).mainCardView.setContentPadding(0,0,0,0);
+            LineChart chart = ((CovidStatisticLineGraphViewHolder) holder).mainLineChart;
+            ((CovidStatisticLineGraphViewHolder) holder).lineCartCardTitle.setText(statRecyclerItemList.get(position).getLineCardTitle());
+            //chart.setBackgroundColor(Color.WHITE);
+
+            chart.getDescription().setEnabled(false);
+
+            chart.setTouchEnabled(true);
+            chart.setDrawGridBackground(false);
+
+            chart.setDragEnabled(true);
+            chart.setScaleEnabled(true);
+
+            // force pinch zoom along both axis
+            chart.setPinchZoom(true);
+
+            chart.getAxisRight().setEnabled(false);
+            chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+            chart.getXAxis().setTextColor(Utils.getCurrentTheme(holder.itemView.getContext()) == 0 ? Color.BLACK : Color.WHITE);
+            chart.getXAxis().setLabelRotationAngle(90f);
+
+            {
+                int finalPosition = position;
+                chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value) {
+                        return statRecyclerItemList.get(finalPosition).getLineLabels().get((int) value);
+                    }
+                });
+            }
+
+            chart.getAxisLeft().setTextColor(Utils.getCurrentTheme(holder.itemView.getContext()) == 0 ? Color.BLACK : Color.WHITE);
+
+            // draw points over time
+            chart.animateX(300);
+
+            // get the legend (only possible after setting data)
+            Legend l = chart.getLegend();
+
+            // draw legend entries as lines
+            l.setForm(Legend.LegendForm.LINE);
+            l.setTextColor(Utils.getCurrentTheme(holder.itemView.getContext()) == 0 ? Color.BLACK : Color.WHITE);
+
+            ArrayList<Entry> values = new ArrayList<>();
+
+            int i = 0;
+            for (Integer item : statRecyclerItemList.get(position).getLineValues()) {
+                values.add(new Entry(i, item));
+                i++;
+            }
+
+            LineDataSet set1;
+
+            if (chart.getData() != null && chart.getData().getDataSetCount() > 0) {
+                set1 = (LineDataSet) chart.getData().getDataSetByIndex(0);
+                set1.setValues(values);
+                set1.notifyDataSetChanged();
+                chart.getData().notifyDataChanged();
+                chart.notifyDataSetChanged();
+            } else {
+
+                // create a dataset, which should belong to a country
+                set1 = new LineDataSet(values, "Ethiopia");
+                set1.setDrawIcons(false);
+
+                set1.setColor(ContextCompat.getColor(holder.itemView.getContext() , R.color.purple_0));
+                set1.setValueTextColor(Utils.getCurrentTheme(holder.itemView.getContext()) == 0 ? Color.BLACK : Color.WHITE);
+                set1.setCircleColor(ContextCompat.getColor(holder.itemView.getContext() , R.color.purple_1));
+
+                // line thickness and point size
+                set1.setLineWidth(1f);
+                set1.setCircleRadius(3f);
+
+                // draw points as solid circles
+                set1.setDrawCircleHole(false);
+
+                // customize legend entry
+                set1.setFormLineWidth(1f);
+                set1.setFormSize(15.f);
+
+                // text size of values
+                set1.setValueTextSize(9f);
+
+                // draw selection line as dashed
+                set1.setHighLightColor(ContextCompat.getColor(holder.itemView.getContext() , R.color.purple_0));
+                set1.enableDashedHighlightLine(10f, 5f, 0f);
+
+                // set the filled area
+                set1.setDrawFilled(false);
+
+                ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+                dataSets.add(set1); // add the data sets
+
+                // create a data object with the data sets
+                LineData data = new LineData(dataSets);
+                data.setValueTextColor(Utils.getCurrentTheme(holder.itemView.getContext()) == 0 ? Color.BLACK : Color.WHITE);
+
+                // set data
+                chart.setData(data);
+            }
+
+        }
+        else {
 //            ViewGroup.LayoutParams params = ((HeaderViewHolder) holder).blankView.getLayoutParams();
 //            params.height = dpToPx(holder.itemView.getContext(), 116);
 //            ((HeaderViewHolder) holder).blankView.setLayoutParams(params);
@@ -242,6 +369,7 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 case 1: return PIE_CHART;
                 case 2: return STATUS_CARD;
                 case 3: return PATIENT_TABLE;
+                case 4: return LINE_CHART;
                 default: return HEADER;
             }
         }
@@ -250,6 +378,19 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public int getItemCount() {
         return statRecyclerItemList.size()+1;
+    }
+
+    private static class CovidStatisticLineGraphViewHolder extends RecyclerView.ViewHolder {
+        LineChart mainLineChart;
+        MaterialCardView mainCardView;
+        AppCompatTextView lineCartCardTitle;
+
+        CovidStatisticLineGraphViewHolder(@NonNull View itemView) {
+            super(itemView);
+            mainCardView = itemView.findViewById(R.id.main_card_view);
+            mainLineChart = itemView.findViewById(R.id.line_chart);
+            lineCartCardTitle = itemView.findViewById(R.id.line_title);
+        }
     }
 
     private static class CovidStatisticPieViewHolder extends RecyclerView.ViewHolder {
