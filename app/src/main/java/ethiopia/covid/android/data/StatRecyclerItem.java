@@ -16,7 +16,10 @@ public class StatRecyclerItem {
     private int fixedHeaderCount = 0;
 
     // todo: Pie stuff
-
+    private String pieCardTitle;
+    private List<Integer> pieValues;
+    private List<String> pieLabels;
+    private List<Integer> pieColors;
 
     // Status Card
     private String country;
@@ -27,6 +30,14 @@ public class StatRecyclerItem {
 
     // Patient table stuff
     private List<PatientItem> patientItems;
+
+    public StatRecyclerItem(String pieCardTitle, List<Integer> pieValues, List<String> pieLabels, List<Integer> pieColors) {
+        this.type = 1;
+        this.pieCardTitle = pieCardTitle;
+        this.pieValues = pieValues;
+        this.pieLabels = pieLabels;
+        this.pieColors = pieColors;
+    }
 
     public StatRecyclerItem(String country, int totalInfected, int totalDeath, int totalRecovered, int totalTested) {
         this.type = 2;
@@ -137,5 +148,37 @@ public class StatRecyclerItem {
 
     public void setTotalTested(int totalTested) {
         this.totalTested = totalTested;
+    }
+
+    public List<Integer> getPieValues() {
+        return pieValues;
+    }
+
+    public void setPieValues(List<Integer> pieValues) {
+        this.pieValues = pieValues;
+    }
+
+    public List<String> getPieLabels() {
+        return pieLabels;
+    }
+
+    public void setPieLabels(List<String> pieLabels) {
+        this.pieLabels = pieLabels;
+    }
+
+    public List<Integer> getPieColors() {
+        return pieColors;
+    }
+
+    public void setPieColors(List<Integer> pieColors) {
+        this.pieColors = pieColors;
+    }
+
+    public String getPieCardTitle() {
+        return pieCardTitle;
+    }
+
+    public void setPieCardTitle(String pieCardTitle) {
+        this.pieCardTitle = pieCardTitle;
     }
 }

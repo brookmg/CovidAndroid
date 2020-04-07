@@ -1,13 +1,23 @@
 package ethiopia.covid.android.ui.adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.utils.MPPointF;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
@@ -56,6 +66,10 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case STATUS_CARD:
                 return new StatusCardViewHolder(
                         LayoutInflater.from(parent.getContext()).inflate(R.layout.status_card_recycler_element, parent, false)
+                );
+            case PIE_CHART:
+                return new CovidStatisticPieViewHolder(
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.stat_table_pie_element, parent, false)
                 );
         }
 
@@ -133,6 +147,85 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     statRecyclerItemList.get(position).getFixedHeaderCount(), 8
             );
 
+        } else if (getItemViewType(position) == PIE_CHART) {
+            position -= 1;
+
+            ((CovidStatisticPieViewHolder) holder).mainCardView.setContentPadding(0,0,0,0);
+            ((CovidStatisticPieViewHolder) holder).pieCardTitle.setText(statRecyclerItemList.get(position).getPieCardTitle());
+            ArrayList<PieEntry> entries = new ArrayList<>();
+
+            ((CovidStatisticPieViewHolder) holder).mainPieChart.setUsePercentValues(true);
+            ((CovidStatisticPieViewHolder) holder).mainPieChart.getDescription().setEnabled(false);
+            ((CovidStatisticPieViewHolder) holder).mainPieChart.setExtraOffsets(5, 10, 5, 5);
+
+            ((CovidStatisticPieViewHolder) holder).mainPieChart.setDragDecelerationFrictionCoef(0.95f);
+            ((CovidStatisticPieViewHolder) holder).mainPieChart.setDrawHoleEnabled(true);
+
+            ((CovidStatisticPieViewHolder) holder).mainPieChart.setHoleColor(
+                    Utils.getCurrentTheme(holder.itemView.getContext()) == 0 ? Color.WHITE :
+                            ContextCompat.getColor(holder.itemView.getContext() , R.color.black_2)
+            );
+
+            ((CovidStatisticPieViewHolder) holder).mainPieChart.setTransparentCircleAlpha(110);
+
+            ((CovidStatisticPieViewHolder) holder).mainPieChart.setHoleRadius(40f);
+            ((CovidStatisticPieViewHolder) holder).mainPieChart.setTransparentCircleRadius(44f);
+
+            ((CovidStatisticPieViewHolder) holder).mainPieChart.setDrawCenterText(true);
+
+            ((CovidStatisticPieViewHolder) holder).mainPieChart.setRotationAngle(0);
+            // enable rotation of the chart by touch
+            ((CovidStatisticPieViewHolder) holder).mainPieChart.setRotationEnabled(true);
+            ((CovidStatisticPieViewHolder) holder).mainPieChart.setHighlightPerTapEnabled(true);
+            ((CovidStatisticPieViewHolder) holder).mainPieChart.animateY(400, Easing.EaseInOutQuad);
+
+            Legend l = ((CovidStatisticPieViewHolder) holder).mainPieChart.getLegend();
+            l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+            l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+            l.setOrientation(Legend.LegendOrientation.VERTICAL);
+            l.setTextColor(Utils.getCurrentTheme(holder.itemView.getContext()) == 0 ? Color.BLACK : Color.WHITE);
+            l.setDrawInside(false);
+            l.setXEntrySpace(7f);
+            l.setYEntrySpace(0f);
+            l.setYOffset(0f);
+
+            // entry label styling
+            ((CovidStatisticPieViewHolder) holder).mainPieChart.setEntryLabelColor(Color.WHITE);
+            ((CovidStatisticPieViewHolder) holder).mainPieChart.setDrawEntryLabels(false);
+
+            ((CovidStatisticPieViewHolder) holder).mainPieChart.setNoDataTextColor(
+                    Utils.getCurrentTheme(holder.itemView.getContext()) == 0 ?
+                            Color.BLACK : Color.WHITE
+            );
+            ((CovidStatisticPieViewHolder) holder).mainPieChart.setEntryLabelTextSize(12f);
+
+            for (int i = 0; i < statRecyclerItemList.get(position).getPieValues().size(); i++) {
+                entries.add(new PieEntry(
+                        statRecyclerItemList.get(position).getPieValues().get(i),
+                        statRecyclerItemList.get(position).getPieLabels().get(i)
+                ));
+            }
+
+            PieDataSet mainDataSet = new PieDataSet(entries, "");
+            mainDataSet.setDrawIcons(false);
+            mainDataSet.setSliceSpace(1f);
+            mainDataSet.setIconsOffset(new MPPointF(0, 40));
+            mainDataSet.setSelectionShift(5f);
+
+            mainDataSet.setColors(statRecyclerItemList.get(position).getPieColors());
+
+            PieData data = new PieData(mainDataSet);
+            data.setValueFormatter(new PercentFormatter(
+                    ((CovidStatisticPieViewHolder) holder).mainPieChart
+            ));
+
+            data.setValueTextSize(11f);
+            data.setValueTextColor(Color.WHITE);
+
+            ((CovidStatisticPieViewHolder) holder).mainPieChart.setData(data);
+            ((CovidStatisticPieViewHolder) holder).mainPieChart.highlightValues(null);
+
+            ((CovidStatisticPieViewHolder) holder).mainPieChart.invalidate();
         } else {
 //            ViewGroup.LayoutParams params = ((HeaderViewHolder) holder).blankView.getLayoutParams();
 //            params.height = dpToPx(holder.itemView.getContext(), 116);
@@ -157,6 +250,19 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public int getItemCount() {
         return statRecyclerItemList.size()+1;
+    }
+
+    private static class CovidStatisticPieViewHolder extends RecyclerView.ViewHolder {
+        PieChart mainPieChart;
+        MaterialCardView mainCardView;
+        AppCompatTextView pieCardTitle;
+
+        CovidStatisticPieViewHolder(@NonNull View itemView) {
+            super(itemView);
+            mainCardView = itemView.findViewById(R.id.main_card_view);
+            mainPieChart = itemView.findViewById(R.id.pie_chart);
+            pieCardTitle = itemView.findViewById(R.id.pie_title);
+        }
     }
 
     private static class CovidStatisticTableViewHolder extends RecyclerView.ViewHolder {
