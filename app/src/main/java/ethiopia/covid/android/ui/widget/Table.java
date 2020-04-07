@@ -103,7 +103,7 @@ public class Table extends LinearLayout {
                               boolean enablePagination, OnClickListener onNextButtonClicked, int pageLimit,
                               int page
     ) {
-
+        clearTable();
         this.rowItems = rowItems;
         this.currentPageLimit = pageLimit;
         this.currentPage = page;
@@ -112,7 +112,6 @@ public class Table extends LinearLayout {
                 onNextButtonClicked :
                 (enablePagination ?
                         v -> {
-                            clearTable();
                             populateTable(
                                     headers, rowItems, fixedColumn, fixedColumnCount, headerTextLengthLimit,
                                     true, null, pageLimit,
