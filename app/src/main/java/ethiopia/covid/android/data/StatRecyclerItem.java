@@ -21,7 +21,7 @@ public class StatRecyclerItem {
     private List<Integer> pieColors;
 
     private String lineCardTitle;
-    private List<Integer> lineValues;
+    private List<LineChartItem> lineChartItems;
     private List<String> lineLabels;
 
     // Status Card
@@ -34,10 +34,10 @@ public class StatRecyclerItem {
     // Patient table stuff
     private List<PatientItem> patientItems;
 
-    public StatRecyclerItem(String lineCardTitle, List<Integer> lineValues, List<String> lineLabels) {
+    public StatRecyclerItem(String lineCardTitle, List<LineChartItem> lineChartItems, List<String> lineLabels) {
         this.type = 4;
         this.lineCardTitle = lineCardTitle;
-        this.lineValues = lineValues;
+        this.lineChartItems = lineChartItems;
         this.lineLabels = lineLabels;
     }
 
@@ -200,12 +200,12 @@ public class StatRecyclerItem {
         this.lineCardTitle = lineCardTitle;
     }
 
-    public List<Integer> getLineValues() {
-        return lineValues;
+    public List<LineChartItem> getLineChartItems() {
+        return lineChartItems;
     }
 
-    public void setLineValues(List<Integer> lineValues) {
-        this.lineValues = lineValues;
+    public void setLineChartItems(List<LineChartItem> lineChartItems) {
+        this.lineChartItems = lineChartItems;
     }
 
     public List<String> getLineLabels() {
@@ -215,5 +215,4 @@ public class StatRecyclerItem {
     public void setLineLabels(List<String> lineLabels) {
         this.lineLabels = lineLabels;
     }
-
 }

@@ -1,7 +1,6 @@
 package ethiopia.covid.android.ui.adapter;
 
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,21 +14,16 @@ import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.renderer.XAxisRenderer;
 import com.github.mikephil.charting.utils.MPPointF;
 import com.google.android.material.card.MaterialCardView;
 
@@ -40,6 +34,7 @@ import java.util.Locale;
 
 import ethiopia.covid.android.R;
 import ethiopia.covid.android.data.CovidStatItem;
+import ethiopia.covid.android.data.LineChartItem;
 import ethiopia.covid.android.data.PatientItem;
 import ethiopia.covid.android.data.StatRecyclerItem;
 import ethiopia.covid.android.ui.widget.Table;
@@ -294,64 +289,67 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             l.setForm(Legend.LegendForm.LINE);
             l.setTextColor(Utils.getCurrentTheme(holder.itemView.getContext()) == 0 ? Color.BLACK : Color.WHITE);
 
-            ArrayList<Entry> values = new ArrayList<>();
+            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
-            int i = 0;
-            for (Integer item : statRecyclerItemList.get(position).getLineValues()) {
-                values.add(new Entry(i, item));
-                i++;
+            for (LineChartItem lineChartItem : statRecyclerItemList.get(position).getLineChartItems()) {
+                LineDataSet dataSet;
+
+                ArrayList<Entry> values = new ArrayList<>();
+
+                int i = 0;
+                for (Integer item : lineChartItem.getValues()) {
+                    values.add(new Entry(i, item));
+                    i++;
+                }
+
+                if (chart.getData() != null && chart.getData().getDataSetCount() > 0) {
+                    dataSet = (LineDataSet) chart.getData().getDataSetByIndex(0);
+                    dataSet.setValues(values);
+                    dataSet.notifyDataSetChanged();
+                    chart.getData().notifyDataChanged();
+                    chart.notifyDataSetChanged();
+                } else {
+
+                    // create a dataset, which should belong to a country
+                    dataSet = new LineDataSet(values, lineChartItem.getChartLabel());
+                    dataSet.setDrawIcons(false);
+
+                    dataSet.setColor(lineChartItem.getLineColor());
+                    dataSet.setValueTextColor(Utils.getCurrentTheme(holder.itemView.getContext()) == 0 ? Color.BLACK : Color.WHITE);
+                    dataSet.setCircleColor(lineChartItem.getCircleColor());
+
+                    // line thickness and point size
+                    dataSet.setLineWidth(1f);
+                    dataSet.setCircleRadius(3f);
+
+                    // draw points as solid circles
+                    dataSet.setDrawCircleHole(false);
+
+                    // customize legend entry
+                    dataSet.setFormLineWidth(1f);
+                    dataSet.setFormSize(15.f);
+
+                    // text size of values
+                    dataSet.setValueTextSize(9f);
+
+                    // draw selection line as dashed
+                    dataSet.setHighLightColor(ContextCompat.getColor(holder.itemView.getContext() , R.color.purple_0));
+                    dataSet.enableDashedHighlightLine(10f, 5f, 0f);
+
+                    // set the filled area
+                    dataSet.setDrawFilled(false);
+
+                    dataSets.add(dataSet); // add the data sets
+                }
             }
 
-            LineDataSet set1;
+            // create a data object with the data sets
+            LineData data = new LineData(dataSets);
+            data.setDrawValues(false);
+            data.setValueTextColor(Utils.getCurrentTheme(holder.itemView.getContext()) == 0 ? Color.BLACK : Color.WHITE);
 
-            if (chart.getData() != null && chart.getData().getDataSetCount() > 0) {
-                set1 = (LineDataSet) chart.getData().getDataSetByIndex(0);
-                set1.setValues(values);
-                set1.notifyDataSetChanged();
-                chart.getData().notifyDataChanged();
-                chart.notifyDataSetChanged();
-            } else {
-
-                // create a dataset, which should belong to a country
-                set1 = new LineDataSet(values, "Ethiopia");
-                set1.setDrawIcons(false);
-
-                set1.setColor(ContextCompat.getColor(holder.itemView.getContext() , R.color.purple_0));
-                set1.setValueTextColor(Utils.getCurrentTheme(holder.itemView.getContext()) == 0 ? Color.BLACK : Color.WHITE);
-                set1.setCircleColor(ContextCompat.getColor(holder.itemView.getContext() , R.color.purple_1));
-
-                // line thickness and point size
-                set1.setLineWidth(1f);
-                set1.setCircleRadius(3f);
-
-                // draw points as solid circles
-                set1.setDrawCircleHole(false);
-
-                // customize legend entry
-                set1.setFormLineWidth(1f);
-                set1.setFormSize(15.f);
-
-                // text size of values
-                set1.setValueTextSize(9f);
-
-                // draw selection line as dashed
-                set1.setHighLightColor(ContextCompat.getColor(holder.itemView.getContext() , R.color.purple_0));
-                set1.enableDashedHighlightLine(10f, 5f, 0f);
-
-                // set the filled area
-                set1.setDrawFilled(false);
-
-                ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-                dataSets.add(set1); // add the data sets
-
-                // create a data object with the data sets
-                LineData data = new LineData(dataSets);
-                data.setValueTextColor(Utils.getCurrentTheme(holder.itemView.getContext()) == 0 ? Color.BLACK : Color.WHITE);
-
-                // set data
-                chart.setData(data);
-            }
-
+            // set data
+            chart.setData(data);
         }
         else {
 //            ViewGroup.LayoutParams params = ((HeaderViewHolder) holder).blankView.getLayoutParams();
