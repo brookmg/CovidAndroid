@@ -172,8 +172,8 @@ public class DetailRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         void bind(DetailItem item) {
 
             materialCardView.setOnClickListener(v -> expandableLayout.toggle(true));
-            questionText.setText(Html.fromHtml(item.getFaqItem().getQuestion()));
-            answerText.setText(Html.fromHtml(item.getFaqItem().getAnswer()));
+            questionText.setText(item.getFaqItem().getQuestion());
+            answerText.setText(item.getFaqItem().getAnswer());
 
             if (Utils.getCurrentTheme(itemView.getContext()) == 0) {
                 // Light theme

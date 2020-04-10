@@ -72,9 +72,10 @@ public class DetailFragment extends BaseFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.VERTICAL , false));
 
         List<DetailItem> details = new ArrayList<>();
+        adapter.setHasStableIds(true);
 
         App.getInstance().getMainAPI().getFrequentlyAskedQuestions((item, err) -> {
-            if (!item.getData().isEmpty()) {
+            if (item != null && !item.getData().isEmpty()) {
                 for (FAQ.QuestionItem content : item.getData()) {
                     details.add(new DetailItem(content));
                 }
