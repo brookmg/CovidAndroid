@@ -28,6 +28,8 @@
 
 ## Contribution
 
+* You can join the trello board made for managing this project using the link https://trello.com/b/4dE9nqno
+
 * Fork the repo
 * Checkout the `dev` branch ‼
 * Create a new branch `git checkout -b 'feat/$feature_name'`
