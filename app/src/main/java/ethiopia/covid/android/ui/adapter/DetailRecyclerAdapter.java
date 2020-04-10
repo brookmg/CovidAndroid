@@ -25,6 +25,8 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.material.card.MaterialCardView;
 
+import net.cachapa.expandablelayout.ExpandableLayout;
+
 import java.util.List;
 
 import ethiopia.covid.android.R;
@@ -157,16 +159,19 @@ public class DetailRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         AppCompatTextView questionText;
         AppCompatTextView answerText;
         MaterialCardView materialCardView;
+        ExpandableLayout expandableLayout;
 
         FAQViewHolder(@NonNull View itemView) {
             super(itemView);
             questionText = itemView.findViewById(R.id.question_text);
             answerText = itemView.findViewById(R.id.answer_text);
+            expandableLayout = itemView.findViewById(R.id.expandable_container);
             materialCardView = itemView.findViewById(R.id.main_card_view);
         }
 
         void bind(DetailItem item) {
 
+            materialCardView.setOnClickListener(v -> expandableLayout.toggle(true));
             questionText.setText(Html.fromHtml(item.getFaqItem().getQuestion()));
             answerText.setText(Html.fromHtml(item.getFaqItem().getAnswer()));
 
