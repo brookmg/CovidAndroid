@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.AppBarLayout;
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -38,6 +39,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static ethiopia.covid.android.ui.fragment.ContentState.changeErrorDialogVisibility;
+import static ethiopia.covid.android.ui.fragment.ContentState.changeProgressBarVisibility;
+import static ethiopia.covid.android.ui.fragment.ContentState.setRefreshButtonAction;
 import static ethiopia.covid.android.util.Utils.getCurrentTheme;
 
 /**
@@ -106,14 +110,28 @@ public class StatFragment extends BaseFragment {
             }
         });
 
-
-
-        App.getInstance().getMainAPI().getStatRecyclerContents((recyclerItems, err) -> {
-            statRecyclerAdapter = new StatRecyclerAdapter(recyclerItems);
-            recyclerView.setAdapter(statRecyclerAdapter);
-        });
+        setRefreshButtonAction(mainView, v -> renderPage(mainView));
+        renderPage(mainView);
 
         return mainView;
+    }
+
+    private void renderPage(View mainView) {
+        changeProgressBarVisibility(mainView , true);
+        changeErrorDialogVisibility(mainView, false);
+        recyclerView.setVisibility(View.GONE);
+
+        App.getInstance().getMainAPI().getStatRecyclerContents((recyclerItems, err) -> {
+            if (!err.isEmpty() || recyclerItems == null || recyclerItems.isEmpty() ) {
+                changeProgressBarVisibility(mainView, false);
+                changeErrorDialogVisibility(mainView, true);
+            }
+
+            statRecyclerAdapter = new StatRecyclerAdapter(recyclerItems);
+            recyclerView.setAdapter(statRecyclerAdapter);
+            recyclerView.setVisibility(View.VISIBLE);
+            changeProgressBarVisibility(mainView , false);
+        });
     }
 
 }

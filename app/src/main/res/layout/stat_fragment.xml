@@ -6,7 +6,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/stat_recycler_view"
-        android:paddingBottom="65dp"
+        android:paddingBottom="70dp"
+        android:clipToPadding="false"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -93,5 +94,7 @@
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
+
+    <include layout="@layout/content_state_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
