@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+        android:id="@+id/main_progress_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cpb_background_progressbar_color="?appCardColor"
+        app:cpb_indeterminate_mode="true"
+        app:cpb_background_progressbar_width="10dp"
+        app:cpb_progressbar_width="6dp"
+        app:cpb_round_border="false"
+        android:visibility="gone"
+        app:cpb_progressbar_color="?appIndicatorColor"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/error_indicator"
+        app:srcCompat="@drawable/ic_warning"
+        app:tint="@color/red_1"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/error_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/error_text"
+        app:layout_constraintTop_toBottomOf="@+id/error_indicator"
+        app:layout_constraintBottom_toTopOf="@+id/refresh_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="16sp"
+        android:padding="8dp"
+        android:visibility="gone"
+        style="@style/TextAppearance.AppCompat.Widget.ActionMode.Title"
+        android:textColor="?appTextColorPrimary"
+        android:text="@string/error_content"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:maxWidth="350dp"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/refresh_button"
+        android:focusable="true"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/error_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:text="@string/refresh"
+        android:visibility="gone"
+        android:textColor="@color/red_1"
+        app:strokeColor="@color/red_1"
+        app:rippleColor="@color/red_0"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_height="wrap_content" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
