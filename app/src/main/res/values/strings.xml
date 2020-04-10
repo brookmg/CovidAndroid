@@ -13,5 +13,7 @@
     <string name="recovered">Recover</string>
     <string name="tested">Tested</string>
     <string name="regions_affected">Regions affected</string>
+    <string name="question">Question</string>
+    <string name="answer">Answer</string>
 
 </resources>
