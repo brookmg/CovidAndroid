@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import ethiopia.covid.android.R;
@@ -65,6 +66,8 @@ public class HomeFragment extends BaseFragment {
             }
         });
         smoothBottomBar.setOnItemSelectedListener(i -> viewPager.setCurrentItem(i));
+        ViewCompat.setElevation(smoothBottomBar, 16f);
+
         return mainView;
     }
 

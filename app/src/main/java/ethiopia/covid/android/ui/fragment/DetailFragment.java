@@ -26,6 +26,10 @@ import ethiopia.covid.android.data.ProtectiveMeasures;
 import ethiopia.covid.android.network.API;
 import ethiopia.covid.android.ui.adapter.DetailRecyclerAdapter;
 
+import static ethiopia.covid.android.ui.fragment.ContentState.changeErrorDialogVisibility;
+import static ethiopia.covid.android.ui.fragment.ContentState.changeProgressBarVisibility;
+import static ethiopia.covid.android.ui.fragment.ContentState.setRefreshButtonAction;
+
 /**
  * Created by BrookMG on 3/23/2020 in ethiopia.covid.android.ui.fragment
  * inside the project CoVidEt .
@@ -70,23 +74,35 @@ public class DetailFragment extends BaseFragment {
         View mainView = inflater.inflate(R.layout.detail_fragment, container, false);
         recyclerView = mainView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.VERTICAL , false));
+        adapter.setHasStableIds(true);
 
+        recyclerView.setAdapter(adapter);
+        setRefreshButtonAction(mainView , v -> renderPage(mainView));
+        renderPage(mainView);
+
+        return mainView;
+    }
+
+    private void renderPage(View mainView) {
         List<DetailItem> details = new ArrayList<>();
 
+        changeProgressBarVisibility(mainView , true);
+        changeErrorDialogVisibility(mainView, false);
+
         App.getInstance().getMainAPI().getFrequentlyAskedQuestions((item, err) -> {
-            if (!item.getData().isEmpty()) {
+            if (item != null && !item.getData().isEmpty()) {
                 for (FAQ.QuestionItem content : item.getData()) {
                     details.add(new DetailItem(content));
                 }
+            } else {
+                changeProgressBarVisibility(mainView , false);
+                changeErrorDialogVisibility(mainView, true);
             }
 
             adapter.addContent(details);
+            changeProgressBarVisibility(mainView , false);
         });
 
-
-        recyclerView.setAdapter(adapter);
-
-        return mainView;
     }
 
 }
