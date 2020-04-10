@@ -103,7 +103,11 @@ public class Table extends LinearLayout {
                               boolean enablePagination, OnClickListener onNextButtonClicked, int pageLimit,
                               int page
     ) {
-        clearTable();
+        // if there is already content present in the table and the table was not cleared before calling this method
+        // then do not re-populate the table.
+        if (fixedColumnTableLayout.getParent() != null
+                && scrollableTableLayout.getParent() != null) return;
+
         this.rowItems = rowItems;
         this.currentPageLimit = pageLimit;
         this.currentPage = page;
@@ -112,6 +116,7 @@ public class Table extends LinearLayout {
                 onNextButtonClicked :
                 (enablePagination ?
                         v -> {
+                            clearTable();
                             populateTable(
                                     headers, rowItems, fixedColumn, fixedColumnCount, headerTextLengthLimit,
                                     true, null, pageLimit,
