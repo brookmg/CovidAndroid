@@ -26,10 +26,12 @@ import ethiopia.covid.android.BuildConfig;
 import ethiopia.covid.android.R;
 import ethiopia.covid.android.data.Case;
 import ethiopia.covid.android.data.CovidStatItem;
+import ethiopia.covid.android.data.FAQ;
 import ethiopia.covid.android.data.JohnsHopkinsItem;
 import ethiopia.covid.android.data.LineChartItem;
 import ethiopia.covid.android.data.PatientItem;
 import ethiopia.covid.android.data.Patients;
+import ethiopia.covid.android.data.ProtectiveMeasures;
 import ethiopia.covid.android.data.Region;
 import ethiopia.covid.android.data.StatRecyclerItem;
 import ethiopia.covid.android.data.WorldCovid;
@@ -47,6 +49,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class API {
     private PMOCovidAPI pmoCovidAPI;
     private WorldCovidAPI worldCovidAPI;
+    private ContentCovidAPI contentCovidAPI;
     private static ExecutorService executors;
 
     public API() {
@@ -64,8 +67,14 @@ public class API {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        Retrofit retrofitContent = new Retrofit.Builder().baseUrl("https://covid19-news.herokuapp.com/api/covid19/")
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
         pmoCovidAPI = retrofit.create(PMOCovidAPI.class);
         worldCovidAPI = retrofitWorld.create(WorldCovidAPI.class);
+        contentCovidAPI = retrofitContent.create(ContentCovidAPI.class);
         executors = Executors.newFixedThreadPool(5);
     }
 
@@ -125,6 +134,60 @@ public class API {
         executors.execute(() -> {
             try {
                 Response<List<WorldCovid>> response = worldCovidAPI.getListOfStat().execute();
+                if (response.body() != null) {
+                    mainHandler.post(() -> onItemReady.onItem(response.body(), ""));
+                } else {
+                    mainHandler.post(() -> {
+                        try {
+                            onItemReady.onItem(null, response.errorBody() != null ? response.errorBody().string() : "Unknown error");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
+            } catch (IOException e) {
+                mainHandler.post(() -> onItemReady.onItem(null , e.toString()));
+                e.printStackTrace();
+            }
+        });
+    }
+
+    @UiThread
+    public void getProtectiveMeasures(OnItemReady<ProtectiveMeasures> onItemReady) {
+        Handler mainHandler = new Handler(Looper.getMainLooper());
+        executors.execute(() -> {
+            try {
+                Response<ProtectiveMeasures> response = contentCovidAPI.getProtectiveMeasures().execute();
+                if (response.body() != null) {
+                    ProtectiveMeasures measures = response.body();
+                    List<String> contents = measures.getContent();
+                    contents.remove(0);
+                    contents.remove(contents.size()-1);
+                    measures.setContent(contents);
+
+                    mainHandler.post(() -> onItemReady.onItem(measures, ""));
+                } else {
+                    mainHandler.post(() -> {
+                        try {
+                            onItemReady.onItem(null, response.errorBody() != null ? response.errorBody().string() : "Unknown error");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
+            } catch (IOException e) {
+                mainHandler.post(() -> onItemReady.onItem(null , e.toString()));
+                e.printStackTrace();
+            }
+        });
+    }
+
+    @UiThread
+    public void getFrequentlyAskedQuestions(OnItemReady<FAQ> onItemReady) {
+        Handler mainHandler = new Handler(Looper.getMainLooper());
+        executors.execute(() -> {
+            try {
+                Response<FAQ> response = contentCovidAPI.getFrequentlyAskedQuestions().execute();
                 if (response.body() != null) {
                     mainHandler.post(() -> onItemReady.onItem(response.body(), ""));
                 } else {

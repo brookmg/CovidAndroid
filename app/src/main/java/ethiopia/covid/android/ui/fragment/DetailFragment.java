@@ -18,8 +18,12 @@ import com.google.android.material.appbar.AppBarLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import ethiopia.covid.android.App;
 import ethiopia.covid.android.R;
 import ethiopia.covid.android.data.DetailItem;
+import ethiopia.covid.android.data.FAQ;
+import ethiopia.covid.android.data.ProtectiveMeasures;
+import ethiopia.covid.android.network.API;
 import ethiopia.covid.android.ui.adapter.DetailRecyclerAdapter;
 
 /**
@@ -29,6 +33,7 @@ import ethiopia.covid.android.ui.adapter.DetailRecyclerAdapter;
 public class DetailFragment extends BaseFragment {
 
     private RecyclerView recyclerView;
+    private DetailRecyclerAdapter adapter = new DetailRecyclerAdapter(new ArrayList<>());
 
     public static DetailFragment newInstance() {
         Bundle args = new Bundle();
@@ -67,12 +72,20 @@ public class DetailFragment extends BaseFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.VERTICAL , false));
 
         List<DetailItem> details = new ArrayList<>();
-        details.add(new DetailItem("What is corona virus", R.drawable.covid_virus_icon, true, ""));
-        details.add(new DetailItem("Wear a mask where in crowded place", R.drawable.wear_masks ,true, ""));
-        details.add(new DetailItem("Wash your hands for 20+ seconds", R.drawable.wash_hands, true, ""));
-        details.add(new DetailItem("Cover your mouth and nose when coughing or sneezing", R.drawable.cover_face_coughing, true, ""));
 
-        recyclerView.setAdapter(new DetailRecyclerAdapter(details));
+        App.getInstance().getMainAPI().getFrequentlyAskedQuestions((item, err) -> {
+            if (!item.getData().isEmpty()) {
+                for (FAQ.QuestionItem content : item.getData()) {
+                    details.add(new DetailItem(content));
+                }
+            }
+
+            adapter.addContent(details);
+        });
+
+
+        recyclerView.setAdapter(adapter);
+
         return mainView;
     }
 
