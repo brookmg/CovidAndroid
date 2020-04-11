@@ -85,7 +85,7 @@ public class QuestionnaireFragment extends BaseFragment {
         bottomAppBar = mainView.findViewById(R.id.bottom_bar);
 
         tabAdapter = new TabAdapter(getChildFragmentManager());
-        tabAdapter.addFragment(BlankFragment.newInstance(), getString(R.string.news_menu_title));
+        tabAdapter.addFragment(IntroductionFragment.newInstance(), getString(R.string.news_menu_title));
         tabAdapter.addFragment(BlankFragment.newInstance(), getString(R.string.news_menu_title));
         tabAdapter.addFragment(BlankFragment.newInstance(), getString(R.string.news_menu_title));
         tabAdapter.addFragment(BlankFragment.newInstance(), getString(R.string.news_menu_title));
