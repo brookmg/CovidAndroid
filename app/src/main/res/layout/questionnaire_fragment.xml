@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="false"
+    android:background="?appBackgroundColor"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.MainActivity">
+
+    <!--  app:layout_behavior="@string/appbar_scrolling_view_behavior" -->
+    <ethiopia.covid.android.ui.widget.YekomeViewPager
+        android:id="@+id/main_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/next_fab"
+        android:layout_width="wrap_content"
+        app:layout_anchor="@id/bottom_bar"
+        android:layout_margin="16dp"
+        app:srcCompat="@drawable/ic_forward"
+        app:tint="@color/white_0"
+        app:backgroundTint="@color/purple_1"
+        android:textColor="@color/white_0"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        app:fabAlignmentMode="end"
+        app:fabAnimationMode="slide"
+        app:fabCradleRoundedCornerRadius="16dp"
+        app:elevation="8dp"
+        app:fabCradleMargin="10dp"
+        app:contentInsetEndWithActions="100dp"
+        app:navigationIcon="@drawable/ic_back"
+        app:fabCradleVerticalOffset="10dp"
+        app:title="Questionnaire"
+        app:contentInsetEnd="100dp"
+        app:titleTextColor="?appTextColorPrimary"
+        app:backgroundTint="?appBackgroundColorTransparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_gravity="bottom"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/current_page_progress_bar"
+            android:progressTint="@color/purple_1"
+            android:indeterminate="false"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:max="100"
+            android:layout_width="match_parent"
+            android:layout_height="2dp" />
+
+    </com.google.android.material.bottomappbar.BottomAppBar>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
