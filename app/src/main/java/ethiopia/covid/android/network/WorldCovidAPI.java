@@ -2,9 +2,11 @@ package ethiopia.covid.android.network;
 
 import java.util.List;
 
+import ethiopia.covid.android.data.JohnsHopkinsItem;
 import ethiopia.covid.android.data.WorldCovid;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -14,5 +16,6 @@ inside the project CoVidEt .
 public interface WorldCovidAPI {
 
     @GET("countries") public Call<List<WorldCovid>> getListOfStat();
+    @GET("v2/historical/{country}?limit=30") public Call<JohnsHopkinsItem> getCountryHistoricalData(@Path("country") String country);
 
 }

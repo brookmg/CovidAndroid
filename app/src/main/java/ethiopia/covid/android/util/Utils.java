@@ -3,6 +3,7 @@ package ethiopia.covid.android.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
@@ -11,8 +12,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Px;
+import androidx.core.graphics.ColorUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 public class Utils {
 
@@ -83,6 +88,33 @@ public class Utils {
         } catch (android.content.ActivityNotFoundException anfe) {
             activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
         }
+    }
+
+    public static String formatNumber(long number) {
+        String stringify = String.valueOf(number);
+        int numberOfCommas = ((int) Math.floor((stringify.length() - 1) / 3f));
+
+        StringBuilder returnable = new StringBuilder();
+        returnable.append(stringify);
+
+        for (int i = 1; i <= numberOfCommas; i++) {
+            returnable.insert( stringify.length() - ( i * 3 ), ',');
+        }
+
+        return returnable.toString();
+    }
+
+    public static List<Integer> generateColors(int number) {
+        List<Integer> returnable = new ArrayList<>();
+        float[] hsl = { 0 , 0.7f , 0.5f };
+
+        for (int i = 0; i < number; i++) {
+            hsl[0] = new Random().nextFloat() * 360f;
+            if (hsl[1] < 0.2) hsl[1] -= 0.1f; else hsl[1] = 0.7f;
+            returnable.add(ColorUtils.HSLToColor(hsl));
+        }
+
+        return returnable;
     }
 
     public static int getCurrentTheme(Context context) {

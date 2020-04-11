@@ -12,5 +12,10 @@
     <string name="death">Death</string>
     <string name="recovered">Recover</string>
     <string name="tested">Tested</string>
+    <string name="regions_affected">Regions affected</string>
+    <string name="question">Question</string>
+    <string name="answer">Answer</string>
+    <string name="error_content">Some error has occured while preparing content</string>
+    <string name="refresh">Refresh</string>
 
 </resources>

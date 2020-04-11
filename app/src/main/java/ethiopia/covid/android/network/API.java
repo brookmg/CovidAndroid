@@ -5,23 +5,38 @@ import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.UiThread;
+import androidx.core.content.ContextCompat;
 
 import com.chuckerteam.chucker.api.ChuckerInterceptor;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import ethiopia.covid.android.App;
 import ethiopia.covid.android.BuildConfig;
+import ethiopia.covid.android.R;
 import ethiopia.covid.android.data.Case;
 import ethiopia.covid.android.data.CovidStatItem;
+import ethiopia.covid.android.data.FAQ;
+import ethiopia.covid.android.data.JohnsHopkinsItem;
+import ethiopia.covid.android.data.LineChartItem;
+import ethiopia.covid.android.data.PatientItem;
 import ethiopia.covid.android.data.Patients;
+import ethiopia.covid.android.data.ProtectiveMeasures;
+import ethiopia.covid.android.data.Region;
 import ethiopia.covid.android.data.StatRecyclerItem;
 import ethiopia.covid.android.data.WorldCovid;
+import ethiopia.covid.android.util.Constant;
+import ethiopia.covid.android.util.Utils;
 import okhttp3.OkHttpClient;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -34,6 +49,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class API {
     private PMOCovidAPI pmoCovidAPI;
     private WorldCovidAPI worldCovidAPI;
+    private ContentCovidAPI contentCovidAPI;
     private static ExecutorService executors;
 
     public API() {
@@ -51,8 +67,14 @@ public class API {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        Retrofit retrofitContent = new Retrofit.Builder().baseUrl("https://covid19-news.herokuapp.com/api/covid19/")
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
         pmoCovidAPI = retrofit.create(PMOCovidAPI.class);
         worldCovidAPI = retrofitWorld.create(WorldCovidAPI.class);
+        contentCovidAPI = retrofitContent.create(ContentCovidAPI.class);
         executors = Executors.newFixedThreadPool(5);
     }
 
@@ -131,6 +153,60 @@ public class API {
     }
 
     @UiThread
+    public void getProtectiveMeasures(OnItemReady<ProtectiveMeasures> onItemReady) {
+        Handler mainHandler = new Handler(Looper.getMainLooper());
+        executors.execute(() -> {
+            try {
+                Response<ProtectiveMeasures> response = contentCovidAPI.getProtectiveMeasures().execute();
+                if (response.body() != null) {
+                    ProtectiveMeasures measures = response.body();
+                    List<String> contents = measures.getContent();
+                    contents.remove(0);
+                    contents.remove(contents.size()-1);
+                    measures.setContent(contents);
+
+                    mainHandler.post(() -> onItemReady.onItem(measures, ""));
+                } else {
+                    mainHandler.post(() -> {
+                        try {
+                            onItemReady.onItem(null, response.errorBody() != null ? response.errorBody().string() : "Unknown error");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
+            } catch (IOException e) {
+                mainHandler.post(() -> onItemReady.onItem(null , e.toString()));
+                e.printStackTrace();
+            }
+        });
+    }
+
+    @UiThread
+    public void getFrequentlyAskedQuestions(OnItemReady<FAQ> onItemReady) {
+        Handler mainHandler = new Handler(Looper.getMainLooper());
+        executors.execute(() -> {
+            try {
+                Response<FAQ> response = contentCovidAPI.getFrequentlyAskedQuestions().execute();
+                if (response.body() != null) {
+                    mainHandler.post(() -> onItemReady.onItem(response.body(), ""));
+                } else {
+                    mainHandler.post(() -> {
+                        try {
+                            onItemReady.onItem(null, response.errorBody() != null ? response.errorBody().string() : "Unknown error");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
+            } catch (IOException e) {
+                mainHandler.post(() -> onItemReady.onItem(null , e.toString()));
+                e.printStackTrace();
+            }
+        });
+    }
+
+    @UiThread
     public void getStatRecyclerContents(OnItemReady<List<StatRecyclerItem>> onItemReady) {
 
         conjure(() -> {
@@ -143,7 +219,43 @@ public class API {
             } catch (Exception ignored) {}
 
             try {
+
+                Map<String, Region> regions = new HashMap<>();
                 Patients patients = getPmoCovidAPI().getPatients().execute().body();
+
+                for (PatientItem item : patients != null ?
+                        patients.getResults() : new ArrayList<PatientItem>()) {
+                    if (regions.containsKey(item.getLocation())) {
+                        regions.get(item.getLocation()).setNumberOfInfected(
+                                regions.get(item.getLocation()).getNumberOfInfected() + 1
+                        );
+                    } else {
+                        String location = item.getLocation();
+                        regions.put(item.getLocation() ,
+                                new Region(
+                                    item.getLocation(),
+                                    Constant.regionNameWithCodeMap.get(location),
+                                    1,
+                                    item.getStatus().equals("Deceased") ? 1 : 0
+                                )
+                        );
+                    }
+                }
+
+                List<Integer> values = new ArrayList<>();
+                List<String> regionCodes = new ArrayList<>();
+
+                for (Entry<String, Region> item : regions.entrySet()) {
+                    values.add(item.getValue().getNumberOfInfected());
+                    regionCodes.add(item.getValue().getRegionName());
+                }
+
+                returnable.add(
+                        new StatRecyclerItem(
+                                App.getInstance().getString(R.string.regions_affected) , values, regionCodes, Utils.generateColors(values.size())
+                        )
+                );
+
                 returnable.add(
                         new StatRecyclerItem(
                                 Arrays.asList("ID" , "Name", "Location", "Age", "Gender" , "Nationality", "RecentTravel", "Status"),
@@ -151,7 +263,61 @@ public class API {
                                 patients.getResults()
                         )
                 );
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+
+            }
+
+            try {
+                Response<JohnsHopkinsItem> response = getWorldCovidAPI().getCountryHistoricalData("et").execute();
+                JohnsHopkinsItem johnsHopkinsItem = response.body();
+                List<Integer> caseNumbers = new ArrayList<>();
+                List<Integer> deathNumbers = new ArrayList<>();
+                List<Integer> recoveryNumbers = new ArrayList<>();
+                List<String> caseDate = new ArrayList<>();
+
+                for (Entry<String, Integer> item : johnsHopkinsItem.getTimeline().getCases().entrySet()) {
+                    caseDate.add(item.getKey());
+                    caseNumbers.add(item.getValue());
+                }
+
+                for (Entry<String, Integer> item : johnsHopkinsItem.getTimeline().getDeaths().entrySet()) {
+                    deathNumbers.add(item.getValue());
+                }
+
+                for (Entry<String, Integer> item : johnsHopkinsItem.getTimeline().getRecovered().entrySet()) {
+                    recoveryNumbers.add(item.getValue());
+                }
+
+                returnable.add(
+                        new StatRecyclerItem(
+                                "Ethiopia Covid Distribution",
+                                Arrays.asList(
+                                        new LineChartItem(
+                                                caseNumbers,
+                                                "Cases",
+                                                ContextCompat.getColor(App.getInstance() , R.color.purple_0),
+                                                ContextCompat.getColor(App.getInstance() , R.color.purple_1)
+                                        ),
+                                        new LineChartItem(
+                                                deathNumbers,
+                                                "Deaths",
+                                                ContextCompat.getColor(App.getInstance() , R.color.red_0),
+                                                ContextCompat.getColor(App.getInstance() , R.color.red_1)
+                                        ),
+                                        new LineChartItem(
+                                                recoveryNumbers,
+                                                "Recovery",
+                                                ContextCompat.getColor(App.getInstance() , R.color.green_0),
+                                                ContextCompat.getColor(App.getInstance() , R.color.green_1)
+                                        )
+                                ),
+                                caseDate
+                        )
+                );
+
+            } catch (Exception ignored) {
+                Log.e("Graph" , ignored.getMessage());
+            }
 
             try {
                 Response<List<WorldCovid>> worldStatResponse = getWorldCovidAPI().getListOfStat().execute();
@@ -162,7 +328,7 @@ public class API {
                     worldStatItems.add(
                             new CovidStatItem(
                                     location.getCountry().replace(" ", ""),
-                                    location.getTodayCases(),
+                                    location.getCases(),
                                     location.getActive(),
                                     location.getDeaths(),
                                     location.getRecovered(),

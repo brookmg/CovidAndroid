@@ -14,6 +14,6 @@ inside the project CoVidEt .
 public interface PMOCovidAPI {
 
     @GET("cases") public Call<List<Case>> getCases();
-    @GET("patients") public Call<Patients> getPatients();
+    @GET("patients?limit=100&page=0") public Call<Patients> getPatients();
 
 }
