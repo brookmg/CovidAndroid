@@ -7,23 +7,27 @@
 <tr>
 <td><img src="screenshots/1.jpg" width="150" /></td>
 <td><img src="screenshots/2.jpg" width="150" /></td>
+<td><img src="screenshots/6.jpg" width="150" /></td>
 <td><img src="screenshots/3.jpg" width="150" /></td>
 <td><img src="screenshots/4.jpg" width="150" /></td>
+<td><img src="screenshots/5.jpg" width="150" /></td>
 </tr>
 <tr>
-<td><p align="center">Dark - Current cases from PMO API</p></td>
-<td><p align="center">Dark - Current cases worldwide</p></td>
-<td><p align="center">Light - Current cases from PMO API</p></td>
-<td><p align="center">Light - Current cases worldwide</p></td>
+<td><p align="center">Dark - Current cases and affected regions from PMO API</p></td>
+<td><p align="center">Dark - Current cases worldwide and historical data</p></td>
+<td><p align="center">Dark - FAQs about COVID19 from WHO website</p></td>
+<td><p align="center">Light - Current cases and affected regions from PMO API</p></td>
+<td><p align="center">Light - Current cases worldwide and historical data</p></td>
+<td><p align="center">Light - FAQs about COVID19 from WHO website</p></td>
 </tr>
 </table>
 
 ## Features
 
 * [X] Statistics on COVID19
+* [X] Readable contents about the virus
 * [ ] News about COVID19 from valid sources
-* [ ] Readable contents about the virus
-* [ ] Tracking to know where you went
+* [ ] Questionnaire to check how you are feeling
 * [ ] SOS button for calling ambulance
 
 ## Contribution
