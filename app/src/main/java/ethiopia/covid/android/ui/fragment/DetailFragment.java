@@ -74,7 +74,12 @@ public class DetailFragment extends BaseFragment {
         View mainView = inflater.inflate(R.layout.detail_fragment, container, false);
         recyclerView = mainView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.VERTICAL , false));
-        adapter.setHasStableIds(true);
+
+        try {
+            adapter.setHasStableIds(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         recyclerView.setAdapter(adapter);
         setRefreshButtonAction(mainView , v -> renderPage(mainView));
