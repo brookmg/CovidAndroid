@@ -65,6 +65,9 @@ public class QuestionnaireFragment extends BaseFragment {
         mainViewPager.setCurrentItem(
                 Math.max(mainViewPager.getCurrentItem() - 1 , 0), true
         );
+
+        nextButton.show();
+        bottomAppBar.performShow();
     }
 
     @Override
@@ -83,7 +86,8 @@ public class QuestionnaireFragment extends BaseFragment {
                     Math.min(mainViewPager.getCurrentItem() + 1 , tabAdapter.getCount()), true
             );
 
-            Log.e("OUTPUT" , questionState.toString());
+            nextButton.hide();
+            bottomAppBar.performHide();
         }
 
         mainViewPager.setCurrentItem(

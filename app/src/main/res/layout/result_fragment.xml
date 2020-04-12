@@ -17,18 +17,53 @@
         app:layout_constraintBottom_toTopOf="@+id/result_recycler"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/back_button"
+        app:srcCompat="@drawable/ic_back"
+        app:tint="?appTextColorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/result_recycler"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingTop="16dp"
-        android:paddingBottom="65dp"
+        android:paddingBottom="16dp"
         android:clipToPadding="false"
         android:layout_width="match_parent"
         android:layout_marginTop="16dp"
         app:layout_constrainedHeight="true"
         android:background="@drawable/round_dialogs_purple"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_continue_button_holder"
         android:layout_height="0dp" />
+
+    <FrameLayout
+        android:id="@+id/bottom_continue_button_holder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:background="@color/purple_0"
+        android:layout_height="100dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/questionnaire_button"
+            app:cornerRadius="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:backgroundTint="?appBackgroundColor"
+            android:text="@string/send"
+            android:padding="16dp"
+            android:textColor="?appTextColorPrimary"
+            android:layout_margin="16dp"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,5 +21,6 @@
     <string name="help_us_identify_unwell">Help us identify areas with people feeling unwell</string>
     <string name="donate_data">Donate your data to help scientists identify the problem</string>
     <string name="result">Result</string>
+    <string name="send">Send</string>
 
 </resources>

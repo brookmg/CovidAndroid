@@ -17,6 +17,7 @@ import java.util.Map;
 import ethiopia.covid.android.R;
 import ethiopia.covid.android.data.QuestionItem;
 import ethiopia.covid.android.data.QuestionnaireItem;
+import ethiopia.covid.android.ui.activity.MainActivity;
 import ethiopia.covid.android.ui.adapter.ResultRecyclerAdapter;
 
 /**
@@ -52,6 +53,10 @@ public class ResultFragment extends BaseFragment {
         recyclerView = mainView.findViewById(R.id.result_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.VERTICAL , false));
         recyclerView.setAdapter(new ResultRecyclerAdapter(questionItems));
+
+        mainView.findViewById(R.id.back_button).setOnClickListener(v -> {
+            if (getActivity() instanceof MainActivity) ((MainActivity) getActivity()).callBackOnParentFragment();
+        });
         return mainView;
     }
 
