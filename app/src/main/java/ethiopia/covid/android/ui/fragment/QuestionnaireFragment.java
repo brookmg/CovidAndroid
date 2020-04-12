@@ -27,6 +27,7 @@ import java.util.Map;
 import ethiopia.covid.android.R;
 import ethiopia.covid.android.data.QuestionnaireItem;
 import ethiopia.covid.android.data.QuestionItem;
+import ethiopia.covid.android.ui.activity.MainActivity;
 import ethiopia.covid.android.ui.adapter.OnQuestionItemSelected;
 import ethiopia.covid.android.ui.adapter.TabAdapter;
 import ethiopia.covid.android.ui.widget.YekomeViewPager;
@@ -68,6 +69,7 @@ public class QuestionnaireFragment extends BaseFragment {
 
         nextButton.show();
         bottomAppBar.performShow();
+        canGoBack = mainViewPager.getCurrentItem() != 0;
     }
 
     @Override
@@ -93,6 +95,8 @@ public class QuestionnaireFragment extends BaseFragment {
         mainViewPager.setCurrentItem(
                 Math.min(mainViewPager.getCurrentItem() + 1 , tabAdapter.getCount()), true
         );
+
+        canGoBack = mainViewPager.getCurrentItem() != 0;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)
@@ -166,9 +170,7 @@ public class QuestionnaireFragment extends BaseFragment {
             @Override
             public void onPageSelected(int position) {
                 ValueAnimator valueAnimator = ValueAnimator.ofFloat(pageChangeProgressBar.getProgress(), ((float)(position + 1) / (float)tabAdapter.getCount()) * 100f);
-                valueAnimator.addUpdateListener(animation -> pageChangeProgressBar.setProgress(
-                        Math.round((float) animation.getAnimatedValue())
-                ));
+                valueAnimator.addUpdateListener(animation -> pageChangeProgressBar.setProgress(Math.round((float) animation.getAnimatedValue())));
                 valueAnimator.start();
             }
 
@@ -177,8 +179,14 @@ public class QuestionnaireFragment extends BaseFragment {
         });
         mainViewPager.setOffscreenPageLimit(tabAdapter.getCount());
 
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(pageChangeProgressBar.getProgress(), (1f / (float) tabAdapter.getCount()) * 100f);
+        valueAnimator.addUpdateListener(animation -> pageChangeProgressBar.setProgress(Math.round((float) animation.getAnimatedValue())));
+        valueAnimator.start();
+
         nextButton.setOnClickListener(v -> next());
-        bottomAppBar.setNavigationOnClickListener(v -> back());
+        bottomAppBar.setNavigationOnClickListener(v -> {
+            if (getActivity() instanceof MainActivity) ((MainActivity) getActivity()).callBackOnParentFragment();
+        });
 
         return mainView;
     }

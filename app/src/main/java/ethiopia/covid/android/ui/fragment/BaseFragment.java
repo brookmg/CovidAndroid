@@ -11,11 +11,14 @@ import ethiopia.covid.android.ui.activity.MainActivity;
  */
 public class BaseFragment extends Fragment {
 
+    protected boolean canGoBack;
+
     void changeTheme() {
         if (getActivity() != null) ((MainActivity) getActivity()).changeTheme();
     }
 
     public void back() {}
     public void next() {}
+    public boolean canGoBack() { return canGoBack; }
 
 }

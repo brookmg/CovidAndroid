@@ -12,6 +12,8 @@ import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
 
@@ -92,6 +94,28 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        if (currentFragment.get() != null && ((BaseFragment) currentFragment.get()).canGoBack()) {
+            callBackOnParentFragment();
+        } else {
+
+            if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+                //there are more items in the back stack. We are not on the home frag
+                getSupportFragmentManager().popBackStackImmediate();
+            } else {
+                Snackbar.make(_fragmentContainer, "Press back again or 👉🏾 button", Snackbar.LENGTH_SHORT)
+                        .setAction("Exit", (v) -> finish()).show();
+            }
+
+            if (getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getFragments().size() - 1)
+                    instanceof BaseFragment)
+                setCurrentFragment((BaseFragment) getSupportFragmentManager().getFragments()
+                        .get(getSupportFragmentManager().getFragments().size() - 1));
+        }
+    }
+
 
     public void changeTheme() {
         int currentTheme = Utils.getCurrentTheme(this);
