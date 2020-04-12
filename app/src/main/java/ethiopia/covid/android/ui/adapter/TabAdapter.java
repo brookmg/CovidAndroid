@@ -28,6 +28,10 @@ public class TabAdapter extends FragmentStatePagerAdapter {
         mTabTitles.add(tabTitle);
     }
 
+    public void setFragments(List<Fragment> fragments) {
+        mFragments.addAll(fragments);
+    }
+
     public List<Fragment> getmFragments() {
         return mFragments;
     }
