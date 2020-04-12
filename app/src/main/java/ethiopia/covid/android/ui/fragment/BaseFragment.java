@@ -15,4 +15,7 @@ public class BaseFragment extends Fragment {
         if (getActivity() != null) ((MainActivity) getActivity()).changeTheme();
     }
 
+    public void back() {}
+    public void next() {}
+
 }

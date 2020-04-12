@@ -3,6 +3,8 @@ package ethiopia.covid.android.ui.fragment;
 import android.animation.ValueAnimator;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,16 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import ethiopia.covid.android.R;
+import ethiopia.covid.android.data.QuestionnaireItem;
+import ethiopia.covid.android.data.QuestionItem;
+import ethiopia.covid.android.ui.adapter.OnQuestionItemSelected;
 import ethiopia.covid.android.ui.adapter.TabAdapter;
 import ethiopia.covid.android.ui.widget.YekomeViewPager;
 import ethiopia.covid.android.util.Utils;
@@ -31,22 +42,50 @@ public class QuestionnaireFragment extends BaseFragment {
     private YekomeViewPager mainViewPager;
     private FloatingActionButton nextButton;
     private TabAdapter tabAdapter;
+    private List<QuestionnaireItem> questionnaireItems;
     private BottomAppBar bottomAppBar;
 
-    public static QuestionnaireFragment newInstance() {
+    private ResultFragment resultFragment = ResultFragment.newInstance(new HashMap<>());
+
+    private SparseArray<ArrayList<QuestionItem>> questionState = new SparseArray<>();
+
+    private QuestionnaireFragment(List<QuestionnaireItem> questionnaireItems) {
+        this.questionnaireItems = questionnaireItems;
+    }
+
+    public static QuestionnaireFragment newInstance(List<QuestionnaireItem> items) {
         Bundle args = new Bundle();
-        QuestionnaireFragment fragment = new QuestionnaireFragment();
+        QuestionnaireFragment fragment = new QuestionnaireFragment(items);
         fragment.setArguments(args);
         return fragment;
     }
 
-    void back() {
+    @Override
+    public void back() {
         mainViewPager.setCurrentItem(
                 Math.max(mainViewPager.getCurrentItem() - 1 , 0), true
         );
     }
 
-    void next() {
+    @Override
+    public void next() {
+        if (mainViewPager.getCurrentItem()+1 == tabAdapter.getCount() -1) {
+            Map<QuestionnaireItem, List<QuestionItem>> questionnaireItemListMap = new HashMap<>();
+            for (int i = 0; i < questionnaireItems.size(); i++) {
+                questionnaireItemListMap.put(
+                        questionnaireItems.get(i),
+                        questionState.get(i)
+                );
+            }
+
+            resultFragment.setMap(questionnaireItemListMap);
+            mainViewPager.setCurrentItem(
+                    Math.min(mainViewPager.getCurrentItem() + 1 , tabAdapter.getCount()), true
+            );
+
+            Log.e("OUTPUT" , questionState.toString());
+        }
+
         mainViewPager.setCurrentItem(
                 Math.min(mainViewPager.getCurrentItem() + 1 , tabAdapter.getCount()), true
         );
@@ -86,9 +125,34 @@ public class QuestionnaireFragment extends BaseFragment {
 
         tabAdapter = new TabAdapter(getChildFragmentManager());
         tabAdapter.addFragment(IntroductionFragment.newInstance(), getString(R.string.news_menu_title));
-        tabAdapter.addFragment(BlankFragment.newInstance(), getString(R.string.news_menu_title));
-        tabAdapter.addFragment(BlankFragment.newInstance(), getString(R.string.news_menu_title));
-        tabAdapter.addFragment(BlankFragment.newInstance(), getString(R.string.news_menu_title));
+
+        for (QuestionnaireItem questionnaire : questionnaireItems) {
+            OnQuestionItemSelected questionItemSelected = (item, position) -> {
+                int questionPositionInQuestionnaire = questionnaireItems.indexOf(questionnaire);
+                if (questionnaire.getQuestionType() == QuestionnaireItem.QuestionType.SINGLE_BLOCK_QUESTION) {
+                    questionState.put(questionPositionInQuestionnaire, new ArrayList<>(Collections.singletonList(item)));
+                    next();
+                } else if (questionnaire.getQuestionType() == QuestionnaireItem.QuestionType.SINGLE_CHOICE_QUESTION) {
+                    questionState.put(questionPositionInQuestionnaire, new ArrayList<>(Collections.singletonList(item)));
+                    next();
+                } else if (questionnaire.getQuestionType() == QuestionnaireItem.QuestionType.SINGLE_MULTIPLE_CHOICE_QUESTION) {
+                    ArrayList<QuestionItem> items = questionState.get(questionPositionInQuestionnaire);
+                    if (items != null) {
+                        items.add(item);
+                        questionState.put(questionPositionInQuestionnaire , items);
+                    } else questionState.put(questionPositionInQuestionnaire, new ArrayList<>(Collections.singletonList(item)));
+                }
+            };
+
+            tabAdapter.addFragment(QuestionPageFragment.newInstance(
+                questionnaire.getQuestionText(),
+                questionnaire.getQuestionType(),
+                questionnaire.getQuestionItems(),
+                questionItemSelected
+            ), "Question");
+        }
+
+        tabAdapter.addFragment(resultFragment , "Result");
 
         mainViewPager.setAdapter(tabAdapter);
         mainViewPager.setPagingEnabled(false);
@@ -108,6 +172,7 @@ public class QuestionnaireFragment extends BaseFragment {
             @Override
             public void onPageScrollStateChanged(int state) {}
         });
+        mainViewPager.setOffscreenPageLimit(tabAdapter.getCount());
 
         nextButton.setOnClickListener(v -> next());
         bottomAppBar.setNavigationOnClickListener(v -> back());
