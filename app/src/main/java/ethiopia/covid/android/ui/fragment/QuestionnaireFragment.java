@@ -120,7 +120,6 @@ public class QuestionnaireFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View mainView = inflater.inflate(R.layout.questionnaire_fragment, container, false);
-        Utils.setCurrentTheme(getActivity() , 0);
 
         mainViewPager = mainView.findViewById(R.id.main_view_pager);
         pageChangeProgressBar = mainView.findViewById(R.id.current_page_progress_bar);
