@@ -20,5 +20,6 @@
     <string name="check_in">Check in everyday about how you are feeling</string>
     <string name="help_us_identify_unwell">Help us identify areas with people feeling unwell</string>
     <string name="donate_data">Donate your data to help scientists identify the problem</string>
+    <string name="result">Result</string>
 
 </resources>
