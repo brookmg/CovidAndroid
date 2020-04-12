@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_card_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="?appCardColor"
+    app:cardElevation="8dp"
+    app:cardCornerRadius="16dp"
+    app:layout_anchorGravity="center"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    app:contentPadding="16dp"
+    android:layout_gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/main_check_box"
+        app:buttonTint="@color/purple_1"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        app:useMaterialThemeColors="false"
+        android:gravity="center|start"
+        android:textColor="?appTextColorSecondary"
+        android:textSize="21sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
