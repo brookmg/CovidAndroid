@@ -13,13 +13,18 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.lang.ref.WeakReference;
+import java.util.Arrays;
 
 import ethiopia.covid.android.R;
+import ethiopia.covid.android.data.QuestionnaireItem;
+import ethiopia.covid.android.data.QuestionItem;
 import ethiopia.covid.android.ui.fragment.BaseFragment;
 import ethiopia.covid.android.ui.fragment.HomeFragment;
+import ethiopia.covid.android.ui.fragment.QuestionnaireFragment;
 import ethiopia.covid.android.util.Utils;
 
 import static ethiopia.covid.android.util.Constant.TAG_HOME;
+import static ethiopia.covid.android.util.Constant.TAG_QUESTIONNAIRE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,6 +54,42 @@ public class MainActivity extends AppCompatActivity {
                 fragStarter(fragmentTag , baseFragment , bundle, view);
                 break;
             }
+
+            case TAG_QUESTIONNAIRE: {
+                BaseFragment baseFragment = QuestionnaireFragment.newInstance(Arrays.asList(
+                        new QuestionnaireItem(
+                                QuestionnaireItem.QuestionType.SINGLE_BLOCK_QUESTION,
+                                "How are you feeling today?",
+                                Arrays.asList(
+                                    new QuestionItem("Good", R.drawable.ic_details),
+                                    new QuestionItem("Bad", R.drawable.ic_details)
+                                )
+                        ),
+                        new QuestionnaireItem(
+                                QuestionnaireItem.QuestionType.SINGLE_CHOICE_QUESTION,
+                                "In which region are you currently located",
+                                Arrays.asList(
+                                    new QuestionItem("Addis Abeba", R.drawable.ic_details),
+                                    new QuestionItem("Bahir dar", R.drawable.ic_details),
+                                    new QuestionItem("Gondar", R.drawable.ic_details),
+                                    new QuestionItem("Hawassa", R.drawable.ic_details),
+                                    new QuestionItem("Mekelle", R.drawable.ic_details)
+                                )
+                        ),
+                        new QuestionnaireItem(
+                                QuestionnaireItem.QuestionType.SINGLE_MULTIPLE_CHOICE_QUESTION,
+                                "What are you feeling today?",
+                                Arrays.asList(
+                                        new QuestionItem("Sweating", R.drawable.ic_details),
+                                        new QuestionItem("Coughing", R.drawable.ic_details),
+                                        new QuestionItem("Sour throat", R.drawable.ic_details),
+                                        new QuestionItem("Diarrhea", R.drawable.ic_details)
+                                )
+                        )
+                ));
+                fragStarter(fragmentTag , baseFragment, bundle, view);
+                break;
+            }
         }
     }
 
@@ -61,6 +102,13 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+    public void callNextOnParentFragment() {
+        if (currentFragment.get() != null) ((BaseFragment) currentFragment.get()).next();
+    }
+
+    public void callBackOnParentFragment() {
+        if (currentFragment.get() != null) ((BaseFragment) currentFragment.get()).back();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
