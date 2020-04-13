@@ -181,7 +181,6 @@ public class QuestionnaireFragment extends BaseFragment {
                                 questionState.get(questionPositionInQuestionnaire).contains(item)
                         ) questionState.put(questionPositionInQuestionnaire , new ArrayList<>());
                         else questionState.put(questionPositionInQuestionnaire, new ArrayList<>(Collections.singletonList(item)));
-                        next();
                     } else if (questionnaire.getQuestionType() == QuestionnaireItem.QuestionType.SINGLE_MULTIPLE_CHOICE_QUESTION) {
                         ArrayList<QuestionItem> items = questionState.get(questionPositionInQuestionnaire);
                         if (items != null) {
