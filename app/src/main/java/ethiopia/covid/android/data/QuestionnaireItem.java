@@ -2,6 +2,9 @@ package ethiopia.covid.android.data;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.annotations.Expose;
+
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,9 +12,9 @@ import java.util.List;
  * Created by BrookMG on 4/12/2020 in ethiopia.covid.android.data
  * inside the project CoVidEt .
  */
-public class QuestionnaireItem {
+public class QuestionnaireItem implements Serializable {
 
-    public static enum QuestionType { SINGLE_BLOCK_QUESTION , SINGLE_CHOICE_QUESTION , SINGLE_MULTIPLE_CHOICE_QUESTION }
+    public enum QuestionType { SINGLE_BLOCK_QUESTION , SINGLE_CHOICE_QUESTION , SINGLE_MULTIPLE_CHOICE_QUESTION }
 
     private QuestionType questionType;
     private String questionText;
@@ -47,9 +50,4 @@ public class QuestionnaireItem {
         this.questionText = questionText;
     }
 
-    @NonNull
-    @Override
-    public String toString() {
-        return questionText + "-|||-" + questionType.toString();
-    }
 }

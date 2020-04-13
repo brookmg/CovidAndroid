@@ -12,10 +12,16 @@ public class QuestionItem {
     private String questionText;
     private int questionIconResource;
     private boolean selectedQuestion = false;
+    private String questionIconLink;
 
     public QuestionItem(String questionText, int questionIconResource) {
         this.questionText = questionText;
         this.questionIconResource = questionIconResource;
+    }
+
+    public QuestionItem(String questionText, String questionIconLink) {
+        this.questionText = questionText;
+        this.questionIconLink = questionIconLink;
     }
 
     public String getQuestionText() {
@@ -42,4 +48,11 @@ public class QuestionItem {
         this.selectedQuestion = selectedQuestion;
     }
 
+    public String getQuestionIconLink() {
+        return questionIconLink;
+    }
+
+    public void setQuestionIconLink(String questionIconLink) {
+        this.questionIconLink = questionIconLink;
+    }
 }

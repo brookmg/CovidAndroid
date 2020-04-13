@@ -42,7 +42,10 @@ public class SingleChoiceQuestionRecyclerAdapter extends RecyclerView.Adapter<Si
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.choiceLabel.setText(questionItems.get(position).getQuestionText());
-        Glide.with(holder.choiceImage).load(questionItems.get(position).getQuestionIconResource()).into(holder.choiceImage);
+        if (questionItems.get(position).getQuestionIconResource() > 0)
+            Glide.with(holder.choiceImage).load(questionItems.get(position).getQuestionIconResource()).into(holder.choiceImage);
+        else
+            Glide.with(holder.choiceImage).load(questionItems.get(position).getQuestionIconLink()).into(holder.choiceImage);
 
         if (onQuestionItemClicked != null) {
             holder.mainCardView.setOnClickListener(

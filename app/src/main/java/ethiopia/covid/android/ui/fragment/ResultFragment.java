@@ -4,7 +4,6 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.gson.Gson;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.GsonBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,52 @@ public class ResultFragment extends BaseFragment {
     private RecyclerView recyclerView;
     private Location currentLocation;
     private MaterialButton sendButton;
+
+    private static class Result {
+        private Map<QuestionnaireItem, List<QuestionItem>> questionItems;
+        private double longitude;
+        private double latitude;
+        private double accuracy;
+
+        public Result(Map<QuestionnaireItem, List<QuestionItem>> questionItems, double longitude, double latitude, double accuracy) {
+            this.questionItems = questionItems;
+            this.longitude = longitude;
+            this.latitude = latitude;
+            this.accuracy = accuracy;
+        }
+
+        public Map<QuestionnaireItem, List<QuestionItem>> getQuestionItems() {
+            return questionItems;
+        }
+
+        public void setQuestionItems(Map<QuestionnaireItem, List<QuestionItem>> questionItems) {
+            this.questionItems = questionItems;
+        }
+
+        public double getLongitude() {
+            return longitude;
+        }
+
+        public void setLongitude(double longitude) {
+            this.longitude = longitude;
+        }
+
+        public double getLatitude() {
+            return latitude;
+        }
+
+        public void setLatitude(double latitude) {
+            this.latitude = latitude;
+        }
+
+        public double getAccuracy() {
+            return accuracy;
+        }
+
+        public void setAccuracy(double accuracy) {
+            this.accuracy = accuracy;
+        }
+    }
 
     private ResultFragment(Map<QuestionnaireItem, List<QuestionItem>> questionItems) {
         this.questionItems = questionItems;
@@ -94,7 +141,32 @@ public class ResultFragment extends BaseFragment {
         });
 
         sendButton.setOnClickListener(v -> {
-            Log.e("REsULT" , new Gson().toJson(questionItems));
+            Result result = new Result(
+                    questionItems,
+                    currentLocation != null ? currentLocation.getLongitude() : 0,
+                    currentLocation != null ? currentLocation.getLatitude() : 0,
+                    currentLocation != null ? currentLocation.getAccuracy() : 0
+            );
+            Log.e("REsULT" , new GsonBuilder().enableComplexMapKeySerialization()
+                    .addSerializationExclusionStrategy(new ExclusionStrategy() {
+                        @Override
+                        public boolean shouldSkipField(FieldAttributes field) {
+                            return field.getDeclaringClass() == QuestionnaireItem.class &&
+                                    field.getName().equals("questionItems") ||
+                                field.getDeclaringClass() == QuestionItem.class &&
+                                        field.getName().equals("questionIconResource") ||
+                                field.getDeclaringClass() == QuestionItem.class &&
+                                        field.getName().equals("selectedQuestion") ||
+                                field.getDeclaringClass() == QuestionItem.class &&
+                                        field.getName().equals("questionIconLink");
+                        }
+
+                        @Override
+                        public boolean shouldSkipClass(Class<?> clazz) {
+                            return false;
+                        }
+                    })
+                    .create().toJson(result));
         });
         return mainView;
     }

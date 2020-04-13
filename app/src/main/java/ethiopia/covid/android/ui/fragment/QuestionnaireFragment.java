@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -74,6 +75,9 @@ public class QuestionnaireFragment extends BaseFragment {
     };
 
     private QuestionnaireFragment(List<QuestionnaireItem> questionnaireItems) {
+        questionnaireItems.removeAll(Collections.singleton(null));
+        for (QuestionnaireItem item : questionnaireItems) item.getQuestionItems().removeAll(Collections.singleton(null));
+
         this.questionnaireItems = questionnaireItems;
     }
 

@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -36,6 +37,7 @@ import mumayank.com.airlocationlibrary.AirLocation;
 
 import static ethiopia.covid.android.util.Constant.TAG_HOME;
 import static ethiopia.covid.android.util.Constant.TAG_QUESTIONNAIRE;
+import static ethiopia.covid.android.util.Utils.readRawFile;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void unRegisterLocationCallback(AirLocation.Callbacks callbacks) {
-        if (mainCallbacks.contains(callbacks)) mainCallbacks.remove(callbacks);
+        mainCallbacks.remove(callbacks);
     }
 
     private void fragStarter (String fragTag , BaseFragment baseFragment , Bundle bundle, View sharedView) {
@@ -77,49 +79,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
             case TAG_QUESTIONNAIRE: {
-                BaseFragment baseFragment = QuestionnaireFragment.newInstance(Arrays.asList(
-                        new QuestionnaireItem(
-                                QuestionnaireItem.QuestionType.SINGLE_BLOCK_QUESTION,
-                                "How are you feeling today?",
-                                Arrays.asList(
-                                    new QuestionItem("Good", R.drawable.ic_good),
-                                    new QuestionItem("Bad", R.drawable.ic_bad)
-                                )
-                        ),
-                        new QuestionnaireItem(
-                                QuestionnaireItem.QuestionType.SINGLE_CHOICE_QUESTION,
-                                "In which region are you currently located",
-                                Arrays.asList(
-                                    new QuestionItem("~ Addis Abeba", R.drawable.ic_details),
-                                    new QuestionItem("~ Amhara", R.drawable.ic_details),
-                                    new QuestionItem("~ Oromiya", R.drawable.ic_details),
-                                    new QuestionItem("~ Debub Kelel", R.drawable.ic_details),
-                                    new QuestionItem("~ Tigray", R.drawable.ic_details),
-                                    new QuestionItem("~ Dire Dawa", R.drawable.ic_details),
-                                    new QuestionItem("~ Somali", R.drawable.ic_details),
-                                    new QuestionItem("~ Gambela", R.drawable.ic_details),
-                                    new QuestionItem("~ Afar", R.drawable.ic_details)
-                                )
-                        ),
-                        new QuestionnaireItem(
-                                QuestionnaireItem.QuestionType.SINGLE_MULTIPLE_CHOICE_QUESTION,
-                                "What are you feeling today?",
-                                Arrays.asList(
-                                        new QuestionItem("Fever", R.drawable.ic_details),
-                                        new QuestionItem("Wet coughing", R.drawable.ic_details),
-                                        new QuestionItem("Dry coughing", R.drawable.ic_details),
-                                        new QuestionItem("Sore throat", R.drawable.ic_details),
-                                        new QuestionItem("Runny nose", R.drawable.ic_details),
-                                        new QuestionItem("Nasal congestion", R.drawable.ic_details),
-                                        new QuestionItem("Loss of appetite", R.drawable.ic_details),
-                                        new QuestionItem("Fatigue", R.drawable.ic_details),
-                                        new QuestionItem("Muscle and joint pain", R.drawable.ic_details),
-                                        new QuestionItem("Shortness of breath", R.drawable.ic_details),
-                                        new QuestionItem("Confusion", R.drawable.ic_details),
-                                        new QuestionItem("Diarrhea", R.drawable.ic_details)
-                                )
+                BaseFragment baseFragment = QuestionnaireFragment.newInstance(
+                        new Gson().fromJson(
+                                readRawFile(this, R.raw.sample),
+                                new TypeToken<List<QuestionnaireItem>>(){}.getType()
                         )
-                ));
+                );
                 fragStarter(fragmentTag , baseFragment, bundle, view);
                 break;
             }
