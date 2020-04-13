@@ -11,6 +11,7 @@ public class QuestionItem {
     // single block question type
     private String questionText;
     private int questionIconResource;
+    private boolean selectedQuestion = false;
 
     public QuestionItem(String questionText, int questionIconResource) {
         this.questionText = questionText;
@@ -31,6 +32,14 @@ public class QuestionItem {
 
     public void setQuestionIconResource(int questionIconResource) {
         this.questionIconResource = questionIconResource;
+    }
+
+    public boolean isSelectedQuestion() {
+        return selectedQuestion;
+    }
+
+    public void setSelectedQuestion(boolean selectedQuestion) {
+        this.selectedQuestion = selectedQuestion;
     }
 
     @NonNull

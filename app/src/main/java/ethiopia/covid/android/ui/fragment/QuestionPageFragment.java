@@ -73,6 +73,9 @@ public class QuestionPageFragment extends BaseFragment {
 
         switch (type) {
             case SINGLE_CHOICE_QUESTION:
+                mainRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.VERTICAL , false));
+                mainRecyclerView.setAdapter(new CheckBoxQuestionRecyclerAdapter(questionItems, true, onQuestionItemSelected));
+                break;
             case SINGLE_MULTIPLE_CHOICE_QUESTION:
                 mainRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.VERTICAL , false));
                 mainRecyclerView.setAdapter(new CheckBoxQuestionRecyclerAdapter(questionItems, onQuestionItemSelected));
