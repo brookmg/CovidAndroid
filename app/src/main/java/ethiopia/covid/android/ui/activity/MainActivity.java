@@ -82,28 +82,40 @@ public class MainActivity extends AppCompatActivity {
                                 QuestionnaireItem.QuestionType.SINGLE_BLOCK_QUESTION,
                                 "How are you feeling today?",
                                 Arrays.asList(
-                                    new QuestionItem("Good", R.drawable.ic_details),
-                                    new QuestionItem("Bad", R.drawable.ic_details)
+                                    new QuestionItem("Good", R.drawable.ic_good),
+                                    new QuestionItem("Bad", R.drawable.ic_bad)
                                 )
                         ),
                         new QuestionnaireItem(
                                 QuestionnaireItem.QuestionType.SINGLE_CHOICE_QUESTION,
                                 "In which region are you currently located",
                                 Arrays.asList(
-                                    new QuestionItem("Addis Abeba", R.drawable.ic_details),
-                                    new QuestionItem("Bahir dar", R.drawable.ic_details),
-                                    new QuestionItem("Gondar", R.drawable.ic_details),
-                                    new QuestionItem("Hawassa", R.drawable.ic_details),
-                                    new QuestionItem("Mekelle", R.drawable.ic_details)
+                                    new QuestionItem("~ Addis Abeba", R.drawable.ic_details),
+                                    new QuestionItem("~ Amhara", R.drawable.ic_details),
+                                    new QuestionItem("~ Oromiya", R.drawable.ic_details),
+                                    new QuestionItem("~ Debub Kelel", R.drawable.ic_details),
+                                    new QuestionItem("~ Tigray", R.drawable.ic_details),
+                                    new QuestionItem("~ Dire Dawa", R.drawable.ic_details),
+                                    new QuestionItem("~ Somali", R.drawable.ic_details),
+                                    new QuestionItem("~ Gambela", R.drawable.ic_details),
+                                    new QuestionItem("~ Afar", R.drawable.ic_details)
                                 )
                         ),
                         new QuestionnaireItem(
                                 QuestionnaireItem.QuestionType.SINGLE_MULTIPLE_CHOICE_QUESTION,
                                 "What are you feeling today?",
                                 Arrays.asList(
-                                        new QuestionItem("Sweating", R.drawable.ic_details),
-                                        new QuestionItem("Coughing", R.drawable.ic_details),
-                                        new QuestionItem("Sour throat", R.drawable.ic_details),
+                                        new QuestionItem("Fever", R.drawable.ic_details),
+                                        new QuestionItem("Wet coughing", R.drawable.ic_details),
+                                        new QuestionItem("Dry coughing", R.drawable.ic_details),
+                                        new QuestionItem("Sore throat", R.drawable.ic_details),
+                                        new QuestionItem("Runny nose", R.drawable.ic_details),
+                                        new QuestionItem("Nasal congestion", R.drawable.ic_details),
+                                        new QuestionItem("Loss of appetite", R.drawable.ic_details),
+                                        new QuestionItem("Fatigue", R.drawable.ic_details),
+                                        new QuestionItem("Muscle and joint pain", R.drawable.ic_details),
+                                        new QuestionItem("Shortness of breath", R.drawable.ic_details),
+                                        new QuestionItem("Confusion", R.drawable.ic_details),
                                         new QuestionItem("Diarrhea", R.drawable.ic_details)
                                 )
                         )

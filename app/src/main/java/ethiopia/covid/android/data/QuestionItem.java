@@ -42,9 +42,4 @@ public class QuestionItem {
         this.selectedQuestion = selectedQuestion;
     }
 
-    @NonNull
-    @Override
-    public String toString() {
-        return "( `questionText`: " + questionText + ")";
-    }
 }

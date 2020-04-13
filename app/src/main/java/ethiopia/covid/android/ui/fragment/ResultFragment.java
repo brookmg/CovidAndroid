@@ -3,6 +3,7 @@ package ethiopia.covid.android.ui.fragment;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.button.MaterialButton;
+import com.google.gson.Gson;
 
 import java.util.List;
 import java.util.Map;
@@ -32,6 +36,7 @@ public class ResultFragment extends BaseFragment {
     private Map<QuestionnaireItem, List<QuestionItem>> questionItems;
     private RecyclerView recyclerView;
     private Location currentLocation;
+    private MaterialButton sendButton;
 
     private ResultFragment(Map<QuestionnaireItem, List<QuestionItem>> questionItems) {
         this.questionItems = questionItems;
@@ -80,11 +85,16 @@ public class ResultFragment extends BaseFragment {
                              @Nullable Bundle savedInstanceState) {
         View mainView = inflater.inflate(R.layout.result_fragment, container, false);
         recyclerView = mainView.findViewById(R.id.result_recycler);
+        sendButton = mainView.findViewById(R.id.questionnaire_button);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.VERTICAL , false));
         recyclerView.setAdapter(new ResultRecyclerAdapter(questionItems));
 
         mainView.findViewById(R.id.back_button).setOnClickListener(v -> {
             if (getActivity() instanceof MainActivity) ((MainActivity) getActivity()).callBackOnParentFragment();
+        });
+
+        sendButton.setOnClickListener(v -> {
+            Log.e("REsULT" , new Gson().toJson(questionItems));
         });
         return mainView;
     }

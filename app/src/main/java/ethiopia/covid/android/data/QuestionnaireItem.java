@@ -50,6 +50,6 @@ public class QuestionnaireItem {
     @NonNull
     @Override
     public String toString() {
-        return "{ 'Question': " + questionText + ", '': " + Arrays.toString(questionItems.toArray(new QuestionItem[0])) + " }";
+        return questionText + "-|||-" + questionType.toString();
     }
 }

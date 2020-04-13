@@ -172,12 +172,17 @@ public class QuestionnaireFragment extends BaseFragment {
                         questionState.put(questionPositionInQuestionnaire, new ArrayList<>(Collections.singletonList(item)));
                         next();
                     } else if (questionnaire.getQuestionType() == QuestionnaireItem.QuestionType.SINGLE_CHOICE_QUESTION) {
-                        questionState.put(questionPositionInQuestionnaire, new ArrayList<>(Collections.singletonList(item)));
+                        if (    // If the user unselected an item ... ( clicked it twice in a row ) ... then put empty list
+                                questionState.get(questionPositionInQuestionnaire) != null &&
+                                questionState.get(questionPositionInQuestionnaire).contains(item)
+                        ) questionState.put(questionPositionInQuestionnaire , new ArrayList<>());
+                        else questionState.put(questionPositionInQuestionnaire, new ArrayList<>(Collections.singletonList(item)));
                         next();
                     } else if (questionnaire.getQuestionType() == QuestionnaireItem.QuestionType.SINGLE_MULTIPLE_CHOICE_QUESTION) {
                         ArrayList<QuestionItem> items = questionState.get(questionPositionInQuestionnaire);
                         if (items != null) {
-                            items.add(item);
+                            if (items.contains(item)) items.remove(item);
+                            else items.add(item);
                             questionState.put(questionPositionInQuestionnaire , items);
                         } else questionState.put(questionPositionInQuestionnaire, new ArrayList<>(Collections.singletonList(item)));
                     }
