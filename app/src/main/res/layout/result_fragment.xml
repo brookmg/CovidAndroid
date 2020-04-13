@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="false"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,10 +11,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/result"
-        android:textSize="21sp"
+        android:textSize="24sp"
         android:textStyle="bold"
+        app:layout_constraintVertical_chainStyle="packed"
         android:padding="16dp"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintTop_toBottomOf="@+id/back_button"
         android:textColor="?appTextColorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/result_recycler"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -23,7 +28,8 @@
         app:tint="?appTextColorPrimary"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="8dp"
+        android:layout_margin="16dp"
+        app:layout_constraintVertical_chainStyle="packed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -37,9 +43,10 @@
         android:layout_width="match_parent"
         android:layout_marginTop="16dp"
         app:layout_constrainedHeight="true"
+        app:layout_constraintTop_toBottomOf="@+id/result_text"
         android:background="@drawable/round_dialogs_purple"
         app:layout_constraintBottom_toTopOf="@+id/bottom_continue_button_holder"
-        android:layout_height="0dp" />
+        android:layout_height="wrap_content" />
 
     <FrameLayout
         android:id="@+id/bottom_continue_button_holder"

@@ -1,5 +1,6 @@
 package ethiopia.covid.android.ui.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +46,27 @@ public class ResultFragment extends BaseFragment {
         questionItems = items;
         recyclerView.setAdapter(new ResultRecyclerAdapter(questionItems));
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)
+    private void handleWindowInsets(View view) {
+        view.setOnApplyWindowInsetsListener((v1, insets) -> {
+            ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+            marginParams.setMargins( 0, insets.getSystemWindowInsetTop(), 0, 0);
+            view.setLayoutParams(marginParams);
+
+            return insets;
+        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+            recyclerView.requestApplyInsets();
+            handleWindowInsets(recyclerView);
+        }
+    }
+
 
     @Nullable
     @Override
