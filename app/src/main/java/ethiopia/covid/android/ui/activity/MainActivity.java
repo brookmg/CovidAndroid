@@ -1,11 +1,14 @@
 package ethiopia.covid.android.ui.activity;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
@@ -13,9 +16,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import ethiopia.covid.android.R;
 import ethiopia.covid.android.data.QuestionnaireItem;
@@ -24,6 +32,7 @@ import ethiopia.covid.android.ui.fragment.BaseFragment;
 import ethiopia.covid.android.ui.fragment.HomeFragment;
 import ethiopia.covid.android.ui.fragment.QuestionnaireFragment;
 import ethiopia.covid.android.util.Utils;
+import mumayank.com.airlocationlibrary.AirLocation;
 
 import static ethiopia.covid.android.util.Constant.TAG_HOME;
 import static ethiopia.covid.android.util.Constant.TAG_QUESTIONNAIRE;
@@ -32,9 +41,19 @@ public class MainActivity extends AppCompatActivity {
 
     private FrameLayout _fragmentContainer;
     private WeakReference<Fragment> currentFragment;
+    private AirLocation airLocation;
+    private List<AirLocation.Callbacks> mainCallbacks = new ArrayList<>();
 
     private void setCurrentFragment(BaseFragment fragment) {
         currentFragment = new WeakReference<>(fragment);
+    }
+
+    public void registerLocationCallback(AirLocation.Callbacks callbacks) {
+        if (!mainCallbacks.contains(callbacks)) mainCallbacks.add(callbacks);
+    }
+
+    public void unRegisterLocationCallback(AirLocation.Callbacks callbacks) {
+        if (mainCallbacks.contains(callbacks)) mainCallbacks.remove(callbacks);
     }
 
     private void fragStarter (String fragTag , BaseFragment baseFragment , Bundle bundle, View sharedView) {
@@ -148,6 +167,38 @@ public class MainActivity extends AppCompatActivity {
         if (currentFragment.get() != null) ((BaseFragment) currentFragment.get()).back();
     }
 
+    public void requestLocationForAll() {
+        airLocation = new AirLocation(
+                this, true,
+                true, new AirLocation.Callbacks() {
+            @Override
+            public void onSuccess(@NotNull Location location) {
+                for (AirLocation.Callbacks callback : mainCallbacks) callback.onSuccess(location);
+            }
+
+            @Override
+            public void onFailed(@NotNull AirLocation.LocationFailedEnum locationFailedEnum) {
+                for (AirLocation.Callbacks callback : mainCallbacks) callback.onFailed(locationFailedEnum);
+            }
+        });
+    }
+
+    public void requestLocationIndividually(AirLocation.Callbacks callbacks) {
+        airLocation = new AirLocation(
+                this, true,
+                true, new AirLocation.Callbacks() {
+            @Override
+            public void onSuccess(@NotNull Location location) {
+                callbacks.onSuccess(location);
+            }
+
+            @Override
+            public void onFailed(@NotNull AirLocation.LocationFailedEnum locationFailedEnum) {
+                callbacks.onFailed(locationFailedEnum);
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -171,5 +222,17 @@ public class MainActivity extends AppCompatActivity {
 
         changeFragment(TAG_HOME, new Bundle(), null);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        airLocation.onActivityResult(requestCode , resultCode , data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        airLocation.onRequestPermissionsResult(requestCode , permissions, grantResults);
     }
 }

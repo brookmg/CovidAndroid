@@ -1,5 +1,6 @@
 package ethiopia.covid.android.ui.fragment;
 
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.SparseArray;
@@ -30,6 +31,7 @@ public class ResultFragment extends BaseFragment {
 
     private Map<QuestionnaireItem, List<QuestionItem>> questionItems;
     private RecyclerView recyclerView;
+    private Location currentLocation;
 
     private ResultFragment(Map<QuestionnaireItem, List<QuestionItem>> questionItems) {
         this.questionItems = questionItems;
@@ -45,6 +47,10 @@ public class ResultFragment extends BaseFragment {
     void setMap(Map<QuestionnaireItem, List<QuestionItem>> items) {
         questionItems = items;
         recyclerView.setAdapter(new ResultRecyclerAdapter(questionItems));
+    }
+
+    public void setCurrentLocation(Location currentLocation) {
+        this.currentLocation = currentLocation;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)

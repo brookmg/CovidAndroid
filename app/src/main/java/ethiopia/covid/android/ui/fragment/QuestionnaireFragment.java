@@ -1,7 +1,7 @@
 package ethiopia.covid.android.ui.fragment;
 
 import android.animation.ValueAnimator;
-import android.content.DialogInterface;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +20,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,12 +33,12 @@ import java.util.Map;
 import ethiopia.covid.android.R;
 import ethiopia.covid.android.data.QuestionnaireItem;
 import ethiopia.covid.android.data.QuestionItem;
-import ethiopia.covid.android.network.API;
 import ethiopia.covid.android.ui.activity.MainActivity;
 import ethiopia.covid.android.ui.adapter.OnQuestionItemSelected;
 import ethiopia.covid.android.ui.adapter.TabAdapter;
 import ethiopia.covid.android.ui.widget.YekomeViewPager;
 import ethiopia.covid.android.util.Utils;
+import mumayank.com.airlocationlibrary.AirLocation;
 
 import static ethiopia.covid.android.network.API.conjure;
 
@@ -55,8 +58,20 @@ public class QuestionnaireFragment extends BaseFragment {
 
     private IntroductionFragment introductionFragment = IntroductionFragment.newInstance();
     private ResultFragment resultFragment = ResultFragment.newInstance(new HashMap<>());
+    private Location currentLocation;
 
     private SparseArray<ArrayList<QuestionItem>> questionState = new SparseArray<>();
+    private AirLocation.Callbacks locationCallbacks = new AirLocation.Callbacks() {
+        @Override
+        public void onSuccess(@NotNull Location location) {
+            currentLocation = location;
+        }
+
+        @Override
+        public void onFailed(@NotNull AirLocation.LocationFailedEnum locationFailedEnum) {
+            Log.e("LOCATION" , locationFailedEnum.name());
+        }
+    };
 
     private QuestionnaireFragment(List<QuestionnaireItem> questionnaireItems) {
         this.questionnaireItems = questionnaireItems;
@@ -92,6 +107,8 @@ public class QuestionnaireFragment extends BaseFragment {
             }
 
             resultFragment.setMap(questionnaireItemListMap);
+            resultFragment.setCurrentLocation(currentLocation);
+
             mainViewPager.setCurrentItem(
                     Math.min(mainViewPager.getCurrentItem() + 1 , tabAdapter.getCount()), true
             );
@@ -133,6 +150,10 @@ public class QuestionnaireFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View mainView = inflater.inflate(R.layout.questionnaire_fragment, container, false);
+
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).requestLocationIndividually(locationCallbacks);
+        }
 
         mainViewPager = mainView.findViewById(R.id.main_view_pager);
         pageChangeProgressBar = mainView.findViewById(R.id.current_page_progress_bar);
