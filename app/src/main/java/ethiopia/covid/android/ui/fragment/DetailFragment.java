@@ -2,6 +2,7 @@ package ethiopia.covid.android.ui.fragment;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ import static ethiopia.covid.android.ui.fragment.ContentState.setRefreshButtonAc
 public class DetailFragment extends BaseFragment {
 
     private RecyclerView recyclerView;
-    private DetailRecyclerAdapter adapter = new DetailRecyclerAdapter(new ArrayList<>());
+    private DetailRecyclerAdapter adapter;
 
     public static DetailFragment newInstance() {
         Bundle args = new Bundle();
@@ -66,6 +67,12 @@ public class DetailFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        recyclerView = null;
+        adapter = null;
+    }
 
     @Nullable
     @Override
@@ -75,13 +82,6 @@ public class DetailFragment extends BaseFragment {
         recyclerView = mainView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.VERTICAL , false));
 
-        try {
-            adapter.setHasStableIds(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        recyclerView.setAdapter(adapter);
         setRefreshButtonAction(mainView , v -> renderPage(mainView));
         renderPage(mainView);
 
@@ -89,7 +89,14 @@ public class DetailFragment extends BaseFragment {
     }
 
     private void renderPage(View mainView) {
+        adapter = new DetailRecyclerAdapter(new ArrayList<>());
         List<DetailItem> details = new ArrayList<>();
+
+        try {
+            adapter.setHasStableIds(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         changeProgressBarVisibility(mainView , true);
         changeErrorDialogVisibility(mainView, false);
@@ -104,10 +111,11 @@ public class DetailFragment extends BaseFragment {
                 changeErrorDialogVisibility(mainView, true);
             }
 
-            adapter.addContent(details);
+            if (adapter != null) adapter.addContent(details);
             changeProgressBarVisibility(mainView , false);
         });
 
+        recyclerView.setAdapter(adapter);
     }
 
 }
