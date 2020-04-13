@@ -10,6 +10,7 @@
         android:id="@+id/textView_1"
         android:padding="16dp"
         android:textSize="21sp"
+        android:layout_marginTop="50dp"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/recycler_view"

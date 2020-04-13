@@ -116,6 +116,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void forcefulOnBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+            //there are more items in the back stack. We are not on the home frag
+            getSupportFragmentManager().popBackStackImmediate();
+        } else {
+            Snackbar.make(_fragmentContainer, "Press back again or 👉🏾 button", Snackbar.LENGTH_SHORT)
+                    .setAction("Exit", (v) -> finish()).show();
+        }
+
+        if (getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getFragments().size() - 1)
+                instanceof BaseFragment)
+            setCurrentFragment((BaseFragment) getSupportFragmentManager().getFragments()
+                    .get(getSupportFragmentManager().getFragments().size() - 1));
+    }
 
     public void changeTheme() {
         int currentTheme = Utils.getCurrentTheme(this);

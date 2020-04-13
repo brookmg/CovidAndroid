@@ -1,6 +1,7 @@
 package ethiopia.covid.android.ui.fragment;
 
 import android.animation.ValueAnimator;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,9 +14,11 @@ import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -27,11 +30,14 @@ import java.util.Map;
 import ethiopia.covid.android.R;
 import ethiopia.covid.android.data.QuestionnaireItem;
 import ethiopia.covid.android.data.QuestionItem;
+import ethiopia.covid.android.network.API;
 import ethiopia.covid.android.ui.activity.MainActivity;
 import ethiopia.covid.android.ui.adapter.OnQuestionItemSelected;
 import ethiopia.covid.android.ui.adapter.TabAdapter;
 import ethiopia.covid.android.ui.widget.YekomeViewPager;
 import ethiopia.covid.android.util.Utils;
+
+import static ethiopia.covid.android.network.API.conjure;
 
 /**
  * Created by BrookMG on 3/23/2020 in ethiopia.covid.android.ui.fragment
@@ -42,10 +48,12 @@ public class QuestionnaireFragment extends BaseFragment {
     private ProgressBar pageChangeProgressBar;
     private YekomeViewPager mainViewPager;
     private FloatingActionButton nextButton;
+    private AppCompatImageView exitAllButton;
     private TabAdapter tabAdapter;
     private List<QuestionnaireItem> questionnaireItems;
     private BottomAppBar bottomAppBar;
 
+    private IntroductionFragment introductionFragment = IntroductionFragment.newInstance();
     private ResultFragment resultFragment = ResultFragment.newInstance(new HashMap<>());
 
     private SparseArray<ArrayList<QuestionItem>> questionState = new SparseArray<>();
@@ -116,6 +124,7 @@ public class QuestionnaireFragment extends BaseFragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
             mainViewPager.requestApplyInsets();
             handleWindowInsets(mainViewPager);
+            handleWindowInsets(exitAllButton);
         }
     }
 
@@ -129,37 +138,67 @@ public class QuestionnaireFragment extends BaseFragment {
         pageChangeProgressBar = mainView.findViewById(R.id.current_page_progress_bar);
         nextButton = mainView.findViewById(R.id.next_fab);
         bottomAppBar = mainView.findViewById(R.id.bottom_bar);
+        exitAllButton = mainView.findViewById(R.id.exit_out);
 
         tabAdapter = new TabAdapter(getChildFragmentManager());
-        tabAdapter.addFragment(IntroductionFragment.newInstance(), getString(R.string.news_menu_title));
+        tabAdapter.addFragment(introductionFragment , getString(R.string.news_menu_title));
 
-        for (QuestionnaireItem questionnaire : questionnaireItems) {
-            OnQuestionItemSelected questionItemSelected = (item, position) -> {
-                int questionPositionInQuestionnaire = questionnaireItems.indexOf(questionnaire);
-                if (questionnaire.getQuestionType() == QuestionnaireItem.QuestionType.SINGLE_BLOCK_QUESTION) {
-                    questionState.put(questionPositionInQuestionnaire, new ArrayList<>(Collections.singletonList(item)));
-                    next();
-                } else if (questionnaire.getQuestionType() == QuestionnaireItem.QuestionType.SINGLE_CHOICE_QUESTION) {
-                    questionState.put(questionPositionInQuestionnaire, new ArrayList<>(Collections.singletonList(item)));
-                    next();
-                } else if (questionnaire.getQuestionType() == QuestionnaireItem.QuestionType.SINGLE_MULTIPLE_CHOICE_QUESTION) {
-                    ArrayList<QuestionItem> items = questionState.get(questionPositionInQuestionnaire);
-                    if (items != null) {
-                        items.add(item);
-                        questionState.put(questionPositionInQuestionnaire , items);
-                    } else questionState.put(questionPositionInQuestionnaire, new ArrayList<>(Collections.singletonList(item)));
-                }
-            };
+        conjure(() -> {
+            for (QuestionnaireItem questionnaire : questionnaireItems) {
+                OnQuestionItemSelected questionItemSelected = (item, position) -> {
+                    int questionPositionInQuestionnaire = questionnaireItems.indexOf(questionnaire);
+                    if (questionnaire.getQuestionType() == QuestionnaireItem.QuestionType.SINGLE_BLOCK_QUESTION) {
+                        questionState.put(questionPositionInQuestionnaire, new ArrayList<>(Collections.singletonList(item)));
+                        next();
+                    } else if (questionnaire.getQuestionType() == QuestionnaireItem.QuestionType.SINGLE_CHOICE_QUESTION) {
+                        questionState.put(questionPositionInQuestionnaire, new ArrayList<>(Collections.singletonList(item)));
+                        next();
+                    } else if (questionnaire.getQuestionType() == QuestionnaireItem.QuestionType.SINGLE_MULTIPLE_CHOICE_QUESTION) {
+                        ArrayList<QuestionItem> items = questionState.get(questionPositionInQuestionnaire);
+                        if (items != null) {
+                            items.add(item);
+                            questionState.put(questionPositionInQuestionnaire , items);
+                        } else questionState.put(questionPositionInQuestionnaire, new ArrayList<>(Collections.singletonList(item)));
+                    }
+                };
 
-            tabAdapter.addFragment(QuestionPageFragment.newInstance(
-                questionnaire.getQuestionText(),
-                questionnaire.getQuestionType(),
-                questionnaire.getQuestionItems(),
-                questionItemSelected
-            ), "Question");
-        }
+                tabAdapter.addFragment(QuestionPageFragment.newInstance(
+                        questionnaire.getQuestionText(),
+                        questionnaire.getQuestionType(),
+                        questionnaire.getQuestionItems(),
+                        questionItemSelected
+                ), "Question");
+                tabAdapter.notifyDataSetChanged();
+            }
+            return true;
+        }, (content, err) -> {
+            tabAdapter.addFragment(resultFragment , "Result");
+            tabAdapter.notifyDataSetChanged();
+            introductionFragment.changeProgressState(false);
 
-        tabAdapter.addFragment(resultFragment , "Result");
+            mainViewPager.setOffscreenPageLimit(tabAdapter.getCount());
+            ValueAnimator valueAnimator = ValueAnimator.ofFloat(pageChangeProgressBar.getProgress(), (1f / (float) tabAdapter.getCount()) * 100f);
+            valueAnimator.addUpdateListener(animation -> pageChangeProgressBar.setProgress(Math.round((float) animation.getAnimatedValue())));
+            valueAnimator.start();
+
+            nextButton.setOnClickListener(v -> next());
+            bottomAppBar.setNavigationOnClickListener(v -> {
+                if (getActivity() instanceof MainActivity) ((MainActivity) getActivity()).callBackOnParentFragment();
+            });
+
+            exitAllButton.setOnClickListener(v -> {
+                if (getActivity() != null)
+                new MaterialAlertDialogBuilder(
+                        getActivity(),
+                        Utils.getCurrentTheme(getActivity()) == 0 ? R.style.LightAlertDialog : R.style.DarkAlertDialog
+                ).setTitle("Exit questionnaire?").setMessage("If you exit now, all the progress will be lost. Are you sure?")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            if (getActivity() instanceof MainActivity) {
+                                ((MainActivity) getActivity()).forcefulOnBackPressed();
+                            }
+                        }).setNegativeButton("No" , null).show();
+            });
+        });
 
         mainViewPager.setAdapter(tabAdapter);
         mainViewPager.setPagingEnabled(false);
@@ -176,16 +215,6 @@ public class QuestionnaireFragment extends BaseFragment {
 
             @Override
             public void onPageScrollStateChanged(int state) {}
-        });
-        mainViewPager.setOffscreenPageLimit(tabAdapter.getCount());
-
-        ValueAnimator valueAnimator = ValueAnimator.ofFloat(pageChangeProgressBar.getProgress(), (1f / (float) tabAdapter.getCount()) * 100f);
-        valueAnimator.addUpdateListener(animation -> pageChangeProgressBar.setProgress(Math.round((float) animation.getAnimatedValue())));
-        valueAnimator.start();
-
-        nextButton.setOnClickListener(v -> next());
-        bottomAppBar.setNavigationOnClickListener(v -> {
-            if (getActivity() instanceof MainActivity) ((MainActivity) getActivity()).callBackOnParentFragment();
         });
 
         return mainView;
