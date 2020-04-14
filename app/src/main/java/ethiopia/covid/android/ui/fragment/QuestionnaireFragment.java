@@ -220,12 +220,13 @@ public class QuestionnaireFragment extends BaseFragment {
                 new MaterialAlertDialogBuilder(
                         getActivity(),
                         Utils.getCurrentTheme(getActivity()) == 0 ? R.style.LightAlertDialog : R.style.DarkAlertDialog
-                ).setTitle("Exit questionnaire?").setMessage("If you exit now, all the progress will be lost. Are you sure?")
-                        .setPositiveButton("Yes", (dialog, which) -> {
+                ).setTitle(getString(R.string.exit_questionnaire))
+                        .setMessage(getString(R.string.exit_questionnaire_message))
+                        .setPositiveButton(getString(R.string.yes), (dialog, which) -> {
                             if (getActivity() instanceof MainActivity) {
                                 ((MainActivity) getActivity()).forcefulOnBackPressed();
                             }
-                        }).setNegativeButton("No" , null).show();
+                        }).setNegativeButton(getString(R.string.no) , null).show();
             });
         });
 

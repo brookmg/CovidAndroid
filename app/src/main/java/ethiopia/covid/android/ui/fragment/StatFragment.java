@@ -21,6 +21,7 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -121,7 +122,7 @@ public class StatFragment extends BaseFragment {
         changeErrorDialogVisibility(mainView, false);
         recyclerView.setVisibility(View.GONE);
 
-        App.getInstance().getMainAPI().getStatRecyclerContents((recyclerItems, err) -> {
+        App.getInstance().getMainAPI().getStatRecyclerContents(new WeakReference<>(getActivity()), (recyclerItems, err) -> {
             if (!err.isEmpty() || recyclerItems == null || recyclerItems.isEmpty() ) {
                 changeProgressBarVisibility(mainView, false);
                 changeErrorDialogVisibility(mainView, true);

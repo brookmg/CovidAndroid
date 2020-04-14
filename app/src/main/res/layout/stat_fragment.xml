@@ -47,7 +47,7 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/city_name"
-                    android:text="Addis Abeba,"
+                    android:text="@string/addis_abeba"
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
                     android:paddingLeft="8dp"
@@ -63,7 +63,7 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/country_name"
-                    android:text="Ethiopia"
+                    android:text="@string/ethiopia"
                     android:paddingTop="16dp"
                     android:textSize="18sp"
                     android:paddingBottom="16dp"

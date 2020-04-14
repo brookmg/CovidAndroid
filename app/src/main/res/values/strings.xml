@@ -25,5 +25,36 @@
     <string name="start">Start</string>
     <string name="send">Send</string>
     <string name="help_nhs">Above all, stay home to help the NHS workers and keep them safe</string>
+    <string name="exit_text">Press back again or 👉🏾 button</string>
+    <string name="exit">Exit</string>
+    <string name="et_covid_dist">Ethiopia Covid19 Distribution</string>
+    <string name="cases">Cases</string>
+    <string name="deaths">Deaths</string>
+    <string name="recovery">Recovery</string>
+    <string name="ethiopia">Ethiopia</string>
+
+    <string name="country">Country</string>
+    <string name="active">Active</string>
+    <string name="critical">Critical</string>
+    <string name="case_per_mil">Case/1M</string>
+    <string name="death_per_mil">Death/1M</string>
+
+    <string name="id">ID</string>
+    <string name="name">Name</string>
+    <string name="location">location</string>
+    <string name="age">Age</string>
+    <string name="gender">Gender</string>
+    <string name="nationality">Nationality</string>
+    <string name="recent_travel">RecentTravel</string>
+    <string name="status">Status</string>
+
+    <string name="exit_questionnaire">Exit questionnaire?</string>
+    <string name="exit_questionnaire_message">If you exit now, all the progress will be lost. Are you sure?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="addis_abeba">Addis Abeba,</string>
+    <string name="language">Language</string>
+    <string name="amh">Amharic</string>
+    <string name="eng">English</string>
 
 </resources>

@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.franmontiel.localechanger.LocaleChanger;
 import com.franmontiel.localechanger.utils.ActivityRecreationHelper;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -61,6 +62,49 @@ public class MainActivity extends AppCompatActivity {
     public void unRegisterLocationCallback(AirLocation.Callbacks callbacks) {
         mainCallbacks.remove(callbacks);
     }
+    
+    public void showLanguageDialog() {
+        new MaterialAlertDialogBuilder(this , Utils.getCurrentTheme(this) == 0 ? R.style.LightAlertDialog : R.style.DarkAlertDialog)
+                .setTitle(getString(R.string.language))
+                .setItems(new String[]{
+                        getString(R.string.amh), getString(R.string.eng)
+                }, (dialog, which) -> {
+                    switch (which) {
+                        case 0: {
+                            LocaleChanger.setLocale(new Locale("am", "et"));
+                            this.recreateActivity();
+                            break;
+                        }
+
+                        case 1: {
+                            LocaleChanger.setLocale(new Locale("en", "us"));
+                            this.recreateActivity();
+                            break;
+                        }
+
+//                     case 2: {
+//                         LocaleChanger.setLocale(new Locale("ti"));
+//                         this.recreate();
+//                         break;
+//                     }
+//
+//                     case 3: {
+//
+//                         LocaleChanger.setLocale(new Locale("om"));
+//                         this.recreate();
+//                         break;
+//                     }
+
+                        default: {
+                            
+                            LocaleChanger.setLocale(new Locale("en", "us"));
+                            this.recreateActivity();
+                            break;
+                        }
+                    }
+                }).setCancelable(false).show();
+    }
+
     @Override
     protected void attachBaseContext(Context newBase) {
         newBase = LocaleChanger.configureBaseContext(newBase);
@@ -114,8 +158,8 @@ public class MainActivity extends AppCompatActivity {
                 //there are more items in the back stack. We are not on the home frag
                 getSupportFragmentManager().popBackStackImmediate();
             } else {
-                Snackbar.make(_fragmentContainer, "Press back again or 👉🏾 button", Snackbar.LENGTH_SHORT)
-                        .setAction("Exit", (v) -> finish()).show();
+                Snackbar.make(_fragmentContainer, getString(R.string.exit_text), Snackbar.LENGTH_SHORT)
+                        .setAction(getString(R.string.exit), (v) -> finish()).show();
             }
 
             if (getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getFragments().size() - 1)

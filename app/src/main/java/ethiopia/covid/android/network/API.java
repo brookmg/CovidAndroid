@@ -1,5 +1,6 @@
 package ethiopia.covid.android.network;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -10,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import com.chuckerteam.chucker.api.ChuckerInterceptor;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -207,14 +209,13 @@ public class API {
     }
 
     @UiThread
-    public void getStatRecyclerContents(OnItemReady<List<StatRecyclerItem>> onItemReady) {
-
+    public void getStatRecyclerContents(WeakReference<Context> activity, OnItemReady<List<StatRecyclerItem>> onItemReady) {
         conjure(() -> {
             List<StatRecyclerItem> returnable = new ArrayList<>();
 
             try {
                 Case caseItem = getPmoCovidAPI().getCases().execute().body().get(0);
-                returnable.add(new StatRecyclerItem("Ethiopia" , caseItem.getConfirmed(),
+                returnable.add(new StatRecyclerItem(activity.get().getString(R.string.ethiopia) , caseItem.getConfirmed(),
                         caseItem.getDeceased(), caseItem.getRecovered(), caseItem.getTested()));
             } catch (Exception ignored) {}
 
@@ -252,13 +253,22 @@ public class API {
 
                 returnable.add(
                         new StatRecyclerItem(
-                                App.getInstance().getString(R.string.regions_affected) , values, regionCodes, Utils.generateColors(values.size())
+                                activity.get().getString(R.string.regions_affected) , values, regionCodes, Utils.generateColors(values.size())
                         )
                 );
 
                 returnable.add(
                         new StatRecyclerItem(
-                                Arrays.asList("ID" , "Name", "Location", "Age", "Gender" , "Nationality", "RecentTravel", "Status"),
+                                Arrays.asList(
+                                        activity.get().getString(R.string.id),
+                                        activity.get().getString(R.string.name),
+                                        activity.get().getString(R.string.location),
+                                        activity.get().getString(R.string.age),
+                                        activity.get().getString(R.string.gender),
+                                        activity.get().getString(R.string.nationality),
+                                        activity.get().getString(R.string.recent_travel),
+                                        activity.get().getString(R.string.status)
+                                ),
                                 1,
                                 patients.getResults()
                         )
@@ -290,23 +300,23 @@ public class API {
 
                 returnable.add(
                         new StatRecyclerItem(
-                                "Ethiopia Covid Distribution",
+                                activity.get().getString(R.string.et_covid_dist),
                                 Arrays.asList(
                                         new LineChartItem(
                                                 caseNumbers,
-                                                "Cases",
+                                                activity.get().getString(R.string.cases),
                                                 ContextCompat.getColor(App.getInstance() , R.color.purple_0),
                                                 ContextCompat.getColor(App.getInstance() , R.color.purple_1)
                                         ),
                                         new LineChartItem(
                                                 deathNumbers,
-                                                "Deaths",
+                                                activity.get().getString(R.string.deaths),
                                                 ContextCompat.getColor(App.getInstance() , R.color.red_0),
                                                 ContextCompat.getColor(App.getInstance() , R.color.red_1)
                                         ),
                                         new LineChartItem(
                                                 recoveryNumbers,
-                                                "Recovery",
+                                                activity.get().getString(R.string.recovery),
                                                 ContextCompat.getColor(App.getInstance() , R.color.green_0),
                                                 ContextCompat.getColor(App.getInstance() , R.color.green_1)
                                         )
@@ -342,7 +352,16 @@ public class API {
                 returnable.add(new StatRecyclerItem(
                         0,
                         worldStatItems,
-                        Arrays.asList("Country" , "Infected", "Active", "Death", "Recovered" , "Critical", "Case/1M", "Death/1M"),
+                        Arrays.asList(
+                                activity.get().getString(R.string.country),
+                                activity.get().getString(R.string.infected),
+                                activity.get().getString(R.string.active),
+                                activity.get().getString(R.string.death),
+                                activity.get().getString(R.string.recovery),
+                                activity.get().getString(R.string.critical),
+                                activity.get().getString(R.string.case_per_mil),
+                                activity.get().getString(R.string.death_per_mil)
+                        ),
                         1
                 ));
             } catch (Exception err) {
