@@ -35,6 +35,7 @@ import ethiopia.covid.android.data.PatientItem;
 import ethiopia.covid.android.data.StatRecyclerItem;
 import ethiopia.covid.android.data.WorldCovid;
 import ethiopia.covid.android.network.API;
+import ethiopia.covid.android.ui.activity.MainActivity;
 import ethiopia.covid.android.ui.adapter.StatRecyclerAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,7 +54,7 @@ public class StatFragment extends BaseFragment {
 
     private AppBarLayout appBarLayout;
     private RecyclerView recyclerView;
-    private AppCompatImageButton themeButton;
+    private AppCompatImageButton themeButton, langButton;
     private StatRecyclerAdapter statRecyclerAdapter;
 
     public static StatFragment newInstance() {
@@ -91,6 +92,7 @@ public class StatFragment extends BaseFragment {
         appBarLayout = mainView.findViewById(R.id.appbar_layout);
         recyclerView = mainView.findViewById(R.id.stat_recycler_view);
         themeButton = mainView.findViewById(R.id.theme_btn);
+        langButton = mainView.findViewById(R.id.lang_btn);
 
         themeButton.setImageDrawable(
                 ContextCompat.getDrawable(
@@ -100,6 +102,10 @@ public class StatFragment extends BaseFragment {
         );
 
         themeButton.setOnClickListener(v -> changeTheme());
+        langButton.setOnClickListener(v -> {
+            if (getActivity() instanceof MainActivity) ((MainActivity) getActivity()).showLanguageDialog();
+        });
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.VERTICAL , false) {
             @Override
             public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
