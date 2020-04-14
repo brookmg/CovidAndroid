@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         }
                     }
-                }).setCancelable(false).show();
+                }).show();
     }
 
     @Override
