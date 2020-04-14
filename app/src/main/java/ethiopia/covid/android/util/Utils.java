@@ -14,6 +14,10 @@ import android.widget.LinearLayout;
 import androidx.annotation.Px;
 import androidx.core.graphics.ColorUtils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -115,6 +119,26 @@ public class Utils {
         }
 
         return returnable;
+    }
+
+    public static String readRawFile(Context ctx, int resId) {
+        InputStream inputStream = ctx.getResources().openRawResource(resId);
+
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+        String line;
+        StringBuilder text = new StringBuilder();
+
+        try {
+            while (( line = bufferedReader.readLine()) != null) {
+                text.append(line);
+                text.append('\n');
+            }
+        } catch (IOException e) {
+            return null;
+        }
+
+        return text.toString();
     }
 
     public static int getCurrentTheme(Context context) {

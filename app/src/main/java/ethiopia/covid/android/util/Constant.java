@@ -14,6 +14,8 @@ import kotlin.collections.MapsKt;
 public class Constant {
 
     public static final String TAG_HOME = "tag_home";
+    public static final String TAG_QUESTIONNAIRE = "tag_questionnaire";
+
     public static final String PREFERENCE_THEME = "pref_theme";
     public static final String TIME_STAMP_FORMAT = "yyyy-MM-dd HH:mm:ss";
 

@@ -214,7 +214,7 @@ public class API {
 
             try {
                 Case caseItem = getPmoCovidAPI().getCases().execute().body().get(0);
-                returnable.add(new StatRecyclerItem("Ethiopia" , caseItem.getTotal(),
+                returnable.add(new StatRecyclerItem("Ethiopia" , caseItem.getConfirmed(),
                         caseItem.getDeceased(), caseItem.getRecovered(), caseItem.getTested()));
             } catch (Exception ignored) {}
 

@@ -1,0 +1,43 @@
+[
+  {
+    "questionType": SINGLE_BLOCK_QUESTION,
+    "questionText":"How are you feeling today?",
+    "questionItems": [
+      { "questionText": "Good", "questionIconLink": "https://www.svgrepo.com/download/11889/happy.png" },
+      { "questionText": "Bad", "questionIconLink":  "https://www.svgrepo.com/download/43553/sad.png" }
+    ]
+  },
+  {
+    "questionType": SINGLE_CHOICE_QUESTION,
+    "questionText":"In which region are you currently located",
+    "questionItems": [
+      { "questionText": "~ Addis Abeba" },
+      { "questionText": "~ Amhara" },
+      { "questionText": "~ Oromiya" },
+      { "questionText": "~ Debub Kelel" },
+      { "questionText": "~ Tigray" },
+      { "questionText": "~ Dire Dawa" },
+      { "questionText": "~ Somali" },
+      { "questionText": "~ Gambela" },
+      { "questionText": "~ Afar" }
+    ]
+  },
+  {
+    "questionType": SINGLE_MULTIPLE_CHOICE_QUESTION,
+    "questionText":"What are you feeling today?",
+    "questionItems": [
+      { "questionText": "Fever" },
+      { "questionText": "Wet coughing" },
+      { "questionText": "Dry coughing" },
+      { "questionText": "Sore throat" },
+      { "questionText": "Runny nose" },
+      { "questionText": "Nasal congestion" },
+      { "questionText": "Loss of appetite" },
+      { "questionText": "Fatigue" },
+      { "questionText": "Muscle and joint pain" },
+      { "questionText": "Shortness of breath" },
+      { "questionText": "Confusion" },
+      { "questionText": "Diarrhea" }
+    ]
+  }
+]

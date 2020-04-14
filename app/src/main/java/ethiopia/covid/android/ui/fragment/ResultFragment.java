@@ -1,0 +1,174 @@
+package ethiopia.covid.android.ui.fragment;
+
+import android.location.Location;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.button.MaterialButton;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.GsonBuilder;
+
+import java.util.List;
+import java.util.Map;
+
+import ethiopia.covid.android.R;
+import ethiopia.covid.android.data.QuestionItem;
+import ethiopia.covid.android.data.QuestionnaireItem;
+import ethiopia.covid.android.ui.activity.MainActivity;
+import ethiopia.covid.android.ui.adapter.ResultRecyclerAdapter;
+
+/**
+ * Created by BrookMG on 3/23/2020 in ethiopia.covid.android.ui.fragment
+ * inside the project CoVidEt .
+ */
+public class ResultFragment extends BaseFragment {
+
+    private Map<QuestionnaireItem, List<QuestionItem>> questionItems;
+    private RecyclerView recyclerView;
+    private Location currentLocation;
+    private MaterialButton sendButton;
+
+    private static class Result {
+        private Map<QuestionnaireItem, List<QuestionItem>> questionItems;
+        private double longitude;
+        private double latitude;
+        private double accuracy;
+
+        public Result(Map<QuestionnaireItem, List<QuestionItem>> questionItems, double longitude, double latitude, double accuracy) {
+            this.questionItems = questionItems;
+            this.longitude = longitude;
+            this.latitude = latitude;
+            this.accuracy = accuracy;
+        }
+
+        public Map<QuestionnaireItem, List<QuestionItem>> getQuestionItems() {
+            return questionItems;
+        }
+
+        public void setQuestionItems(Map<QuestionnaireItem, List<QuestionItem>> questionItems) {
+            this.questionItems = questionItems;
+        }
+
+        public double getLongitude() {
+            return longitude;
+        }
+
+        public void setLongitude(double longitude) {
+            this.longitude = longitude;
+        }
+
+        public double getLatitude() {
+            return latitude;
+        }
+
+        public void setLatitude(double latitude) {
+            this.latitude = latitude;
+        }
+
+        public double getAccuracy() {
+            return accuracy;
+        }
+
+        public void setAccuracy(double accuracy) {
+            this.accuracy = accuracy;
+        }
+    }
+
+    private ResultFragment(Map<QuestionnaireItem, List<QuestionItem>> questionItems) {
+        this.questionItems = questionItems;
+    }
+
+    static ResultFragment newInstance(Map<QuestionnaireItem, List<QuestionItem>> items) {
+        Bundle args = new Bundle();
+        ResultFragment fragment = new ResultFragment(items);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    void setMap(Map<QuestionnaireItem, List<QuestionItem>> items) {
+        questionItems = items;
+        recyclerView.setAdapter(new ResultRecyclerAdapter(questionItems));
+    }
+
+    public void setCurrentLocation(Location currentLocation) {
+        this.currentLocation = currentLocation;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)
+    private void handleWindowInsets(View view) {
+        view.setOnApplyWindowInsetsListener((v1, insets) -> {
+            ViewGroup.MarginLayoutParams marginParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+            marginParams.setMargins( 0, insets.getSystemWindowInsetTop(), 0, 0);
+            view.setLayoutParams(marginParams);
+
+            return insets;
+        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+            recyclerView.requestApplyInsets();
+            handleWindowInsets(recyclerView);
+        }
+    }
+
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View mainView = inflater.inflate(R.layout.result_fragment, container, false);
+        recyclerView = mainView.findViewById(R.id.result_recycler);
+        sendButton = mainView.findViewById(R.id.questionnaire_button);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.VERTICAL , false));
+        recyclerView.setAdapter(new ResultRecyclerAdapter(questionItems));
+
+        mainView.findViewById(R.id.back_button).setOnClickListener(v -> {
+            if (getActivity() instanceof MainActivity) ((MainActivity) getActivity()).callBackOnParentFragment();
+        });
+
+        sendButton.setOnClickListener(v -> {
+            Result result = new Result(
+                    questionItems,
+                    currentLocation != null ? currentLocation.getLongitude() : 0,
+                    currentLocation != null ? currentLocation.getLatitude() : 0,
+                    currentLocation != null ? currentLocation.getAccuracy() : 0
+            );
+            Log.e("REsULT" , new GsonBuilder().enableComplexMapKeySerialization()
+                    .addSerializationExclusionStrategy(new ExclusionStrategy() {
+                        @Override
+                        public boolean shouldSkipField(FieldAttributes field) {
+                            return field.getDeclaringClass() == QuestionnaireItem.class &&
+                                    field.getName().equals("questionItems") ||
+                                field.getDeclaringClass() == QuestionItem.class &&
+                                        field.getName().equals("questionIconResource") ||
+                                field.getDeclaringClass() == QuestionItem.class &&
+                                        field.getName().equals("selectedQuestion") ||
+                                field.getDeclaringClass() == QuestionItem.class &&
+                                        field.getName().equals("questionIconLink");
+                        }
+
+                        @Override
+                        public boolean shouldSkipClass(Class<?> clazz) {
+                            return false;
+                        }
+                    })
+                    .create().toJson(result));
+        });
+        return mainView;
+    }
+
+}

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:id="@+id/main_scroll_view"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:paddingBottom="65dp"
+        android:clipToPadding="false"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/icon_1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                app:srcCompat="@drawable/hearts"
+                app:tint="?appTextColorPrimary"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:id="@+id/textView_1"
+                android:padding="16dp"
+                android:textSize="21sp"
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/check_in"
+                app:layout_constraintTop_toBottomOf="@id/icon_1"
+                android:textColor="?appTextColorPrimary" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/icon_2"
+                app:layout_constraintTop_toBottomOf="@id/textView_1"
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                app:srcCompat="@drawable/location"
+                app:tint="?appTextColorPrimary"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:id="@+id/textView_2"
+                android:padding="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="21sp"
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:text="@string/help_us_identify_unwell"
+                app:layout_constraintTop_toBottomOf="@id/icon_2"
+                android:textColor="?appTextColorPrimary" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/icon_3"
+                app:layout_constraintTop_toBottomOf="@id/textView_2"
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                app:srcCompat="@drawable/donate"
+                app:tint="?appTextColorPrimary"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:id="@+id/textView_3"
+                android:padding="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/donate_data"
+                android:textSize="21sp"
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                app:layout_constraintTop_toBottomOf="@id/icon_3"
+                android:textColor="?appTextColorPrimary" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/icon_4"
+                app:layout_constraintTop_toBottomOf="@id/textView_3"
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                app:srcCompat="@drawable/nurse"
+                app:tint="?appTextColorPrimary"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:id="@+id/textView_4"
+                android:padding="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/help_nhs"
+                android:textSize="21sp"
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                app:layout_constraintTop_toBottomOf="@id/icon_4"
+                android:textColor="?appTextColorPrimary" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <include layout="@layout/content_state_layout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

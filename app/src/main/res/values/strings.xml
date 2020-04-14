@@ -15,7 +15,15 @@
     <string name="regions_affected">Regions affected</string>
     <string name="question">Question</string>
     <string name="answer">Answer</string>
-    <string name="error_content">Some error has occured while preparing content</string>
+    <string name="error_content">Some error has occurred while preparing content</string>
     <string name="refresh">Refresh</string>
+    <string name="check_in">Check in everyday about how you are feeling.</string>
+    <string name="help_us_identify_unwell">Help us identify areas with people feeling unwell</string>
+    <string name="donate_data">Donate your data to help scientists identify the problem</string>
+    <string name="result">Result</string>
+    <string name="questionnaire_text">Take a questionnaire now to notify us about your state. This will help us greatly</string>
+    <string name="start">Start</string>
+    <string name="send">Send</string>
+    <string name="help_nhs">Above all, stay home to help the NHS workers and keep them safe</string>
 
 </resources>

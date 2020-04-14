@@ -24,6 +24,26 @@
         <item name="android:background">@drawable/round_dialogs_dark</item>
     </style>
 
+    <style name="SquareShapeAppearance" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
+    <style name="DarkAlertDialog" parent="Theme.MaterialComponents.Dialog.Alert">
+        <item name="android:colorBackground">@color/black_0</item>
+        <item name="colorSurface">@color/black_0</item>
+        <item name="colorPrimary">@color/purple_1</item>
+        <item name="cornerRadius">16dp</item>
+    </style>
+
+    <style name="LightAlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/purple_0</item>
+        <item name="cornerRadius">16dp</item>
+    </style>
+
     <style name="LightTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="windowActionBar">false</item>
         <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="lollipop">true</item>
