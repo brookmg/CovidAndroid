@@ -29,6 +29,10 @@ jobs:
     - name: Decode secrets.properties file
       env: 
         SECRETS_PROPERTIES: ${{ secrets.SECRETS_PROPERTIES }}  
-      run: echo $SECRETS_PROPERTIES > ./secrets.properties  
+      run: echo $SECRETS_PROPERTIES > ./secrets.properties
+    - name: Decode google-services.json file
+      env:
+        GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES }}
+      run: echo $GOOGLE_SERVICES > ./app/google-services.json
     - name: Build with Gradle
       run: ./gradlew build
