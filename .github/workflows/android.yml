@@ -32,7 +32,7 @@ jobs:
       run: echo $SECRETS_PROPERTIES > ./secrets.properties
     - name: Decode google-services.json file
       env:
-        SECRETS_PROPERTIES: ${{ secrets.GOOGLE_SERVICES }}
+        GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES }}
       run: echo $GOOGLE_SERVICES > ./app/google-services.json
     - name: Build with Gradle
       run: ./gradlew build
