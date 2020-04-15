@@ -54,7 +54,10 @@
     <string name="no">No</string>
     <string name="addis_abeba">Addis Abeba,</string>
     <string name="language">Language</string>
-    <string name="amh">Amharic</string>
-    <string name="eng">English</string>
+    <string name="amh" translatable="false">አማርኛ</string>
+    <string name="eng" translatable="false">English</string>
+    <string name="or" translatable="false">Affan Oromo</string>
+    <string name="tig" translatable="false">ትግርኛ</string>
+    <string name="next_page">Next Page</string>
 
 </resources>

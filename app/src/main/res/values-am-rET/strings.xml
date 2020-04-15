@@ -36,7 +36,7 @@
     <string name="critical">ከባድ</string>
     <string name="case_per_mil">የተያዘ/1ሚ</string>
     <string name="death_per_mil">የሞተ/1ሚ</string>
-    <string name="id">ID</string>
+    <string name="id">መለያ</string>
     <string name="name">ስም</string>
     <string name="location">ቦታ</string>
     <string name="age">እድሜ</string>
@@ -50,7 +50,6 @@
     <string name="no">አይ</string>
     <string name="addis_abeba">አዲስ አበባ,</string>
     <string name="language">ቋንቋ</string>
-    <string name="amh">አማርኛ</string>
-    <string name="eng">English</string>
     <string name="contact_menu_title">መረጃ</string>
+    <string name="next_page">ቀጣይ ገጽ</string>
 </resources>

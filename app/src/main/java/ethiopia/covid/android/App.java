@@ -31,7 +31,9 @@ public class App extends Application {
                 getApplicationContext(),
                 Arrays.asList(
                         new Locale("en" , "us"),
-                        new Locale("am", "et")
+                        new Locale("am", "et"),
+                        new Locale("om", "et"),
+                        new Locale("ti", "et")
                 )
         );
     }

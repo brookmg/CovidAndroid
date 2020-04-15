@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         new MaterialAlertDialogBuilder(this , Utils.getCurrentTheme(this) == 0 ? R.style.LightAlertDialog : R.style.DarkAlertDialog)
                 .setTitle(getString(R.string.language))
                 .setItems(new String[]{
-                        getString(R.string.amh), getString(R.string.eng)
+                        getString(R.string.amh), getString(R.string.eng) , getString(R.string.tig) , getString(R.string.or)
                 }, (dialog, which) -> {
                     switch (which) {
                         case 0: {
@@ -82,18 +82,17 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         }
 
-//                     case 2: {
-//                         LocaleChanger.setLocale(new Locale("ti"));
-//                         this.recreate();
-//                         break;
-//                     }
-//
-//                     case 3: {
-//
-//                         LocaleChanger.setLocale(new Locale("om"));
-//                         this.recreate();
-//                         break;
-//                     }
+                        case 2: {
+                         LocaleChanger.setLocale(new Locale("ti", "et"));
+                         this.recreate();
+                         break;
+                        }
+
+                        case 3: {
+                         LocaleChanger.setLocale(new Locale("om", "et"));
+                         this.recreate();
+                         break;
+                        }
 
                         default: {
                             
