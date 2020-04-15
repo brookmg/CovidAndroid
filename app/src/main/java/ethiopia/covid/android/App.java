@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.res.Configuration;
 
 import androidx.annotation.NonNull;
+import androidx.multidex.MultiDex;
+import androidx.multidex.MultiDexApplication;
 
 import com.franmontiel.localechanger.LocaleChanger;
 
@@ -16,7 +18,7 @@ import ethiopia.covid.android.network.API;
  * Created by BrookMG on 3/25/2020 in ethiopia.covid.android
  * inside the project CoVidEt .
  */
-public class App extends Application {
+public class App extends MultiDexApplication {
 
     private API mainAPI;
     private static App instance;
@@ -24,6 +26,8 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        MultiDex.install(this);
+
         instance = this;
         mainAPI = new API();
 
