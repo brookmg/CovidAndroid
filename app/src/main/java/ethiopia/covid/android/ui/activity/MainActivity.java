@@ -1,5 +1,6 @@
 package ethiopia.covid.android.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Build;
@@ -15,6 +16,9 @@ import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.franmontiel.localechanger.LocaleChanger;
+import com.franmontiel.localechanger.utils.ActivityRecreationHelper;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -25,6 +29,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import ethiopia.covid.android.R;
 import ethiopia.covid.android.data.QuestionnaireItem;
@@ -56,6 +61,57 @@ public class MainActivity extends AppCompatActivity {
 
     public void unRegisterLocationCallback(AirLocation.Callbacks callbacks) {
         mainCallbacks.remove(callbacks);
+    }
+    
+    public void showLanguageDialog() {
+        new MaterialAlertDialogBuilder(this , Utils.getCurrentTheme(this) == 0 ? R.style.LightAlertDialog : R.style.DarkAlertDialog)
+                .setTitle(getString(R.string.language))
+                .setItems(new String[]{
+                        getString(R.string.amh), getString(R.string.eng) , getString(R.string.tig) , getString(R.string.or)
+                }, (dialog, which) -> {
+                    switch (which) {
+                        case 0: {
+                            LocaleChanger.setLocale(new Locale("am", "et"));
+                            this.recreateActivity();
+                            break;
+                        }
+
+                        case 1: {
+                            LocaleChanger.setLocale(new Locale("en", "us"));
+                            this.recreateActivity();
+                            break;
+                        }
+
+                        case 2: {
+                         LocaleChanger.setLocale(new Locale("ti", "et"));
+                         this.recreate();
+                         break;
+                        }
+
+                        case 3: {
+                         LocaleChanger.setLocale(new Locale("om", "et"));
+                         this.recreate();
+                         break;
+                        }
+
+                        default: {
+                            
+                            LocaleChanger.setLocale(new Locale("en", "us"));
+                            this.recreateActivity();
+                            break;
+                        }
+                    }
+                }).show();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        newBase = LocaleChanger.configureBaseContext(newBase);
+        super.attachBaseContext(newBase);
+    }
+
+    public void recreateActivity () {
+        ActivityRecreationHelper.recreate(this , false);
     }
 
     private void fragStarter (String fragTag , BaseFragment baseFragment , Bundle bundle, View sharedView) {
@@ -101,8 +157,8 @@ public class MainActivity extends AppCompatActivity {
                 //there are more items in the back stack. We are not on the home frag
                 getSupportFragmentManager().popBackStackImmediate();
             } else {
-                Snackbar.make(_fragmentContainer, "Press back again or 👉🏾 button", Snackbar.LENGTH_SHORT)
-                        .setAction("Exit", (v) -> finish()).show();
+                Snackbar.make(_fragmentContainer, getString(R.string.exit_text), Snackbar.LENGTH_SHORT)
+                        .setAction(getString(R.string.exit), (v) -> finish()).show();
             }
 
             if (getSupportFragmentManager().getFragments().get(getSupportFragmentManager().getFragments().size() - 1)
