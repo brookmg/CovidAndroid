@@ -50,4 +50,6 @@
     <string name="addis_abeba">አዲስ አበባ,</string>
     <string name="contact_menu_title">ሀበሬታ</string>
     <string name="language">ቋንቋ</string>
+    <string name="id">መለያ</string>
+    <string name="exit_questionnaire">ከመጠይቁ ይውጡ?</string>
 </resources>
