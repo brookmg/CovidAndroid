@@ -33,6 +33,21 @@
     <string name="ethiopia">ኢትዮጵያ</string>
     <string name="country">ሃገር</string>
     <string name="death_per_mil">ዝሞቱ/1ሚ</string>
-    <string name="case_per_mil">ዝተረኸቦም/1ሚ</string>
+    <string name="case_per_mil">ዝተትሀዘ/1ሚ</string>
     <string name="next_page">ዝመጽእ ገጽ</string>
+    <string name="active">"ንቅኹ "</string>
+    <string name="critical">ከቢድ</string>
+    <string name="name">ሽም</string>
+    <string name="location">ቦታ</string>
+    <string name="age">ዕድመ</string>
+    <string name="gender">ጾታ</string>
+    <string name="nationality">ዜግነት</string>
+    <string name="recent_travel">ናይ ቀረባ ዕዋን ገይሺ</string>
+    <string name="status">ኩነታ</string>
+    <string name="exit_questionnaire_message">ኽዚ እንተወፂዯም ዝመለሱዎ ኩሉ ክጠፍዕ ዕዩ። ዕርግፀኛ ድዯም?</string>
+    <string name="yes">እወ</string>
+    <string name="no">አይ</string>
+    <string name="addis_abeba">አዲስ አበባ,</string>
+    <string name="contact_menu_title">ሀበሬታ</string>
+    <string name="language">ቋንቋ</string>
 </resources>
