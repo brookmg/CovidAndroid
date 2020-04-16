@@ -33,12 +33,14 @@ jobs:
     - name: Decode keystore.properties file
       env:
         KEYSTORE_PROPERTIES: ${{ secrets.KEYSTORE_PROPERTIES }}
-      run: echo $KEYSTORE_PROPERTIES > ./keystore.properties
+      run: echo "$KEYSTORE_PROPERTIES" | base64 -d > ./keystore.properties
+    - name: Decode release signing jks
+      env:
+        RELEASE_JKS: ${{ secrets.RELEASE_JKS }}
+      run: echo "$RELEASE_JKS" | base64 -d > covid_release.jks
     - name: Decode google-services.json file
       env:
         GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES }}
       run: echo $GOOGLE_SERVICES > ./app/google-services.json
-    - name: Decode release signing jks
-      run: cat ${{ secrets.RELEASE_JKS }} | base64 -d > covid_release.jks
     - name: Build with Gradle
       run: ./gradlew build
