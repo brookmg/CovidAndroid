@@ -42,13 +42,6 @@ jobs:
         run: echo $GOOGLE_SERVICES > ./app/google-services.json
       - name: build release
         run: ./gradlew assembleRelease
-      - name: commit version increments
-        run: |
-          git config --global user.name 'Brook Mezgebu'
-          git config --global user.email 'brook.mezgebu.dev@gmail.com'
-          git add .
-          git commit -am "github: apk generated and version incremented"
-          git push
       - name: Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1.2.1
         env:
@@ -68,3 +61,10 @@ jobs:
           #releaseNotesFile: # optional
           # Flag that can included to print verbose log output.
           debug: true
+      - name: commit version increments
+        run: |
+          git config --global user.name 'Brook Mezgebu'
+          git config --global user.email 'brook.mezgebu.dev@gmail.com'
+          git add .
+          git commit -am "github: apk generated and version incremented"
+          git push
