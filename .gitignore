@@ -12,10 +12,13 @@
 /captures
 .externalNativeBuild
 .cxx
+*.jks
 
 .idea
 app/build
+app/release
 app/src/main/java/ethiopia/covid/android/util/Secrets.java
 secrets.properties
+keystore.properties
 
 google-services.json

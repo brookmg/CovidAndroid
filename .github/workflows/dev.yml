@@ -28,10 +28,16 @@ jobs:
         env:
           SECRETS_PROPERTIES: ${{ secrets.SECRETS_PROPERTIES }}
         run: echo $SECRETS_PROPERTIES > ./secrets.properties
+      - name: Decode keystore.properties file
+        env:
+          KEYSTORE_PROPERTIES: ${{ secrets.KEYSTORE_PROPERTIES }}
+        run: echo $KEYSTORE_PROPERTIES > ./keystore.properties
       - name: Decode google-services.json file
         env:
           GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES }}
         run: echo $GOOGLE_SERVICES > ./app/google-services.json
+      - name: Decode release signing jks
+        run: cat ${{ secrets.RELEASE_JKS }} | base64 -d > covid_release.jks
       - name: build release
         run: ./gradlew assembleRelease
       - name: Firebase App Distribution
@@ -44,9 +50,9 @@ jobs:
           # Upload token - see Firebase CLI Reference
           token: ${{ secrets.FIREBASE_TOKEN }}
           # Artifact to upload (.apk or .ipa)
-          file: app/build/outputs/apk/release/app-release-unsigned.apk
+          file: app/build/outputs/apk/release/app-release.apk
           # Distribution groups
-          #groups: # optional
+          groups: Tester
           # Release notes visible on release page
           #releaseNotes:  optional
           # Release notes visible on release page
