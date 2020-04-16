@@ -2,7 +2,7 @@ name: Android CI
 
 on:
   push:
-    branches: [ feat/workflow_and_dist ]
+    branches: [ dev ]
 
 jobs:
   build:
