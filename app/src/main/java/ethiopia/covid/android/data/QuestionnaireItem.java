@@ -3,6 +3,7 @@ package ethiopia.covid.android.data;
 import androidx.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -14,7 +15,13 @@ import java.util.List;
  */
 public class QuestionnaireItem implements Serializable {
 
-    public enum QuestionType { SINGLE_BLOCK_QUESTION , SINGLE_CHOICE_QUESTION , SINGLE_MULTIPLE_CHOICE_QUESTION }
+    public enum QuestionType {
+        @SerializedName("SINGLE_BLOCK_QUESTION")
+        SINGLE_BLOCK_QUESTION ,
+        @SerializedName("SINGLE_CHOICE_QUESTION")
+        SINGLE_CHOICE_QUESTION ,
+        @SerializedName("SINGLE_MULTIPLE_CHOICE_QUESTION")
+        SINGLE_MULTIPLE_CHOICE_QUESTION }
 
     private QuestionType questionType;
     private String questionText;

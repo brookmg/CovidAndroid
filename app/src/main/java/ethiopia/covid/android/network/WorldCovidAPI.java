@@ -15,7 +15,7 @@ inside the project CoVidEt .
  */
 public interface WorldCovidAPI {
 
-    @GET("countries") public Call<List<WorldCovid>> getListOfStat();
+    @GET("v2/countries") public Call<List<WorldCovid>> getListOfStat();
     @GET("v2/historical/{country}?limit=30") public Call<JohnsHopkinsItem> getCountryHistoricalData(@Path("country") String country);
 
 }
