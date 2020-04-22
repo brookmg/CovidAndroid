@@ -5,14 +5,21 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.Arrays;
 
 import ethiopia.covid.android.R;
+import ethiopia.covid.android.data.ContactItem;
 import ethiopia.covid.android.ui.activity.MainActivity;
+import ethiopia.covid.android.ui.adapter.ContactRecyclerAdapter;
 
 import static ethiopia.covid.android.util.Constant.TAG_QUESTIONNAIRE;
 
@@ -22,7 +29,8 @@ import static ethiopia.covid.android.util.Constant.TAG_QUESTIONNAIRE;
  */
 public class ContactFragment extends BaseFragment {
 
-    private ConstraintLayout constraintLayout;
+    private LinearLayout constraintLayout;
+    private RecyclerView regionalPhoneNumbers;
 
     public static ContactFragment newInstance() {
         Bundle args = new Bundle();
@@ -58,10 +66,29 @@ public class ContactFragment extends BaseFragment {
         View mainView = inflater.inflate(R.layout.contact_fragment, container, false);
 
         constraintLayout = mainView.findViewById(R.id._holder);
+        regionalPhoneNumbers = mainView.findViewById(R.id.regional_phone_numbers_recycler_view);
+
         mainView.findViewById(R.id.questionnaire_button).setOnClickListener(v -> {
             if (getActivity() != null) ((MainActivity) getActivity())
                     .changeFragment(TAG_QUESTIONNAIRE , new Bundle(), null);
         });
+
+        ContactRecyclerAdapter contactRecyclerAdapter = new ContactRecyclerAdapter(Arrays.asList(
+                new ContactItem( R.drawable.tigray , "6244"),
+                new ContactItem( R.drawable.afar , "6220"),
+                new ContactItem( R.drawable.amhara , "6981"),
+                new ContactItem( R.drawable.oromia , "6955"),
+                new ContactItem( R.drawable.somali , "6599"),
+                new ContactItem( R.drawable.benishangul , "6016"),
+                new ContactItem( R.drawable.south , "6929"),
+                new ContactItem( R.drawable.harrar , "6864"),
+                new ContactItem( R.drawable.gambella , "6184"),
+                new ContactItem( R.drawable.dire , "6407")
+        ));
+
+        regionalPhoneNumbers.setNestedScrollingEnabled(false);
+        regionalPhoneNumbers.setLayoutManager(new GridLayoutManager(getActivity() , 2));
+        regionalPhoneNumbers.setAdapter(contactRecyclerAdapter);
 
         return mainView;
     }
