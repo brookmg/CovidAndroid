@@ -34,6 +34,8 @@ import ethiopia.covid.android.data.ContactItem;
 import ethiopia.covid.android.data.DetailItem;
 import ethiopia.covid.android.util.Utils;
 
+import static ethiopia.covid.android.util.Utils.callPhoneNumber;
+
 /**
  * Created by BrookMG on 3/23/2020 in ethiopia.covid.android.ui.adapter
  * inside the project CoVidEt .
@@ -104,6 +106,8 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 textView.setTextColor(ContextCompat.getColor(itemView.getContext() , R.color.white_1));
                 materialCardView.setCardBackgroundColor(ContextCompat.getColor(itemView.getContext() , R.color.black_2));
             }
+
+            materialCardView.setOnClickListener(v -> callPhoneNumber(itemView.getContext() , item.getRegionPhoneNumber()));
 
             if (item.getRegionFlagImageLink() == -1) {
                 imageView.setVisibility(View.GONE);

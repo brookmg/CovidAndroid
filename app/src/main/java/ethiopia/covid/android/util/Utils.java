@@ -94,6 +94,12 @@ public class Utils {
         }
     }
 
+    public static void callPhoneNumber(Context context, String phone) {
+        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+        callIntent.setData(Uri.parse("tel:" + phone));
+        context.startActivity(callIntent);
+    }
+
     public static String formatNumber(long number) {
         String stringify = String.valueOf(number);
         int numberOfCommas = ((int) Math.floor((stringify.length() - 1) / 3f));
