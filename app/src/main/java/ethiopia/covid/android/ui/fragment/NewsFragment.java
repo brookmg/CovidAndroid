@@ -80,6 +80,13 @@ public class NewsFragment extends BaseFragment {
         adapter = null;
     }
 
+    @Override
+    public void onReselect() {
+        super.onReselect();
+        // Go to the top of the recycler view
+        mainNewsRecycler.smoothScrollToPosition(0);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,

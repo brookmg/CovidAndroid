@@ -66,6 +66,7 @@ public class HomeFragment extends BaseFragment {
             }
         });
         smoothBottomBar.setOnItemSelectedListener(i -> viewPager.setCurrentItem(i));
+        smoothBottomBar.setOnItemReselectedListener(i -> ((BaseFragment) tabAdapter.getItem(i)).onReselect());
         ViewCompat.setElevation(smoothBottomBar, 16f);
 
         return mainView;
