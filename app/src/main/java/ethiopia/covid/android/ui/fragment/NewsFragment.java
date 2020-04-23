@@ -98,7 +98,7 @@ public class NewsFragment extends BaseFragment {
     private void renderNews(View mainView) {
         adapter = new NewsItemRecyclerAdapter(new ArrayList<>(), this::onLoadMoreNews , (mainImageView, clickedImageUri) -> {
             if (getActivity() != null)
-            new StfalconImageViewer.Builder<>(getActivity(), Collections.singletonList(clickedImageUri.toString()),
+            new StfalconImageViewer.Builder<>(getActivity(), clickedImageUri,
                     (imageView, image) -> Glide.with(imageView).load(image).into(imageView))
                     .withTransitionFrom(mainImageView)
                     .show(true);

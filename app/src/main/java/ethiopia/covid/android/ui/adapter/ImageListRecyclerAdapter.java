@@ -48,7 +48,7 @@ public class ImageListRecyclerAdapter extends RecyclerView.Adapter<ImageListRecy
             if (onImageItemClicked != null) {
                 onImageItemClicked.OnImageClicked(
                         holder.imageView,
-                        Uri.parse(images.get(position))
+                        images
                 );
             }
         });
