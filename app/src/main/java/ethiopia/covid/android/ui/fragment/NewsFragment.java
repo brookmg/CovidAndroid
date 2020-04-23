@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +22,7 @@ import java.util.Collections;
 import ethiopia.covid.android.App;
 import ethiopia.covid.android.R;
 import ethiopia.covid.android.ui.adapter.NewsItemRecyclerAdapter;
+import ethiopia.covid.android.util.Utils;
 import timber.log.Timber;
 
 import static ethiopia.covid.android.ui.fragment.ContentState.changeErrorDialogVisibility;
@@ -94,9 +96,11 @@ public class NewsFragment extends BaseFragment {
     }
 
     private void renderNews(View mainView) {
-        adapter = new NewsItemRecyclerAdapter(new ArrayList<>(), this::onLoadMoreNews , clickedImageUri -> {
+        adapter = new NewsItemRecyclerAdapter(new ArrayList<>(), this::onLoadMoreNews , (mainImageView, clickedImageUri) -> {
+            if (getActivity() != null)
             new StfalconImageViewer.Builder<>(getActivity(), Collections.singletonList(clickedImageUri.toString()),
                     (imageView, image) -> Glide.with(imageView).load(image).into(imageView))
+                    .withTransitionFrom(mainImageView)
                     .show(true);
         });
 
