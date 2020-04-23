@@ -38,6 +38,7 @@ import ethiopia.covid.android.ui.fragment.BaseFragment;
 import ethiopia.covid.android.ui.fragment.HomeFragment;
 import ethiopia.covid.android.ui.fragment.QuestionnaireFragment;
 import ethiopia.covid.android.util.Utils;
+import me.ibrahimsn.lib.Badge;
 import mumayank.com.airlocationlibrary.AirLocation;
 
 import static ethiopia.covid.android.util.Constant.TAG_HOME;
@@ -61,6 +62,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void unRegisterLocationCallback(AirLocation.Callbacks callbacks) {
         mainCallbacks.remove(callbacks);
+    }
+
+    public void setBadge(int position, Badge badge) {
+        if (currentFragment.get() instanceof HomeFragment) {
+            ((HomeFragment) currentFragment.get()).showBadge(position, badge);
+        }
+    }
+
+    public void removeBadge(int position) {
+        if (currentFragment.get() instanceof HomeFragment) {
+            ((HomeFragment) currentFragment.get()).removeBadge(position);
+        }
     }
     
     public void showLanguageDialog() {

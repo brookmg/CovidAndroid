@@ -17,6 +17,7 @@ public class Constant {
     public static final String TAG_QUESTIONNAIRE = "tag_questionnaire";
 
     public static final String PREFERENCE_THEME = "pref_theme";
+    public static final String PREFERENCE_LATEST_NEWS = "pref_latest_news";
     public static final String TIME_STAMP_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     public static final Map<String, String> regionNameWithCodeMap = new HashMap<String, String>() {

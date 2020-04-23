@@ -31,6 +31,7 @@ import ethiopia.covid.android.data.CovidStatItem;
 import ethiopia.covid.android.data.FAQ;
 import ethiopia.covid.android.data.JohnsHopkinsItem;
 import ethiopia.covid.android.data.LineChartItem;
+import ethiopia.covid.android.data.NewsItem;
 import ethiopia.covid.android.data.PatientItem;
 import ethiopia.covid.android.data.Patients;
 import ethiopia.covid.android.data.ProtectiveMeasures;
@@ -52,6 +53,7 @@ public class API {
     private PMOCovidAPI pmoCovidAPI;
     private WorldCovidAPI worldCovidAPI;
     private ContentCovidAPI contentCovidAPI;
+    private NewsSourceAPI newsSourceAPI;
     private static ExecutorService executors;
 
     public API() {
@@ -74,9 +76,15 @@ public class API {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        Retrofit retrofitNews = new Retrofit.Builder().baseUrl("https://tikvah.herokuapp.com/tikvah/")
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
         pmoCovidAPI = retrofit.create(PMOCovidAPI.class);
         worldCovidAPI = retrofitWorld.create(WorldCovidAPI.class);
         contentCovidAPI = retrofitContent.create(ContentCovidAPI.class);
+        newsSourceAPI = retrofitNews.create(NewsSourceAPI.class);
         executors = Executors.newFixedThreadPool(5);
     }
 
@@ -372,6 +380,55 @@ public class API {
         }, (content, err) -> onItemReady.onItem(content, err != null ? err.toString() : ""));
 
     }
+
+    @UiThread
+    public void getLatestNews(OnItemReady<List<NewsItem>> onItemReady) {
+        Handler mainHandler = new Handler(Looper.getMainLooper());
+        executors.execute(() -> {
+            try {
+                Response<List<NewsItem>> response = newsSourceAPI.getLatest().execute();
+                if (response.body() != null) {
+                    mainHandler.post(() -> onItemReady.onItem(response.body(), ""));
+                } else {
+                    mainHandler.post(() -> {
+                        try {
+                            onItemReady.onItem(null, response.errorBody() != null ? response.errorBody().string() : "Unknown error");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
+            } catch (IOException e) {
+                mainHandler.post(() -> onItemReady.onItem(null , e.toString()));
+                e.printStackTrace();
+            }
+        });
+    }
+
+    @UiThread
+    public void getLatestNews(int beforeItemId, OnItemReady<List<NewsItem>> onItemReady) {
+        Handler mainHandler = new Handler(Looper.getMainLooper());
+        executors.execute(() -> {
+            try {
+                Response<List<NewsItem>> response = newsSourceAPI.getBeforeItem(beforeItemId).execute();
+                if (response.body() != null) {
+                    mainHandler.post(() -> onItemReady.onItem(response.body(), ""));
+                } else {
+                    mainHandler.post(() -> {
+                        try {
+                            onItemReady.onItem(null, response.errorBody() != null ? response.errorBody().string() : "Unknown error");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
+            } catch (IOException e) {
+                mainHandler.post(() -> onItemReady.onItem(null , e.toString()));
+                e.printStackTrace();
+            }
+        });
+    }
+
 
     public interface ConjureBackground<T> { T blockToRunInBackground(); }
     public interface ConjureForeground<T> { void blockToRunOnMainThread(T content, Throwable err); }

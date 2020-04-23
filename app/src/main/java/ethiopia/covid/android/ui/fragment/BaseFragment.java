@@ -21,4 +21,6 @@ public class BaseFragment extends Fragment {
     public void next() {}
     public boolean canGoBack() { return canGoBack; }
 
+    public void onReselect() {}
+
 }
