@@ -84,6 +84,9 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'androidx.browser:browser:1.2.0'
     implementation 'com.github.stfalcon:stfalcon-imageviewer:1.0.1'
+    implementation 'com.google.android.exoplayer:exoplayer:2.9.5'
+    implementation 'im.ene.toro3:toro:3.7.0.2010003'
+    implementation 'im.ene.toro3:toro-ext-exoplayer:3.7.0.2010003'
 
     //FIREBASE
     implementation firebase.core

@@ -52,3 +52,8 @@
 
 -keepclassmembers enum * { *; }
 -keepclassmembers class ethiopia.covid.android.data.* { <fields>; }
+
+-keepclassmembernames class com.google.android.exoplayer2.ui.PlayerControlView {
+  java.lang.Runnable hideAction;
+  void hideAfterTimeout();
+}
