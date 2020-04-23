@@ -1,7 +1,10 @@
 package ethiopia.covid.android.ui.fragment;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +24,19 @@ import java.util.Collections;
 
 import ethiopia.covid.android.App;
 import ethiopia.covid.android.R;
+import ethiopia.covid.android.data.NewsItem;
+import ethiopia.covid.android.ui.activity.MainActivity;
 import ethiopia.covid.android.ui.adapter.NewsItemRecyclerAdapter;
 import ethiopia.covid.android.util.Utils;
+import me.ibrahimsn.lib.Badge;
+import me.ibrahimsn.lib.BadgeType;
 import timber.log.Timber;
 
 import static ethiopia.covid.android.ui.fragment.ContentState.changeErrorDialogVisibility;
 import static ethiopia.covid.android.ui.fragment.ContentState.changeProgressBarVisibility;
 import static ethiopia.covid.android.ui.fragment.ContentState.setRefreshButtonAction;
+import static ethiopia.covid.android.util.Constant.PREFERENCE_LATEST_NEWS;
+import static java.lang.Math.min;
 
 /**
  * Created by BrookMG on 3/23/2020 in ethiopia.covid.android.ui.fragment
@@ -115,16 +124,56 @@ public class NewsFragment extends BaseFragment {
         changeErrorDialogVisibility(mainView, false);
 
         App.getInstance().getMainAPI().getLatestNews((item, err) -> {
+            int previousLatestNews = PreferenceManager.getDefaultSharedPreferences(App.getInstance())
+                    .getInt(PREFERENCE_LATEST_NEWS , 0);
+
             if (item == null) {
                 changeProgressBarVisibility(mainView , false);
                 changeErrorDialogVisibility(mainView, true);
+                return;
             }
+
+            // If the news is not found in the current incoming list ...
+            // That means the user missed more than 10 news
+            int currentNewsPosition = 11;
+
+            for (int i = 0; i < item.size(); i++) {
+                if (item.get(i).getId() == previousLatestNews) {
+                    currentNewsPosition = i;
+                    break;
+                }
+            }
+
+            showBadge(currentNewsPosition);
+
+            PreferenceManager.getDefaultSharedPreferences(App.getInstance())
+                    .edit().putInt(PREFERENCE_LATEST_NEWS , item.get(0).getId())
+                    .apply();
 
             if (adapter != null) adapter.populateNewsItems(item);
             changeProgressBarVisibility(mainView , false);
         });
 
         mainNewsRecycler.setAdapter(adapter);
+    }
+
+    private void showBadge(int numberOfNewNews) {
+        if (numberOfNewNews <= 0) return;
+
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).setBadge(2 , new Badge(
+                    20F,
+                    min(numberOfNewNews, 10) + (numberOfNewNews > 10 ? "+" : ""),
+                    ContextCompat.getColor(getActivity() , R.color.yellow_0),
+                    Color.BLACK,
+                    8F,
+                    BadgeType.BOX
+            ));
+        }
+
+        new Handler().postDelayed(() -> {
+            if (getActivity() instanceof MainActivity) ((MainActivity) getActivity()).removeBadge(2);
+        } , 10_000);
     }
 
 

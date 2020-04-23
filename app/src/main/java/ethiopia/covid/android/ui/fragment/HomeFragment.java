@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import ethiopia.covid.android.R;
 import ethiopia.covid.android.ui.adapter.TabAdapter;
+import me.ibrahimsn.lib.Badge;
 import me.ibrahimsn.lib.OnItemSelectedListener;
 import me.ibrahimsn.lib.SmoothBottomBar;
 
@@ -30,6 +31,14 @@ public class HomeFragment extends BaseFragment {
         HomeFragment fragment = new HomeFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void showBadge(int position , Badge badge) {
+        smoothBottomBar.setBadge(position , badge);
+    }
+
+    public void removeBadge(int position) {
+        smoothBottomBar.removeBadge(position);
     }
 
     @Nullable
