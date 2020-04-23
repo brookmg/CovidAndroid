@@ -21,6 +21,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/player_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintTop_toBottomOf="@+id/image_recycler_view"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_width="0dp"
+            android:layout_height="300dp"
+            app:use_controller="true"
+            app:surface_type="texture_view"
+            app:controller_layout_id="@layout/custom_exo_player"
+            app:show_buffering="when_playing"
+            app:show_shuffle_button="true"/>
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/news_title"
             android:paddingTop="16dp"
@@ -30,7 +46,7 @@
             android:textColor="?appTextColorPrimary"
             android:maxLines="2"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/image_recycler_view"
+            app:layout_constraintTop_toBottomOf="@+id/player_view"
             style="@style/TextAppearance.MaterialComponents.Button"
             android:text="This is a sample title of the news"
             android:layout_width="match_parent"
