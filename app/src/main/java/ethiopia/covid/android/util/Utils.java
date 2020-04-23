@@ -12,16 +12,28 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Px;
+import androidx.browser.customtabs.CustomTabsClient;
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.browser.customtabs.CustomTabsServiceConnection;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+
+import ethiopia.covid.android.R;
+import ethiopia.covid.android.data.NewsItem;
 
 public class Utils {
 
@@ -153,6 +165,27 @@ public class Utils {
 
     public static void setCurrentTheme(Context context, int theme) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(Constant.PREFERENCE_THEME , theme).apply();
+    }
+
+    public static List<NewsItem> getNewsItems(String json) {
+        Type typeOfT = new TypeToken<Collection<NewsItem>>(){}.getType();
+        return new Gson().fromJson(json , typeOfT);
+    }
+
+    public static List<String> getImagesForContent(String json) {
+        Type typeOfT = new TypeToken<Collection<String>>(){}.getType();
+        return new Gson().fromJson(json , typeOfT);
+    }
+
+    public static void openUrlInCustomTab(Context context, String url) {
+        CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
+                .setToolbarColor(ContextCompat.getColor(context, R.color.black_0))
+                .enableUrlBarHiding().setShowTitle(true).build();
+        customTabsIntent.launchUrl(context, Uri.parse(url.replace(" " , "")));
+    }
+
+    public static boolean bindCustomTabsService(Context context, CustomTabsServiceConnection connection) {
+        return CustomTabsClient.bindCustomTabsService(context, "com.android.chrome", connection);
     }
 
 }
