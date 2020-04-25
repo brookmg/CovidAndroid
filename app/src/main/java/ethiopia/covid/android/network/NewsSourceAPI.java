@@ -6,6 +6,7 @@ import ethiopia.covid.android.data.NewsItem;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by BrookMG on 4/23/2020 in ethiopia.covid.android.network
@@ -13,10 +14,10 @@ import retrofit2.http.Path;
  */
 public interface NewsSourceAPI {
 
-    @GET("latest")
+    @GET("latest?limit=10")
     public Call<List<NewsItem>> getLatest();
 
-    @GET("before/{itemId}")
-    public Call<List<NewsItem>> getBeforeItem(@Path("itemId") int itemId);
+    @GET("before?limit=10")
+    public Call<List<NewsItem>> getBeforeItem(@Query("before") int itemId);
 
 }

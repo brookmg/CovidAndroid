@@ -101,7 +101,7 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
 
     private String getTelegramDeepLinkForMention(String mention) {
         String returnable = "tg:resolve?domain=" + mention.replace("@" , "")
-                .replace(" " , "");
+                .replace(" " , "").trim();
         Timber.e(returnable);
         return returnable;
     }
@@ -189,6 +189,8 @@ public class NewsItemRecyclerAdapter extends RecyclerView.Adapter<NewsItemRecycl
                 }
             });
             content.setAutoLinkText(item.getContent());
+
+            telegram.setOnClickListener(v -> openUrlInCustomTab(itemView.getContext() , getTelegramDeepLinkForMention("@tikvahethiopia&post=" + item.getId())));
         }
 
         @NonNull
