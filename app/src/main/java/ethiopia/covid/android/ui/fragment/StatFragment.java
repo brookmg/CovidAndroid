@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +22,7 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -34,6 +36,7 @@ import ethiopia.covid.android.data.PatientItem;
 import ethiopia.covid.android.data.StatRecyclerItem;
 import ethiopia.covid.android.data.WorldCovid;
 import ethiopia.covid.android.network.API;
+import ethiopia.covid.android.ui.activity.MainActivity;
 import ethiopia.covid.android.ui.adapter.StatRecyclerAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,6 +46,8 @@ import static ethiopia.covid.android.ui.fragment.ContentState.changeErrorDialogV
 import static ethiopia.covid.android.ui.fragment.ContentState.changeProgressBarVisibility;
 import static ethiopia.covid.android.ui.fragment.ContentState.setRefreshButtonAction;
 import static ethiopia.covid.android.util.Utils.getCurrentTheme;
+import static java.lang.Math.min;
+import static java.lang.Math.round;
 
 /**
  * Created by BrookMG on 3/23/2020 in ethiopia.covid.android.ui.fragment
@@ -52,8 +57,10 @@ public class StatFragment extends BaseFragment {
 
     private AppBarLayout appBarLayout;
     private RecyclerView recyclerView;
-    private AppCompatImageButton themeButton;
+    private AppCompatImageButton themeButton, langButton;
     private StatRecyclerAdapter statRecyclerAdapter;
+    private Integer recyclerViewY = 0;
+    private int appBarElevation = 0;
 
     public static StatFragment newInstance() {
         Bundle args = new Bundle();
@@ -82,6 +89,11 @@ public class StatFragment extends BaseFragment {
         }
     }
 
+    private void computeRecyclerViewScrollForAppbarElevation(Integer yDiff) {
+        recyclerViewY += yDiff; //not reliable, but it's one way to find scroll position to compute the elevation for the elevation
+        ViewCompat.setElevation(appBarLayout, (round(min(recyclerViewY * 0.8f, 19f))));
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -90,6 +102,7 @@ public class StatFragment extends BaseFragment {
         appBarLayout = mainView.findViewById(R.id.appbar_layout);
         recyclerView = mainView.findViewById(R.id.stat_recycler_view);
         themeButton = mainView.findViewById(R.id.theme_btn);
+        langButton = mainView.findViewById(R.id.lang_btn);
 
         themeButton.setImageDrawable(
                 ContextCompat.getDrawable(
@@ -99,6 +112,10 @@ public class StatFragment extends BaseFragment {
         );
 
         themeButton.setOnClickListener(v -> changeTheme());
+        langButton.setOnClickListener(v -> {
+            if (getActivity() instanceof MainActivity) ((MainActivity) getActivity()).showLanguageDialog();
+        });
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity() , RecyclerView.VERTICAL , false) {
             @Override
             public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
@@ -106,6 +123,17 @@ public class StatFragment extends BaseFragment {
                     super.onLayoutChildren(recycler, state);
                 } catch (IndexOutOfBoundsException exception) {
                     exception.printStackTrace();
+                }
+            }
+        });
+
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (getActivity() instanceof MainActivity) {
+                    computeRecyclerViewScrollForAppbarElevation(dy);
                 }
             }
         });
@@ -121,7 +149,7 @@ public class StatFragment extends BaseFragment {
         changeErrorDialogVisibility(mainView, false);
         recyclerView.setVisibility(View.GONE);
 
-        App.getInstance().getMainAPI().getStatRecyclerContents((recyclerItems, err) -> {
+        App.getInstance().getMainAPI().getStatRecyclerContents(new WeakReference<>(getActivity()), (recyclerItems, err) -> {
             if (!err.isEmpty() || recyclerItems == null || recyclerItems.isEmpty() ) {
                 changeProgressBarVisibility(mainView, false);
                 changeErrorDialogVisibility(mainView, true);

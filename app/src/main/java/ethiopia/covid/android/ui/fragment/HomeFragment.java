@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import ethiopia.covid.android.R;
 import ethiopia.covid.android.ui.adapter.TabAdapter;
+import me.ibrahimsn.lib.Badge;
 import me.ibrahimsn.lib.OnItemSelectedListener;
 import me.ibrahimsn.lib.SmoothBottomBar;
 
@@ -32,6 +33,14 @@ public class HomeFragment extends BaseFragment {
         return fragment;
     }
 
+    public void showBadge(int position , Badge badge) {
+        smoothBottomBar.setBadge(position , badge);
+    }
+
+    public void removeBadge(int position) {
+        smoothBottomBar.removeBadge(position);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -43,8 +52,8 @@ public class HomeFragment extends BaseFragment {
         tabAdapter = new TabAdapter(getChildFragmentManager());
         tabAdapter.addFragment(StatFragment.newInstance(), getString(R.string.statistics_menu_title));
         tabAdapter.addFragment(DetailFragment.newInstance(), getString(R.string.covid19_menu_title));
-        tabAdapter.addFragment(BlankFragment.newInstance(), getString(R.string.news_menu_title));
-        tabAdapter.addFragment(BlankFragment.newInstance(), getString(R.string.contact_menu_title));
+        tabAdapter.addFragment(NewsFragment.newInstance(), getString(R.string.news_menu_title));
+        tabAdapter.addFragment(ContactFragment.newInstance(), getString(R.string.contact_menu_title));
 
         viewPager.setAdapter(tabAdapter);
         viewPager.setOffscreenPageLimit(3);
@@ -66,6 +75,7 @@ public class HomeFragment extends BaseFragment {
             }
         });
         smoothBottomBar.setOnItemSelectedListener(i -> viewPager.setCurrentItem(i));
+        smoothBottomBar.setOnItemReselectedListener(i -> ((BaseFragment) tabAdapter.getItem(i)).onReselect());
         ViewCompat.setElevation(smoothBottomBar, 16f);
 
         return mainView;

@@ -1,0 +1,235 @@
+[debug] [2020-04-16T23:35:11.007Z] ----------------------------------------------------------------------
+[debug] [2020-04-16T23:35:11.010Z] Command:       /usr/local/bin/node /usr/local/bin/firebase appdistribution:distribute app/build/outputs/apk/release/app-release.apk --app 1:327634015535:android:b35ffb7f114c925257fdda --token 1//09iJxOZoiTf8qCgYIARAAGAkSNwF-L9IrnaRx-sRh-HHP91n8aMxEBiTn2R2EhXHkq9_sHsxjkZA5Wa7za8pIeoIlKa9aL1IkvVc --groups Tester --release-notes commit b65de0cff94eea758ddc236f084a12cf6ba1bce4
+Author: Brook Mezgebu <brook.mezgebu.dev@gmail.com>
+
+    fix: commit after sending off to firebase --debug
+[debug] [2020-04-16T23:35:11.010Z] CLI Version:   8.1.0
+[debug] [2020-04-16T23:35:11.011Z] Platform:      linux
+[debug] [2020-04-16T23:35:11.011Z] Node Version:  v12.10.0
+[debug] [2020-04-16T23:35:11.011Z] Time:          Thu Apr 16 2020 23:35:11 GMT+0000 (Coordinated Universal Time)
+[debug] [2020-04-16T23:35:11.011Z] ----------------------------------------------------------------------
+[debug] [2020-04-16T23:35:11.011Z] 
+[debug] [2020-04-16T23:35:11.021Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-16T23:35:11.023Z] > authorizing via --token option
+[info] i  getting app details...
+[debug] [2020-04-16T23:35:11.029Z] > refreshing access token with scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-16T23:35:11.030Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-04-16T23:35:11.133Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 16 Apr 2020 23:35:11 GMT","server":"scaffolding on HTTPServer2","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-16T23:35:11.136Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda  
+ 
+[debug] [2020-04-16T23:35:11.424Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 16 Apr 2020 23:35:11 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-16T23:35:11.442Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/upload_status/6fd4699d295097cae71e0eab11a4fae0eae57293  
+ 
+[debug] [2020-04-16T23:35:11.741Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 16 Apr 2020 23:35:11 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  uploading distribution...
+[debug] [2020-04-16T23:35:11.742Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/jwt  
+ 
+[debug] [2020-04-16T23:35:11.971Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 16 Apr 2020 23:35:11 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-16T23:35:11.972Z] >>> HTTP REQUEST POST https://appdistribution-uploads.crashlytics.com/spi/v1/jwt_distributions  
+ 
+[debug] [2020-04-16T23:35:12.233Z] <<< HTTP RESPONSE 202 {"content-type":"application/json","date":"Thu, 16 Apr 2020 23:35:12 GMT","etag":"6fd4699d295097cae71e0eab11a4fae0eae57293","server":"nginx","status":"202 Accepted","x-content-type-options":"nosniff","x-request-id":"f859895cd10d0b07db1cfdb69570b8bf","content-length":"66","connection":"keep-alive"}
+[debug] [2020-04-16T23:35:12.235Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/upload_status/6fd4699d295097cae71e0eab11a4fae0eae57293  
+ 
+[debug] [2020-04-16T23:35:12.545Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 16 Apr 2020 23:35:12 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-16T23:35:14.546Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/upload_status/6fd4699d295097cae71e0eab11a4fae0eae57293  
+ 
+[debug] [2020-04-16T23:35:14.896Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 16 Apr 2020 23:35:14 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] ✔  uploaded distribution successfully!
+[info] i  adding release notes...
+[debug] [2020-04-16T23:35:14.898Z] >>> HTTP REQUEST POST https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/releases/5e98ebb1e3a551210e0000bf/notes  
+ {"releaseNotes":{"releaseNotes":"commit b65de0cff94eea758ddc236f084a12cf6ba1bce4\nAuthor: Brook Mezgebu <brook.mezgebu.dev@gmail.com>\n\n    fix: commit after sending off to firebase"}}
+[debug] [2020-04-16T23:35:15.217Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 16 Apr 2020 23:35:15 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] ✔  added release notes successfully
+[info] i  adding testers/groups...
+[debug] [2020-04-16T23:35:15.219Z] >>> HTTP REQUEST POST https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/releases/5e98ebb1e3a551210e0000bf/enable_access  
+ {"emails":[],"groupIds":["Tester"]}
+[debug] [2020-04-16T23:35:15.844Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 16 Apr 2020 23:35:15 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-17T10:25:20.074Z] ----------------------------------------------------------------------
+[debug] [2020-04-17T10:25:20.077Z] Command:       /usr/local/bin/node /usr/local/bin/firebase appdistribution:distribute app/build/outputs/apk/release/app-release.apk --app 1:327634015535:android:b35ffb7f114c925257fdda --token 1//09iJxOZoiTf8qCgYIARAAGAkSNwF-L9IrnaRx-sRh-HHP91n8aMxEBiTn2R2EhXHkq9_sHsxjkZA5Wa7za8pIeoIlKa9aL1IkvVc --groups Tester --release-notes commit 25eb1c2f2474fa76217440bae1a32393097dbe79
+Author: Brook Mezgebu <brook.mezgebu.dev@gmail.com>
+
+    Merge pull request #27 from brookmg/fix/release_build_crash --debug
+[debug] [2020-04-17T10:25:20.077Z] CLI Version:   8.1.0
+[debug] [2020-04-17T10:25:20.077Z] Platform:      linux
+[debug] [2020-04-17T10:25:20.077Z] Node Version:  v12.10.0
+[debug] [2020-04-17T10:25:20.077Z] Time:          Fri Apr 17 2020 10:25:20 GMT+0000 (Coordinated Universal Time)
+[debug] [2020-04-17T10:25:20.078Z] ----------------------------------------------------------------------
+[debug] [2020-04-17T10:25:20.078Z] 
+[debug] [2020-04-17T10:25:20.086Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-17T10:25:20.087Z] > authorizing via --token option
+[info] i  getting app details...
+[debug] [2020-04-17T10:25:20.091Z] > refreshing access token with scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-17T10:25:20.092Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-04-17T10:25:20.180Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 17 Apr 2020 10:25:20 GMT","server":"scaffolding on HTTPServer2","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-17T10:25:20.182Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda  
+ 
+[debug] [2020-04-17T10:25:20.439Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 17 Apr 2020 10:25:20 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-17T10:25:20.452Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/upload_status/fd3e3072e6ccbee226561f104dca7eb56ef8886d  
+ 
+[debug] [2020-04-17T10:25:20.759Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 17 Apr 2020 10:25:20 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  uploading distribution...
+[debug] [2020-04-17T10:25:20.761Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/jwt  
+ 
+[debug] [2020-04-17T10:25:20.923Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 17 Apr 2020 10:25:20 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-17T10:25:20.924Z] >>> HTTP REQUEST POST https://appdistribution-uploads.crashlytics.com/spi/v1/jwt_distributions  
+ 
+[debug] [2020-04-17T10:25:21.080Z] <<< HTTP RESPONSE 202 {"content-type":"application/json","date":"Fri, 17 Apr 2020 10:25:21 GMT","etag":"fd3e3072e6ccbee226561f104dca7eb56ef8886d","server":"nginx","status":"202 Accepted","x-content-type-options":"nosniff","x-request-id":"dc5af797afee5eb9dc47974c04949f2c","content-length":"66","connection":"keep-alive"}
+[debug] [2020-04-17T10:25:21.081Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/upload_status/fd3e3072e6ccbee226561f104dca7eb56ef8886d  
+ 
+[debug] [2020-04-17T10:25:21.321Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 17 Apr 2020 10:25:21 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-17T10:25:23.323Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/upload_status/fd3e3072e6ccbee226561f104dca7eb56ef8886d  
+ 
+[debug] [2020-04-17T10:25:23.645Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 17 Apr 2020 10:25:23 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] ✔  uploaded distribution successfully!
+[info] i  adding release notes...
+[debug] [2020-04-17T10:25:23.646Z] >>> HTTP REQUEST POST https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/releases/5e9984127e131032c9000102/notes  
+ {"releaseNotes":{"releaseNotes":"commit 25eb1c2f2474fa76217440bae1a32393097dbe79\nAuthor: Brook Mezgebu <brook.mezgebu.dev@gmail.com>\n\n    Merge pull request #27 from brookmg/fix/release_build_crash"}}
+[debug] [2020-04-17T10:25:23.951Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 17 Apr 2020 10:25:23 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] ✔  added release notes successfully
+[info] i  adding testers/groups...
+[debug] [2020-04-17T10:25:23.953Z] >>> HTTP REQUEST POST https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/releases/5e9984127e131032c9000102/enable_access  
+ {"emails":[],"groupIds":["Tester"]}
+[debug] [2020-04-17T10:25:24.564Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 17 Apr 2020 10:25:24 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-23T15:36:32.685Z] ----------------------------------------------------------------------
+[debug] [2020-04-23T15:36:32.687Z] Command:       /usr/local/bin/node /usr/local/bin/firebase appdistribution:distribute app/build/outputs/apk/release/app-release.apk --app 1:327634015535:android:b35ffb7f114c925257fdda --token 1//09iJxOZoiTf8qCgYIARAAGAkSNwF-L9IrnaRx-sRh-HHP91n8aMxEBiTn2R2EhXHkq9_sHsxjkZA5Wa7za8pIeoIlKa9aL1IkvVc --groups Tester --release-notes commit a490718f8fd1027e032706f0ad00482d343de56e
+Author: Brook Mezgebu <brook.mezgebu.dev@gmail.com>
+
+    Merge pull request #28 from brookmg/feat/contact_news --debug
+[debug] [2020-04-23T15:36:32.688Z] CLI Version:   8.1.1
+[debug] [2020-04-23T15:36:32.688Z] Platform:      linux
+[debug] [2020-04-23T15:36:32.688Z] Node Version:  v12.10.0
+[debug] [2020-04-23T15:36:32.688Z] Time:          Thu Apr 23 2020 15:36:32 GMT+0000 (Coordinated Universal Time)
+[debug] [2020-04-23T15:36:32.688Z] ----------------------------------------------------------------------
+[debug] [2020-04-23T15:36:32.689Z] 
+[debug] [2020-04-23T15:36:32.697Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-23T15:36:32.699Z] > authorizing via --token option
+[info] i  getting app details...
+[debug] [2020-04-23T15:36:32.702Z] > refreshing access token with scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-23T15:36:32.703Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-04-23T15:36:32.783Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 23 Apr 2020 15:36:32 GMT","server":"scaffolding on HTTPServer2","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-23T15:36:32.785Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda  
+ 
+[debug] [2020-04-23T15:36:33.032Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 23 Apr 2020 15:36:33 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-23T15:36:33.057Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/upload_status/2f550b22ab9e27519dfb2ea52a3266cdba1977bb  
+ 
+[debug] [2020-04-23T15:36:33.336Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 23 Apr 2020 15:36:33 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  uploading distribution...
+[debug] [2020-04-23T15:36:33.337Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/jwt  
+ 
+[debug] [2020-04-23T15:36:33.623Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 23 Apr 2020 15:36:33 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-23T15:36:33.624Z] >>> HTTP REQUEST POST https://appdistribution-uploads.crashlytics.com/spi/v1/jwt_distributions  
+ 
+[debug] [2020-04-23T15:36:33.778Z] <<< HTTP RESPONSE 202 {"content-type":"application/json","date":"Thu, 23 Apr 2020 15:36:33 GMT","etag":"2f550b22ab9e27519dfb2ea52a3266cdba1977bb","server":"nginx","status":"202 Accepted","x-content-type-options":"nosniff","x-request-id":"afd82d2f6bbfe0c933e9e9c4006fc40c","content-length":"66","connection":"keep-alive"}
+[debug] [2020-04-23T15:36:33.779Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/upload_status/2f550b22ab9e27519dfb2ea52a3266cdba1977bb  
+ 
+[debug] [2020-04-23T15:36:33.982Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 23 Apr 2020 15:36:33 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-23T15:36:35.986Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/upload_status/2f550b22ab9e27519dfb2ea52a3266cdba1977bb  
+ 
+[debug] [2020-04-23T15:36:36.274Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 23 Apr 2020 15:36:36 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] ✔  uploaded distribution successfully!
+[info] i  adding release notes...
+[debug] [2020-04-23T15:36:36.275Z] >>> HTTP REQUEST POST https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/releases/5ea1b6027e131055be0001f6/notes  
+ {"releaseNotes":{"releaseNotes":"commit a490718f8fd1027e032706f0ad00482d343de56e\nAuthor: Brook Mezgebu <brook.mezgebu.dev@gmail.com>\n\n    Merge pull request #28 from brookmg/feat/contact_news"}}
+[debug] [2020-04-23T15:36:36.572Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 23 Apr 2020 15:36:36 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] ✔  added release notes successfully
+[info] i  adding testers/groups...
+[debug] [2020-04-23T15:36:36.574Z] >>> HTTP REQUEST POST https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/releases/5ea1b6027e131055be0001f6/enable_access  
+ {"emails":[],"groupIds":["Tester"]}
+[debug] [2020-04-23T15:36:38.065Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 23 Apr 2020 15:36:38 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-25T18:54:35.155Z] ----------------------------------------------------------------------
+[debug] [2020-04-25T18:54:35.158Z] Command:       /usr/local/bin/node /usr/local/bin/firebase appdistribution:distribute app/build/outputs/apk/release/app-release.apk --app 1:327634015535:android:b35ffb7f114c925257fdda --token 1//09iJxOZoiTf8qCgYIARAAGAkSNwF-L9IrnaRx-sRh-HHP91n8aMxEBiTn2R2EhXHkq9_sHsxjkZA5Wa7za8pIeoIlKa9aL1IkvVc --groups Tester --release-notes commit 3567f40ee8daf172d9d0c08c715b2313b914c4cd
+Author: Brook Mezgebu <brook.mezgebu.dev@gmail.com>
+
+    Merge pull request #29 from brookmg/feat/news-questionnaire-fix --debug
+[debug] [2020-04-25T18:54:35.158Z] CLI Version:   8.1.1
+[debug] [2020-04-25T18:54:35.158Z] Platform:      linux
+[debug] [2020-04-25T18:54:35.158Z] Node Version:  v12.10.0
+[debug] [2020-04-25T18:54:35.158Z] Time:          Sat Apr 25 2020 18:54:35 GMT+0000 (Coordinated Universal Time)
+[debug] [2020-04-25T18:54:35.158Z] ----------------------------------------------------------------------
+[debug] [2020-04-25T18:54:35.158Z] 
+[debug] [2020-04-25T18:54:35.167Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-25T18:54:35.168Z] > authorizing via --token option
+[info] i  getting app details...
+[debug] [2020-04-25T18:54:35.172Z] > refreshing access token with scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-25T18:54:35.172Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-04-25T18:54:35.256Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 25 Apr 2020 18:54:35 GMT","server":"scaffolding on HTTPServer2","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-25T18:54:35.259Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda  
+ 
+[debug] [2020-04-25T18:54:35.525Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 25 Apr 2020 18:54:35 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-25T18:54:35.546Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/upload_status/ca191fc806607907a689b89cac1a558502799178  
+ 
+[debug] [2020-04-25T18:54:35.858Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 25 Apr 2020 18:54:35 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  uploading distribution...
+[debug] [2020-04-25T18:54:35.859Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/jwt  
+ 
+[debug] [2020-04-25T18:54:36.053Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 25 Apr 2020 18:54:36 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-25T18:54:36.054Z] >>> HTTP REQUEST POST https://appdistribution-uploads.crashlytics.com/spi/v1/jwt_distributions  
+ 
+[debug] [2020-04-25T18:54:36.234Z] <<< HTTP RESPONSE 202 {"content-type":"application/json","date":"Sat, 25 Apr 2020 18:54:36 GMT","etag":"ca191fc806607907a689b89cac1a558502799178","server":"nginx","status":"202 Accepted","x-content-type-options":"nosniff","x-request-id":"e083052ae2a149a78b48a23c2f4a0868","content-length":"66","connection":"keep-alive"}
+[debug] [2020-04-25T18:54:36.235Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/upload_status/ca191fc806607907a689b89cac1a558502799178  
+ 
+[debug] [2020-04-25T18:54:36.484Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 25 Apr 2020 18:54:36 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-25T18:54:38.487Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/upload_status/ca191fc806607907a689b89cac1a558502799178  
+ 
+[debug] [2020-04-25T18:54:38.818Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 25 Apr 2020 18:54:38 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] ✔  uploaded distribution successfully!
+[info] i  adding release notes...
+[debug] [2020-04-25T18:54:38.820Z] >>> HTTP REQUEST POST https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/releases/5ea4876d4b3e4d283000008c/notes  
+ {"releaseNotes":{"releaseNotes":"commit 3567f40ee8daf172d9d0c08c715b2313b914c4cd\nAuthor: Brook Mezgebu <brook.mezgebu.dev@gmail.com>\n\n    Merge pull request #29 from brookmg/feat/news-questionnaire-fix"}}
+[debug] [2020-04-25T18:54:39.035Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 25 Apr 2020 18:54:39 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] ✔  added release notes successfully
+[info] i  adding testers/groups...
+[debug] [2020-04-25T18:54:39.037Z] >>> HTTP REQUEST POST https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/releases/5ea4876d4b3e4d283000008c/enable_access  
+ {"emails":[],"groupIds":["Tester"]}
+[debug] [2020-04-25T18:54:40.251Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 25 Apr 2020 18:54:40 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-25T20:38:08.986Z] ----------------------------------------------------------------------
+[debug] [2020-04-25T20:38:08.989Z] Command:       /usr/local/bin/node /usr/local/bin/firebase appdistribution:distribute app/build/outputs/apk/release/app-release.apk --app 1:327634015535:android:b35ffb7f114c925257fdda --token 1//09iJxOZoiTf8qCgYIARAAGAkSNwF-L9IrnaRx-sRh-HHP91n8aMxEBiTn2R2EhXHkq9_sHsxjkZA5Wa7za8pIeoIlKa9aL1IkvVc --groups Tester --release-notes commit 388019aa48cbc593f6bda4214eec2658c4c9de8b
+Author: Brook Mezgebu <brook.mezgebu.dev@gmail.com>
+
+    Merge pull request #30 from brookmg/feat/finishing_up --debug
+[debug] [2020-04-25T20:38:08.989Z] CLI Version:   8.1.1
+[debug] [2020-04-25T20:38:08.989Z] Platform:      linux
+[debug] [2020-04-25T20:38:08.989Z] Node Version:  v12.10.0
+[debug] [2020-04-25T20:38:08.989Z] Time:          Sat Apr 25 2020 20:38:08 GMT+0000 (Coordinated Universal Time)
+[debug] [2020-04-25T20:38:08.990Z] ----------------------------------------------------------------------
+[debug] [2020-04-25T20:38:08.990Z] 
+[debug] [2020-04-25T20:38:08.998Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-25T20:38:08.999Z] > authorizing via --token option
+[info] i  getting app details...
+[debug] [2020-04-25T20:38:09.003Z] > refreshing access token with scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-25T20:38:09.003Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-04-25T20:38:09.096Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 25 Apr 2020 20:38:09 GMT","server":"scaffolding on HTTPServer2","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-25T20:38:09.098Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda  
+ 
+[debug] [2020-04-25T20:38:09.407Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 25 Apr 2020 20:38:09 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-25T20:38:09.429Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/upload_status/9dd42526144e63a84d85ce4d4f9ad77777fe432e  
+ 
+[debug] [2020-04-25T20:38:09.760Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 25 Apr 2020 20:38:09 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  uploading distribution...
+[debug] [2020-04-25T20:38:09.762Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/jwt  
+ 
+[debug] [2020-04-25T20:38:09.982Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 25 Apr 2020 20:38:09 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-25T20:38:09.983Z] >>> HTTP REQUEST POST https://appdistribution-uploads.crashlytics.com/spi/v1/jwt_distributions  
+ 
+[debug] [2020-04-25T20:38:10.333Z] <<< HTTP RESPONSE 202 {"content-type":"application/json","date":"Sat, 25 Apr 2020 20:38:10 GMT","etag":"9dd42526144e63a84d85ce4d4f9ad77777fe432e","server":"nginx","status":"202 Accepted","x-content-type-options":"nosniff","x-request-id":"b8cc6da41c12edefdc4d4f03882f7ffb","content-length":"66","connection":"keep-alive"}
+[debug] [2020-04-25T20:38:10.335Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/upload_status/9dd42526144e63a84d85ce4d4f9ad77777fe432e  
+ 
+[debug] [2020-04-25T20:38:10.663Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 25 Apr 2020 20:38:10 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-25T20:38:12.666Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/upload_status/9dd42526144e63a84d85ce4d4f9ad77777fe432e  
+ 
+[debug] [2020-04-25T20:38:12.959Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 25 Apr 2020 20:38:12 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] ✔  uploaded distribution successfully!
+[info] i  adding release notes...
+[debug] [2020-04-25T20:38:12.960Z] >>> HTTP REQUEST POST https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/releases/5ea49fb34b3e4d28400000a7/notes  
+ {"releaseNotes":{"releaseNotes":"commit 388019aa48cbc593f6bda4214eec2658c4c9de8b\nAuthor: Brook Mezgebu <brook.mezgebu.dev@gmail.com>\n\n    Merge pull request #30 from brookmg/feat/finishing_up"}}
+[debug] [2020-04-25T20:38:13.288Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 25 Apr 2020 20:38:13 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] ✔  added release notes successfully
+[info] i  adding testers/groups...
+[debug] [2020-04-25T20:38:13.291Z] >>> HTTP REQUEST POST https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/releases/5ea49fb34b3e4d28400000a7/enable_access  
+ {"emails":[],"groupIds":["Tester"]}
+[debug] [2020-04-25T20:38:14.384Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 25 Apr 2020 20:38:14 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}

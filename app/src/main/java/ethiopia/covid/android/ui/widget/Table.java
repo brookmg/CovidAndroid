@@ -84,7 +84,7 @@ public class Table extends LinearLayout {
         fixedColumnTableLayout.setStretchAllColumns(false);
         tableLayoutContainer.setOrientation(HORIZONTAL);
 
-        nextPageButton.setText("Next Page");
+        nextPageButton.setText(getContext().getString(R.string.next_page));
         nextPageButton.setCornerRadius(10);
         nextPageButton.setTextColor(ContextCompat.getColor(getContext() , R.color.purple_1));
         nextPageButton.setBackgroundTintList(ColorStateList.valueOf(

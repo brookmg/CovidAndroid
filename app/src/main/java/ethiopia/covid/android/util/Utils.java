@@ -12,12 +12,33 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Px;
+import androidx.browser.customtabs.CustomTabsClient;
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.browser.customtabs.CustomTabsServiceConnection;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.ColorUtils;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+
+import ethiopia.covid.android.R;
+import ethiopia.covid.android.data.NewsItem;
+import timber.log.Timber;
 
 public class Utils {
 
@@ -90,6 +111,12 @@ public class Utils {
         }
     }
 
+    public static void callPhoneNumber(Context context, String phone) {
+        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+        callIntent.setData(Uri.parse("tel:" + phone));
+        context.startActivity(callIntent);
+    }
+
     public static String formatNumber(long number) {
         String stringify = String.valueOf(number);
         int numberOfCommas = ((int) Math.floor((stringify.length() - 1) / 3f));
@@ -117,12 +144,73 @@ public class Utils {
         return returnable;
     }
 
+    public static String readRawFile(Context ctx, int resId) {
+        InputStream inputStream = ctx.getResources().openRawResource(resId);
+
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+        String line;
+        StringBuilder text = new StringBuilder();
+
+        try {
+            while (( line = bufferedReader.readLine()) != null) {
+                text.append(line);
+                text.append('\n');
+            }
+        } catch (IOException e) {
+            return null;
+        }
+
+        return text.toString();
+    }
+
     public static int getCurrentTheme(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getInt(Constant.PREFERENCE_THEME , 0);
     }
 
     public static void setCurrentTheme(Context context, int theme) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(Constant.PREFERENCE_THEME , theme).apply();
+    }
+
+    public static List<NewsItem> getNewsItems(String json) {
+        Type typeOfT = new TypeToken<Collection<NewsItem>>(){}.getType();
+        return new Gson().fromJson(json , typeOfT);
+    }
+
+    public static List<String> getImagesForContent(String json) {
+        Type typeOfT = new TypeToken<Collection<String>>(){}.getType();
+        return new Gson().fromJson(json , typeOfT);
+    }
+
+    public static void openUrlInCustomTab(Context context, String url) {
+        CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
+                .setToolbarColor(ContextCompat.getColor(context, R.color.black_0))
+                .enableUrlBarHiding().setShowTitle(true).build();
+        customTabsIntent.launchUrl(context, Uri.parse(url.replace(" " , "")));
+    }
+
+    public static boolean bindCustomTabsService(Context context, CustomTabsServiceConnection connection) {
+        return CustomTabsClient.bindCustomTabsService(context, "com.android.chrome", connection);
+    }
+
+    public static String md5(String string) {
+        byte[] hash;
+
+        try {
+            hash = MessageDigest.getInstance("MD5").digest(string.getBytes(StandardCharsets.UTF_8));
+        } catch (NoSuchAlgorithmException e) {
+            Timber.e(e, "Huh, MD5 should be supported? China is that you?");
+            return "";
+        }
+
+        StringBuilder hex = new StringBuilder(hash.length * 2);
+        for (byte b : hash) {
+            if ((b & 0xFF) < 0x10) {
+                hex.append("0");
+            }
+            hex.append(Integer.toHexString(b & 0xFF));
+        }
+        return hex.toString();
     }
 
 }

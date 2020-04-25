@@ -1,0 +1,70 @@
+name: Ship to firebase dist
+
+on:
+  push:
+    branches: [ dev ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache
+        uses: actions/cache@v1.1.2
+        with:
+          # A directory to store and save the cache
+          path: ./cache
+          # An explicit key for restoring and saving the cache
+          key: iox90zBdlqmMk
+      - name: set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+      - name: Decode secrets.properties file
+        env:
+          SECRETS_PROPERTIES: ${{ secrets.SECRETS_PROPERTIES }}
+        run: echo $SECRETS_PROPERTIES > ./secrets.properties
+      - name: Decode keystore.properties file
+        env:
+          KEYSTORE_PROPERTIES: ${{ secrets.KEYSTORE_PROPERTIES }}
+        run: echo "$KEYSTORE_PROPERTIES" | base64 -d > ./keystore.properties
+      - name: Decode release signing jks
+        env:
+          RELEASE_JKS: ${{ secrets.RELEASE_JKS }}
+        run: echo "$RELEASE_JKS" | base64 -d > ./covid_release.jks
+      - name: Decode google-services.json file
+        env:
+          GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES }}
+        run: echo $GOOGLE_SERVICES > ./app/google-services.json
+      - name: build release
+        run: ./gradlew assembleRelease
+      - name: Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.2.1
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        with:
+          # App id can be found on the General Settings page
+          appId: ${{ secrets.FIREBASE_APP_ID }}
+          # Upload token - see Firebase CLI Reference
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          # Artifact to upload (.apk or .ipa)
+          file: app/build/outputs/apk/release/app-release.apk
+          # Distribution groups
+          groups: Tester
+          # Release notes visible on release page
+          #releaseNotes:  optional
+          # Release notes visible on release page
+          #releaseNotesFile: # optional
+          # Flag that can included to print verbose log output.
+          debug: true
+      - name: commit version increments
+        run: |
+          git config --global user.name 'Brook Mezgebu'
+          git config --global user.email 'brook.mezgebu.dev@gmail.com'
+          git add .
+          git commit -am "github: apk generated and version incremented"
+          git push
