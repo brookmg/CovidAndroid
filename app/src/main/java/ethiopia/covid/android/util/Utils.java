@@ -25,7 +25,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -34,6 +38,7 @@ import java.util.Random;
 
 import ethiopia.covid.android.R;
 import ethiopia.covid.android.data.NewsItem;
+import timber.log.Timber;
 
 public class Utils {
 
@@ -186,6 +191,26 @@ public class Utils {
 
     public static boolean bindCustomTabsService(Context context, CustomTabsServiceConnection connection) {
         return CustomTabsClient.bindCustomTabsService(context, "com.android.chrome", connection);
+    }
+
+    public static String md5(String string) {
+        byte[] hash;
+
+        try {
+            hash = MessageDigest.getInstance("MD5").digest(string.getBytes(StandardCharsets.UTF_8));
+        } catch (NoSuchAlgorithmException e) {
+            Timber.e(e, "Huh, MD5 should be supported? China is that you?");
+            return "";
+        }
+
+        StringBuilder hex = new StringBuilder(hash.length * 2);
+        for (byte b : hash) {
+            if ((b & 0xFF) < 0x10) {
+                hex.append("0");
+            }
+            hex.append(Integer.toHexString(b & 0xFF));
+        }
+        return hex.toString();
     }
 
 }

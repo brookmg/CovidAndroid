@@ -3,6 +3,7 @@ package ethiopia.covid.android.ui.fragment;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.GsonBuilder;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +31,9 @@ import ethiopia.covid.android.data.QuestionItem;
 import ethiopia.covid.android.data.QuestionnaireItem;
 import ethiopia.covid.android.ui.activity.MainActivity;
 import ethiopia.covid.android.ui.adapter.ResultRecyclerAdapter;
+import timber.log.Timber;
+
+import static ethiopia.covid.android.util.Constant.PREFERENCE_QTIME;
 
 /**
  * Created by BrookMG on 3/23/2020 in ethiopia.covid.android.ui.fragment
@@ -35,9 +42,12 @@ import ethiopia.covid.android.ui.adapter.ResultRecyclerAdapter;
 public class ResultFragment extends BaseFragment {
 
     private Map<QuestionnaireItem, List<QuestionItem>> questionItems;
+    private String hashOfQuestionnaire;
     private RecyclerView recyclerView;
     private Location currentLocation;
     private MaterialButton sendButton;
+
+    private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
     private static class Result {
         private Map<QuestionnaireItem, List<QuestionItem>> questionItems;
@@ -85,13 +95,14 @@ public class ResultFragment extends BaseFragment {
         }
     }
 
-    private ResultFragment(Map<QuestionnaireItem, List<QuestionItem>> questionItems) {
+    private ResultFragment(Map<QuestionnaireItem, List<QuestionItem>> questionItems, String hashOfQuestionnaire) {
         this.questionItems = questionItems;
+        this.hashOfQuestionnaire = hashOfQuestionnaire;
     }
 
-    static ResultFragment newInstance(Map<QuestionnaireItem, List<QuestionItem>> items) {
+    static ResultFragment newInstance(Map<QuestionnaireItem, List<QuestionItem>> items , String hashOfQuestionnaire) {
         Bundle args = new Bundle();
-        ResultFragment fragment = new ResultFragment(items);
+        ResultFragment fragment = new ResultFragment(items, hashOfQuestionnaire);
         fragment.setArguments(args);
         return fragment;
     }
@@ -125,6 +136,9 @@ public class ResultFragment extends BaseFragment {
         }
     }
 
+    public void setHashOfQuestionnaire(String hashOfQuestionnaire) {
+        this.hashOfQuestionnaire = hashOfQuestionnaire;
+    }
 
     @Nullable
     @Override
@@ -147,18 +161,19 @@ public class ResultFragment extends BaseFragment {
                     currentLocation != null ? currentLocation.getLatitude() : 0,
                     currentLocation != null ? currentLocation.getAccuracy() : 0
             );
-            Log.e("REsULT" , new GsonBuilder().enableComplexMapKeySerialization()
+
+            String resultJson = new GsonBuilder().enableComplexMapKeySerialization()
                     .addSerializationExclusionStrategy(new ExclusionStrategy() {
                         @Override
                         public boolean shouldSkipField(FieldAttributes field) {
                             return field.getDeclaringClass() == QuestionnaireItem.class &&
                                     field.getName().equals("questionItems") ||
-                                field.getDeclaringClass() == QuestionItem.class &&
-                                        field.getName().equals("questionIconResource") ||
-                                field.getDeclaringClass() == QuestionItem.class &&
-                                        field.getName().equals("selectedQuestion") ||
-                                field.getDeclaringClass() == QuestionItem.class &&
-                                        field.getName().equals("questionIconLink");
+                                    field.getDeclaringClass() == QuestionItem.class &&
+                                            field.getName().equals("questionIconResource") ||
+                                    field.getDeclaringClass() == QuestionItem.class &&
+                                            field.getName().equals("selectedQuestion") ||
+                                    field.getDeclaringClass() == QuestionItem.class &&
+                                            field.getName().equals("questionIconLink");
                         }
 
                         @Override
@@ -166,7 +181,23 @@ public class ResultFragment extends BaseFragment {
                             return false;
                         }
                     })
-                    .create().toJson(result));
+                    .create().toJson(result);
+
+            Map<String , Object> answer = new HashMap<>();
+            answer.put(hashOfQuestionnaire , resultJson);
+
+            firestore
+                    .collection("answers")
+                    .add(answer)
+                    .addOnSuccessListener(r -> Timber.d("Added successfully.") );
+
+            PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
+                    .putLong(PREFERENCE_QTIME , new Date().getTime()).apply();
+
+            if (getActivity() instanceof MainActivity) {
+                ((MainActivity) getActivity()).forcefulOnBackPressed();
+            }
+
         });
         return mainView;
     }

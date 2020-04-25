@@ -2,7 +2,10 @@ package ethiopia.covid.android.util;
 
 import androidx.core.util.Pair;
 
+import com.franmontiel.localechanger.LocaleChanger;
+
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import kotlin.collections.MapsKt;
@@ -18,7 +21,17 @@ public class Constant {
 
     public static final String PREFERENCE_THEME = "pref_theme";
     public static final String PREFERENCE_LATEST_NEWS = "pref_latest_news";
+    public static final String PREFERENCE_QTIME = "pref_q_time";
     public static final String TIME_STAMP_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+    public static final String FRC_QUESTIONNAIRE_EN = "frc_questionnaire_en";
+    public static final String FRC_QUESTIONNAIRE_AM = "frc_questionnaire_am";
+    public static final String FRC_QUESTIONNAIRE_OR = "frc_questionnaire_or";
+    public static final String FRC_QUESTIONNAIRE_TI = "frc_questionnaire_ti";
+
+    public static String getQuestionnaireConstant() {
+        return "frc_questionnaire_" + LocaleChanger.getLocale().getLanguage();
+    }
 
     public static final Map<String, String> regionNameWithCodeMap = new HashMap<String, String>() {
         {

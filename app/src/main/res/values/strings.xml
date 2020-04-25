@@ -59,5 +59,6 @@
     <string name="or" translatable="false">Affan Oromo</string>
     <string name="tig" translatable="false">ትግርኛ</string>
     <string name="next_page">Next Page</string>
+    <string name="comeback_tmw" translatable="false">You have filled in the questionnaire for today. Please comeback tommorrow.</string>
 
 </resources>
