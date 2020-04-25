@@ -73,7 +73,7 @@
     <style name="DarkTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/black_1y</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/black_1x</item>
         <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="lollipop">true</item>
         <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialogDark</item>
 
