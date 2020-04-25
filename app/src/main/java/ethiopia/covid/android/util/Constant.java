@@ -29,8 +29,8 @@ public class Constant {
     public static final String FRC_QUESTIONNAIRE_OR = "frc_questionnaire_or";
     public static final String FRC_QUESTIONNAIRE_TI = "frc_questionnaire_ti";
 
-    public static String getQuestionnaireConstant() {
-        return "frc_questionnaire_" + LocaleChanger.getLocale().getLanguage();
+    public static String getQuestionnaireConstant(String localeLanguage) {
+        return "frc_questionnaire_" + localeLanguage;
     }
 
     public static final Map<String, String> regionNameWithCodeMap = new HashMap<String, String>() {

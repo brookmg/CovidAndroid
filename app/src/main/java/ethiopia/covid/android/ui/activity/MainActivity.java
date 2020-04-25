@@ -165,12 +165,12 @@ public class MainActivity extends AppCompatActivity {
                 if (new Date().getTime() - lastQuiz > ( DateUtils.DAY_IN_MILLIS )) {
 
                     String questionnaireContent = FirebaseRemoteConfig.getInstance()
-                            .getString(getQuestionnaireConstant());
+                            .getString(getQuestionnaireConstant(LocaleChanger.getLocale().getLanguage()));
                     String hashOfQuestionnaire = md5(questionnaireContent);
 
                     List<QuestionnaireItem> items = new Gson()
-                            .fromJson(questionnaireContent, new TypeToken<List<QuestionnaireItem>>() {
-                            }.getType());
+                            .fromJson(questionnaireContent, new TypeToken<List<QuestionnaireItem>>() {}
+                            .getType());
 
                     if (items != null && !items.isEmpty()) {
                         BaseFragment baseFragment = QuestionnaireFragment.newInstance(items, hashOfQuestionnaire);
