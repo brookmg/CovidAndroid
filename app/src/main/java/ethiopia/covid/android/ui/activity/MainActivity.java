@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -18,16 +20,21 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.franmontiel.localechanger.LocaleChanger;
 import com.franmontiel.localechanger.utils.ActivityRecreationHelper;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.ref.WeakReference;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -40,9 +47,13 @@ import ethiopia.covid.android.ui.fragment.QuestionnaireFragment;
 import ethiopia.covid.android.util.Utils;
 import me.ibrahimsn.lib.Badge;
 import mumayank.com.airlocationlibrary.AirLocation;
+import timber.log.Timber;
 
+import static ethiopia.covid.android.util.Constant.PREFERENCE_QTIME;
 import static ethiopia.covid.android.util.Constant.TAG_HOME;
 import static ethiopia.covid.android.util.Constant.TAG_QUESTIONNAIRE;
+import static ethiopia.covid.android.util.Constant.getQuestionnaireConstant;
+import static ethiopia.covid.android.util.Utils.md5;
 import static ethiopia.covid.android.util.Utils.readRawFile;
 
 public class MainActivity extends AppCompatActivity {
@@ -148,13 +159,27 @@ public class MainActivity extends AppCompatActivity {
             }
 
             case TAG_QUESTIONNAIRE: {
-                BaseFragment baseFragment = QuestionnaireFragment.newInstance(
-                        new Gson().fromJson(
-                                readRawFile(this, R.raw.sample),
-                                new TypeToken<List<QuestionnaireItem>>(){}.getType()
-                        )
-                );
-                fragStarter(fragmentTag , baseFragment, bundle, view);
+                long lastQuiz = PreferenceManager.getDefaultSharedPreferences(this)
+                        .getLong(PREFERENCE_QTIME , 0);
+
+                if (new Date().getTime() - lastQuiz > ( DateUtils.DAY_IN_MILLIS )) {
+
+                    String questionnaireContent = FirebaseRemoteConfig.getInstance()
+                            .getString(getQuestionnaireConstant(LocaleChanger.getLocale().getLanguage()));
+                    String hashOfQuestionnaire = md5(questionnaireContent);
+
+                    List<QuestionnaireItem> items = new Gson()
+                            .fromJson(questionnaireContent, new TypeToken<List<QuestionnaireItem>>() {}
+                            .getType());
+
+                    if (items != null && !items.isEmpty()) {
+                        BaseFragment baseFragment = QuestionnaireFragment.newInstance(items, hashOfQuestionnaire);
+                        fragStarter(fragmentTag, baseFragment, bundle, view);
+                    }
+                } else {
+                    Snackbar.make(_fragmentContainer, getString(R.string.comeback_tmw), Snackbar.LENGTH_SHORT).show();
+                }
+
                 break;
             }
         }
@@ -267,6 +292,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         changeFragment(TAG_HOME, new Bundle(), null);
+        FirebaseRemoteConfig.getInstance().fetchAndActivate()
+                .addOnSuccessListener(aBoolean ->
+                        Timber.d("Firebase Remote Config %s",
+                                (aBoolean ? "Updated" : "!Updated")));
 
     }
 

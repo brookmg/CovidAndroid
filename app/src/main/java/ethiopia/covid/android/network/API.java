@@ -76,7 +76,7 @@ public class API {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        Retrofit retrofitNews = new Retrofit.Builder().baseUrl("https://tikvah.herokuapp.com/tikvah/")
+        Retrofit retrofitNews = new Retrofit.Builder().baseUrl("https://covidn.herokuapp.com/tikvah/")
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

@@ -94,6 +94,8 @@ dependencies {
     implementation firebase.performance
     implementation firebase.messaging
     implementation firebase.crashlytics
+    implementation (firebase.firestore)
+    implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

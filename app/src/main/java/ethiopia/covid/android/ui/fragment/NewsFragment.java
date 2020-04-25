@@ -127,7 +127,7 @@ public class NewsFragment extends BaseFragment {
             int previousLatestNews = PreferenceManager.getDefaultSharedPreferences(App.getInstance())
                     .getInt(PREFERENCE_LATEST_NEWS , 0);
 
-            if (item == null) {
+            if (item == null || item.isEmpty()) {
                 changeProgressBarVisibility(mainView , false);
                 changeErrorDialogVisibility(mainView, true);
                 return;
@@ -138,6 +138,7 @@ public class NewsFragment extends BaseFragment {
             int currentNewsPosition = 11;
 
             for (int i = 0; i < item.size(); i++) {
+                if (item.get(i) == null) continue;
                 if (item.get(i).getId() == previousLatestNews) {
                     currentNewsPosition = i;
                     break;

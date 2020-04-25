@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class NewsItem {
 
-    @SerializedName("Id")
+    @SerializedName("_id")
     private Integer id;
     private String content;
     private String image;

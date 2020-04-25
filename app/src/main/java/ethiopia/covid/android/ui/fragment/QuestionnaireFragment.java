@@ -40,6 +40,7 @@ import ethiopia.covid.android.ui.adapter.TabAdapter;
 import ethiopia.covid.android.ui.widget.YekomeViewPager;
 import ethiopia.covid.android.util.Utils;
 import mumayank.com.airlocationlibrary.AirLocation;
+import timber.log.Timber;
 
 import static ethiopia.covid.android.network.API.conjure;
 
@@ -55,10 +56,11 @@ public class QuestionnaireFragment extends BaseFragment {
     private AppCompatImageView exitAllButton;
     private TabAdapter tabAdapter;
     private List<QuestionnaireItem> questionnaireItems;
+    private String hashOfQuestionnaire;
     private BottomAppBar bottomAppBar;
 
     private IntroductionFragment introductionFragment = IntroductionFragment.newInstance();
-    private ResultFragment resultFragment = ResultFragment.newInstance(new HashMap<>());
+    private ResultFragment resultFragment = ResultFragment.newInstance(new HashMap<>() , "");
     private Location currentLocation;
 
     private SparseArray<ArrayList<QuestionItem>> questionState = new SparseArray<>();
@@ -70,20 +72,24 @@ public class QuestionnaireFragment extends BaseFragment {
 
         @Override
         public void onFailed(@NotNull AirLocation.LocationFailedEnum locationFailedEnum) {
-            Log.e("LOCATION" , locationFailedEnum.name());
+            Timber.e(locationFailedEnum.name());
         }
     };
 
-    private QuestionnaireFragment(List<QuestionnaireItem> questionnaireItems) {
+    private QuestionnaireFragment(List<QuestionnaireItem> questionnaireItems, String hashOfQuestionnaire) {
         questionnaireItems.removeAll(Collections.singleton(null));
         for (QuestionnaireItem item : questionnaireItems) item.getQuestionItems().removeAll(Collections.singleton(null));
 
         this.questionnaireItems = questionnaireItems;
+        this.hashOfQuestionnaire = hashOfQuestionnaire;
+
+        if (resultFragment != null) resultFragment.setHashOfQuestionnaire(hashOfQuestionnaire);
+        else resultFragment = ResultFragment.newInstance(new HashMap<>() , hashOfQuestionnaire);
     }
 
-    public static QuestionnaireFragment newInstance(List<QuestionnaireItem> items) {
+    public static QuestionnaireFragment newInstance(List<QuestionnaireItem> items, String hashOfQuestionnaire) {
         Bundle args = new Bundle();
-        QuestionnaireFragment fragment = new QuestionnaireFragment(items);
+        QuestionnaireFragment fragment = new QuestionnaireFragment(items, hashOfQuestionnaire);
         fragment.setArguments(args);
         return fragment;
     }
