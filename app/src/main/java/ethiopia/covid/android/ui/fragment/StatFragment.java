@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,6 +46,8 @@ import static ethiopia.covid.android.ui.fragment.ContentState.changeErrorDialogV
 import static ethiopia.covid.android.ui.fragment.ContentState.changeProgressBarVisibility;
 import static ethiopia.covid.android.ui.fragment.ContentState.setRefreshButtonAction;
 import static ethiopia.covid.android.util.Utils.getCurrentTheme;
+import static java.lang.Math.min;
+import static java.lang.Math.round;
 
 /**
  * Created by BrookMG on 3/23/2020 in ethiopia.covid.android.ui.fragment
@@ -56,6 +59,8 @@ public class StatFragment extends BaseFragment {
     private RecyclerView recyclerView;
     private AppCompatImageButton themeButton, langButton;
     private StatRecyclerAdapter statRecyclerAdapter;
+    private Integer recyclerViewY = 0;
+    private int appBarElevation = 0;
 
     public static StatFragment newInstance() {
         Bundle args = new Bundle();
@@ -82,6 +87,11 @@ public class StatFragment extends BaseFragment {
             appBarLayout.requestApplyInsets();
             handleWindowInsets(appBarLayout);
         }
+    }
+
+    private void computeRecyclerViewScrollForAppbarElevation(Integer yDiff) {
+        recyclerViewY += yDiff; //not reliable, but it's one way to find scroll position to compute the elevation for the elevation
+        ViewCompat.setElevation(appBarLayout, (round(min(recyclerViewY * 0.8f, 19f))));
     }
 
     @Nullable
@@ -113,6 +123,17 @@ public class StatFragment extends BaseFragment {
                     super.onLayoutChildren(recycler, state);
                 } catch (IndexOutOfBoundsException exception) {
                     exception.printStackTrace();
+                }
+            }
+        });
+
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (getActivity() instanceof MainActivity) {
+                    computeRecyclerViewScrollForAppbarElevation(dy);
                 }
             }
         });
