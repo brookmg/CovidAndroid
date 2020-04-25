@@ -2,7 +2,7 @@ name: Ship to firebase dist
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ master , dev ]
 
 jobs:
   build:
