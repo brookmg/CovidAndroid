@@ -18,11 +18,20 @@
 <td><p align="center">Light - Current cases and affected regions from PMO API</p></td>
 <td><p align="center">Light - Current cases worldwide and historical data</p></td>
 </tr>
+
 <tr>
 <td><img src="screenshots/5.jpg" width="150" /></td>
+<td><img src="screenshots/7.jpg" width="150" /></td>
+<td><img src="screenshots/8.jpg" width="150" /></td>
+<td><img src="screenshots/9.jpg" width="150" /></td>
+<td><img src="screenshots/10.jpg" width="150" /></td>
 </tr>
 <tr>
 <td><p align="center">Light - FAQs about COVID19 from WHO website</p></td>
+<td><p align="center">Lang - Language support for some Ethiopian languages</p></td>
+<td><p align="center">News - Realtime news from trusted sources</p></td>
+<td><p align="center">Contact - Phone numbers for regions for COVID19 related case</p></td>
+<td><p align="center">Questionnaire - Collecting data from users with their consent.</p></td>
 </tr>
 </table>
 
@@ -30,9 +39,9 @@
 
 * [X] Statistics on COVID19
 * [X] Readable contents about the virus
-* [ ] News about COVID19 from valid sources
-* [ ] Questionnaire to check how you are feeling
-* [ ] SOS button for calling ambulance
+* [X] News about COVID19 from valid sources
+* [X] Questionnaire to check how you are feeling
+* [X] SOS button for calling ambulance _ish_
 
 ## Contribution
 
