@@ -280,3 +280,50 @@ Author: Brook Mezgebu <brook.mezgebu.dev@gmail.com>
 [debug] [2020-04-25T22:14:35.560Z] >>> HTTP REQUEST POST https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/releases/5ea4b64a7e131038f40000ab/enable_access  
  {"emails":[],"groupIds":["Tester"]}
 [debug] [2020-04-25T22:14:36.778Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 25 Apr 2020 22:14:36 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-05-01T10:47:21.361Z] ----------------------------------------------------------------------
+[debug] [2020-05-01T10:47:21.363Z] Command:       /usr/local/bin/node /usr/local/bin/firebase appdistribution:distribute app/build/outputs/apk/release/app-release.apk --app 1:327634015535:android:b35ffb7f114c925257fdda --token 1//09iJxOZoiTf8qCgYIARAAGAkSNwF-L9IrnaRx-sRh-HHP91n8aMxEBiTn2R2EhXHkq9_sHsxjkZA5Wa7za8pIeoIlKa9aL1IkvVc --groups Tester --release-notes commit 9e32e3b199a1a780941c51956b1def97997092f7
+Author: Brook Mezgebu <brook.mezgebu.dev@gmail.com>
+
+    Merge pull request #38 from brookmg/feat/change-app-icon --debug
+[debug] [2020-05-01T10:47:21.364Z] CLI Version:   8.2.0
+[debug] [2020-05-01T10:47:21.364Z] Platform:      linux
+[debug] [2020-05-01T10:47:21.364Z] Node Version:  v12.10.0
+[debug] [2020-05-01T10:47:21.364Z] Time:          Fri May 01 2020 10:47:21 GMT+0000 (Coordinated Universal Time)
+[debug] [2020-05-01T10:47:21.364Z] ----------------------------------------------------------------------
+[debug] [2020-05-01T10:47:21.364Z] 
+[debug] [2020-05-01T10:47:21.372Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-05-01T10:47:21.373Z] > authorizing via --token option
+[info] i  getting app details...
+[debug] [2020-05-01T10:47:21.377Z] > refreshing access token with scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-05-01T10:47:21.377Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-05-01T10:47:21.482Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 01 May 2020 10:47:21 GMT","server":"scaffolding on HTTPServer2","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-05-01T10:47:21.484Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda  
+ 
+[debug] [2020-05-01T10:47:21.810Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 01 May 2020 10:47:21 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-05-01T10:47:21.830Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/upload_status/f8a05671469b9ea99f6de11225a9d932280642eb  
+ 
+[debug] [2020-05-01T10:47:22.125Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 01 May 2020 10:47:22 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  uploading distribution...
+[debug] [2020-05-01T10:47:22.126Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/jwt  
+ 
+[debug] [2020-05-01T10:47:22.365Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 01 May 2020 10:47:22 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-05-01T10:47:22.366Z] >>> HTTP REQUEST POST https://appdistribution-uploads.crashlytics.com/spi/v1/jwt_distributions  
+ 
+[debug] [2020-05-01T10:47:22.534Z] <<< HTTP RESPONSE 202 {"content-type":"application/json","date":"Fri, 01 May 2020 10:47:22 GMT","etag":"f8a05671469b9ea99f6de11225a9d932280642eb","server":"nginx","status":"202 Accepted","x-content-type-options":"nosniff","x-request-id":"4caa635d9d7937a076f547a088e48df7","content-length":"66","connection":"keep-alive"}
+[debug] [2020-05-01T10:47:22.535Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/upload_status/f8a05671469b9ea99f6de11225a9d932280642eb  
+ 
+[debug] [2020-05-01T10:47:22.781Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 01 May 2020 10:47:22 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-05-01T10:47:24.785Z] >>> HTTP REQUEST GET https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/upload_status/f8a05671469b9ea99f6de11225a9d932280642eb  
+ 
+[debug] [2020-05-01T10:47:25.058Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 01 May 2020 10:47:25 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] ✔  uploaded distribution successfully!
+[info] i  adding release notes...
+[debug] [2020-05-01T10:47:25.060Z] >>> HTTP REQUEST POST https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/releases/5eabfe3bee8c3d52bf0000d1/notes  
+ {"releaseNotes":{"releaseNotes":"commit 9e32e3b199a1a780941c51956b1def97997092f7\nAuthor: Brook Mezgebu <brook.mezgebu.dev@gmail.com>\n\n    Merge pull request #38 from brookmg/feat/change-app-icon"}}
+[debug] [2020-05-01T10:47:25.316Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 01 May 2020 10:47:25 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] ✔  added release notes successfully
+[info] i  adding testers/groups...
+[debug] [2020-05-01T10:47:25.318Z] >>> HTTP REQUEST POST https://firebaseappdistribution.googleapis.com/v1alpha/apps/1:327634015535:android:b35ffb7f114c925257fdda/releases/5eabfe3bee8c3d52bf0000d1/enable_access  
+ {"emails":[],"groupIds":["Tester"]}
+[debug] [2020-05-01T10:47:26.844Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 01 May 2020 10:47:26 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
