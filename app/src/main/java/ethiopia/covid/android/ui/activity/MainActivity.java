@@ -42,6 +42,7 @@ import ethiopia.covid.android.R;
 import ethiopia.covid.android.data.QuestionnaireItem;
 import ethiopia.covid.android.data.QuestionItem;
 import ethiopia.covid.android.ui.fragment.BaseFragment;
+import ethiopia.covid.android.ui.fragment.HeatMapFragment;
 import ethiopia.covid.android.ui.fragment.HomeFragment;
 import ethiopia.covid.android.ui.fragment.QuestionnaireFragment;
 import ethiopia.covid.android.util.Utils;
@@ -50,6 +51,7 @@ import mumayank.com.airlocationlibrary.AirLocation;
 import timber.log.Timber;
 
 import static ethiopia.covid.android.util.Constant.PREFERENCE_QTIME;
+import static ethiopia.covid.android.util.Constant.TAG_HEAT_MAP;
 import static ethiopia.covid.android.util.Constant.TAG_HOME;
 import static ethiopia.covid.android.util.Constant.TAG_QUESTIONNAIRE;
 import static ethiopia.covid.android.util.Constant.getQuestionnaireConstant;
@@ -96,35 +98,26 @@ public class MainActivity extends AppCompatActivity {
                     switch (which) {
                         case 0: {
                             LocaleChanger.setLocale(new Locale("am", "et"));
-                            this.recreateActivity();
-                            break;
-                        }
-
-                        case 1: {
-                            LocaleChanger.setLocale(new Locale("en", "us"));
-                            this.recreateActivity();
                             break;
                         }
 
                         case 2: {
-                         LocaleChanger.setLocale(new Locale("ti", "et"));
-                         this.recreate();
-                         break;
+                            LocaleChanger.setLocale(new Locale("ti", "et"));
+                            break;
                         }
 
                         case 3: {
-                         LocaleChanger.setLocale(new Locale("om", "et"));
-                         this.recreate();
-                         break;
+                             LocaleChanger.setLocale(new Locale("om", "et"));
+                             break;
                         }
 
+                        case 1:
                         default: {
-                            
                             LocaleChanger.setLocale(new Locale("en", "us"));
-                            this.recreateActivity();
                             break;
                         }
                     }
+                    this.recreateActivity();
                 }).show();
     }
 
@@ -181,6 +174,11 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 break;
+            }
+
+            case TAG_HEAT_MAP: {
+                BaseFragment baseFragment = HeatMapFragment.newInstance();
+                fragStarter(fragmentTag, baseFragment, bundle, view);
             }
         }
     }

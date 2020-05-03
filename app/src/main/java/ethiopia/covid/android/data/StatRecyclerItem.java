@@ -1,5 +1,7 @@
 package ethiopia.covid.android.data;
 
+import android.view.View;
+
 import java.util.List;
 
 /**
@@ -8,7 +10,7 @@ import java.util.List;
  */
 public class StatRecyclerItem {
 
-    private int type = 0;  // 0 -> Table , 1 -> Pie , 2 -> Status card, 3 -> Patients , 4 -> Line
+    private int type = 0;  // 0 -> Table , 1 -> Pie , 2 -> Status card, 3 -> Patients , 4 -> Line , 5 -> Button card
 
     // Table stuff
     private List<CovidStatItem> tableItems;
@@ -33,6 +35,18 @@ public class StatRecyclerItem {
 
     // Patient table stuff
     private List<PatientItem> patientItems;
+
+    // Button Card stuff
+    private String buttonCardText;
+    private String buttonText;
+    private View.OnClickListener buttonOnClickListener;
+
+    public StatRecyclerItem(String buttonCardText, String buttonText, View.OnClickListener buttonOnClickListener) {
+        this.type = 5;
+        this.buttonCardText = buttonCardText;
+        this.buttonText = buttonText;
+        this.buttonOnClickListener = buttonOnClickListener;
+    }
 
     public StatRecyclerItem(String lineCardTitle, List<LineChartItem> lineChartItems, List<String> lineLabels) {
         this.type = 4;
@@ -214,5 +228,29 @@ public class StatRecyclerItem {
 
     public void setLineLabels(List<String> lineLabels) {
         this.lineLabels = lineLabels;
+    }
+
+    public String getButtonCardText() {
+        return buttonCardText;
+    }
+
+    public void setButtonCardText(String buttonCardText) {
+        this.buttonCardText = buttonCardText;
+    }
+
+    public String getButtonText() {
+        return buttonText;
+    }
+
+    public void setButtonText(String buttonText) {
+        this.buttonText = buttonText;
+    }
+
+    public View.OnClickListener getButtonOnClickListener() {
+        return buttonOnClickListener;
+    }
+
+    public void setButtonOnClickListener(View.OnClickListener buttonOnClickListener) {
+        this.buttonOnClickListener = buttonOnClickListener;
     }
 }

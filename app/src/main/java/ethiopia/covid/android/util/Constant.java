@@ -18,6 +18,7 @@ public class Constant {
 
     public static final String TAG_HOME = "tag_home";
     public static final String TAG_QUESTIONNAIRE = "tag_questionnaire";
+    public static final String TAG_HEAT_MAP = "tag_heat_map";
 
     public static final String PREFERENCE_THEME = "pref_theme";
     public static final String PREFERENCE_LATEST_NEWS = "pref_latest_news";

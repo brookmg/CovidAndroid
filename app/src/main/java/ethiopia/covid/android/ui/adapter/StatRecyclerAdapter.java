@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,6 +56,7 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int STATUS_CARD = 3;
     private final int PATIENT_TABLE = 4;
     private final int LINE_CHART = 5;
+    private final int BUTTON_CARD = 6;
 
     private List<StatRecyclerItem> statRecyclerItemList;
 
@@ -83,6 +85,10 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case LINE_CHART:
                 return new CovidStatisticLineGraphViewHolder(
                         LayoutInflater.from(parent.getContext()).inflate(R.layout.stat_table_graph_element, parent, false)
+                );
+            case BUTTON_CARD:
+                return new ButtonCardViewHolder(
+                        LayoutInflater.from(parent.getContext()).inflate(R.layout.card_recycler_element, parent, false)
                 );
         }
 
@@ -351,6 +357,13 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             // set data
             chart.setData(data);
         }
+        else if (getItemViewType(position) == BUTTON_CARD) {
+            position -= 1;
+            ((ButtonCardViewHolder) holder).mainText.setText(statRecyclerItemList.get(position).getButtonCardText());
+            ((ButtonCardViewHolder) holder).mainButton.setOnClickListener(statRecyclerItemList.get(position).getButtonOnClickListener());
+            ((ButtonCardViewHolder) holder).mainButton.setText(statRecyclerItemList.get(position).getButtonText());
+        }
+
         else {
 //            ViewGroup.LayoutParams params = ((HeaderViewHolder) holder).blankView.getLayoutParams();
 //            params.height = dpToPx(holder.itemView.getContext(), 116);
@@ -368,6 +381,7 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 case 2: return STATUS_CARD;
                 case 3: return PATIENT_TABLE;
                 case 4: return LINE_CHART;
+                case 5: return BUTTON_CARD;
                 default: return HEADER;
             }
         }
@@ -434,6 +448,19 @@ public class StatRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             infected = itemView.findViewById(R.id.infected);
             recovered = itemView.findViewById(R.id.recovered);
             death = itemView.findViewById(R.id.death);
+        }
+    }
+
+    private static class ButtonCardViewHolder extends RecyclerView.ViewHolder {
+        MaterialCardView mainCard;
+        AppCompatTextView mainText;
+        AppCompatButton mainButton;
+
+        ButtonCardViewHolder(@NonNull View itemView) {
+            super(itemView);
+            mainCard = itemView.findViewById(R.id.root);
+            mainText = itemView.findViewById(R.id.main_text);
+            mainButton = itemView.findViewById(R.id.main_button);
         }
     }
 

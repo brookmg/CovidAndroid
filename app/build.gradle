@@ -35,6 +35,7 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue "string", "google_maps_api_key", keystoreProperties['googleMapsAPIKKey']
         }
         debug {
             //applicationIdSuffix '.debug'
@@ -45,6 +46,7 @@ android {
                 instrumentationEnabled false
             }
             versionNameSuffix ' (' + gitBranch() + ')'
+            resValue "string", "google_maps_api_key", keystoreProperties['googleMapsAPIKKey']
         }
     }
     compileOptions {
@@ -96,6 +98,8 @@ dependencies {
     implementation firebase.crashlytics
     implementation (firebase.firestore)
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.maps.android:android-maps-utils:1.0.2'
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
