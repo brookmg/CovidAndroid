@@ -16,6 +16,7 @@ import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ import timber.log.Timber;
 public class HeatMapFragment extends BaseFragment {
 
     private MapView mainMapView;
+    private FloatingActionButton backButton;
     private List<Circle> circles = new ArrayList<>();
 //    float mapZoomLevel = 0f;
 
@@ -55,6 +57,7 @@ public class HeatMapFragment extends BaseFragment {
                              @Nullable Bundle savedInstanceState) {
         View mainView = inflater.inflate(R.layout.heat_map_fragment, container, false);
         mainMapView = mainView.findViewById(R.id.main_map_view);
+        backButton = mainView.findViewById(R.id.back_button);
 
         MapsInitializer.initialize(getActivity());
         mainMapView.getMapAsync(googleMap -> {
@@ -72,6 +75,7 @@ public class HeatMapFragment extends BaseFragment {
         });
 
         mainMapView.onCreate(savedInstanceState);
+        backButton.setOnClickListener( v -> getActivity().onBackPressed() );
         return mainView;
     }
 

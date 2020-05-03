@@ -45,6 +45,7 @@ import retrofit2.Response;
 import static ethiopia.covid.android.ui.fragment.ContentState.changeErrorDialogVisibility;
 import static ethiopia.covid.android.ui.fragment.ContentState.changeProgressBarVisibility;
 import static ethiopia.covid.android.ui.fragment.ContentState.setRefreshButtonAction;
+import static ethiopia.covid.android.util.Constant.TAG_HEAT_MAP;
 import static ethiopia.covid.android.util.Utils.getCurrentTheme;
 import static java.lang.Math.min;
 import static java.lang.Math.round;
@@ -153,7 +154,20 @@ public class StatFragment extends BaseFragment {
             if (!err.isEmpty() || recyclerItems == null || recyclerItems.isEmpty() ) {
                 changeProgressBarVisibility(mainView, false);
                 changeErrorDialogVisibility(mainView, true);
+                return;
             }
+
+            recyclerItems.add(
+                    2,
+                    new StatRecyclerItem(
+                            "Preview heat map for the world countries.",
+                            "Preview",
+                            v -> {
+                                if (getActivity() instanceof MainActivity)
+                                    ((MainActivity) getActivity()).changeFragment(TAG_HEAT_MAP, new Bundle(), null);
+                            }
+                    )
+            );
 
             statRecyclerAdapter = new StatRecyclerAdapter(recyclerItems);
             recyclerView.setAdapter(statRecyclerAdapter);
