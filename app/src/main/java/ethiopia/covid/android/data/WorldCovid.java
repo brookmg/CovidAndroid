@@ -1,5 +1,7 @@
 package ethiopia.covid.android.data;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 import java.util.List;
 
@@ -37,7 +39,8 @@ public class WorldCovid {
         private int _id;
         private String iso2;
         private String iso3;
-        private double lat, lon;
+        private double lat;
+        private @SerializedName("long") double lon;
         private String flag;
 
         public CountryInfo(int _id, String iso2, String iso3, double lat, double lon, String flag) {

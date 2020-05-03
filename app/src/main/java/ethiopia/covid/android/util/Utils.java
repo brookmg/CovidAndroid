@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -211,6 +212,37 @@ public class Utils {
             hex.append(Integer.toHexString(b & 0xFF));
         }
         return hex.toString();
+    }
+
+    /**
+     * Function to return a color in the gradient of two colors at a specific point
+     * @param colorRGBFirst -> first color with RGB value containing array of ( Shade of red ! ) {@link Integer}
+     * @param colorRGBsecond -> second color with RGB value containing array of ( Shade of green ! ) {@link Integer}
+     * @param factor -> position of the pointer ... 0 is color1 and 1 is color2
+     * @return an integer array containing RGB value of the color found
+     */
+    public static int[] calculateTheDelta(int[] colorRGBFirst, int[] colorRGBsecond, float factor) {
+
+        int[] rgbBaby = {
+                0, 0, 0
+        };
+
+        float slope = (colorRGBsecond[1] - colorRGBFirst[1]) / (1f - 0.5f);
+        float slope2 = (colorRGBFirst[0] - colorRGBsecond[0]) / (1f - 0.5f);
+
+        if (factor < 0.5f) {
+            //only touch green
+            rgbBaby[0] = colorRGBFirst[0];
+            rgbBaby[1] = (int) (slope * factor);
+        } else {
+            //only touch red
+            rgbBaby[0] = (int) (-1 * slope2 * (factor - 1f));
+            rgbBaby[1] = colorRGBsecond[1];
+        }
+
+        rgbBaby[2] = (colorRGBFirst[2] + (int) ((colorRGBsecond[2] - colorRGBFirst[2]) * factor));
+
+        return rgbBaby;
     }
 
 }
