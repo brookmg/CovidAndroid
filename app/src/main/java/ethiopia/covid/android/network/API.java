@@ -58,7 +58,7 @@ public class API {
 
     public API() {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addNetworkInterceptor(new ChuckerInterceptor(App.getInstance()))
+                .addNetworkInterceptor(new ChuckerInterceptor(App.Companion.getInstance()))
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://api.pmo.gov.et/v1/")
@@ -313,20 +313,20 @@ public class API {
                                         new LineChartItem(
                                                 caseNumbers,
                                                 activity.get().getString(R.string.cases),
-                                                ContextCompat.getColor(App.getInstance() , R.color.purple_0),
-                                                ContextCompat.getColor(App.getInstance() , R.color.purple_1)
+                                                ContextCompat.getColor(App.Companion.getInstance() , R.color.purple_0),
+                                                ContextCompat.getColor(App.Companion.getInstance() , R.color.purple_1)
                                         ),
                                         new LineChartItem(
                                                 deathNumbers,
                                                 activity.get().getString(R.string.deaths),
-                                                ContextCompat.getColor(App.getInstance() , R.color.red_0),
-                                                ContextCompat.getColor(App.getInstance() , R.color.red_1)
+                                                ContextCompat.getColor(App.Companion.getInstance() , R.color.red_0),
+                                                ContextCompat.getColor(App.Companion.getInstance() , R.color.red_1)
                                         ),
                                         new LineChartItem(
                                                 recoveryNumbers,
                                                 activity.get().getString(R.string.recovery),
-                                                ContextCompat.getColor(App.getInstance() , R.color.green_0),
-                                                ContextCompat.getColor(App.getInstance() , R.color.green_1)
+                                                ContextCompat.getColor(App.Companion.getInstance() , R.color.green_0),
+                                                ContextCompat.getColor(App.Companion.getInstance() , R.color.green_1)
                                         )
                                 ),
                                 caseDate

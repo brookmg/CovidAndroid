@@ -101,8 +101,8 @@ public class DetailFragment extends BaseFragment {
         changeProgressBarVisibility(mainView , true);
         changeErrorDialogVisibility(mainView, false);
 
-        App.getInstance().getMainAPI().getFrequentlyAskedQuestions((item, err) -> {
-            if (item != null && item.getData() != null && !item.getData().isEmpty()) {
+        App.Companion.getInstance().getMainAPI().getFrequentlyAskedQuestions((item, err) -> {
+            if (item != null && !item.getData().isEmpty()) {
                 for (FAQ.QuestionItem content : item.getData()) {
                     details.add(new DetailItem(content));
                 }

@@ -81,7 +81,7 @@ public class HeatMapFragment extends BaseFragment {
 
     private void setUpClusterManager(GoogleMap map) {
         if (getActivity() == null) return;
-        App.getInstance().getMainAPI().getWorldStat((items, err) -> addCountryCircles(map, items));
+        App.Companion.getInstance().getMainAPI().getWorldStat((items, err) -> addCountryCircles(map, items));
     }
 
     private void addCountryCircles(GoogleMap map, List<WorldCovid> items) {

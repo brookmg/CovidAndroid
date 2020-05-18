@@ -150,7 +150,7 @@ public class StatFragment extends BaseFragment {
         changeErrorDialogVisibility(mainView, false);
         recyclerView.setVisibility(View.GONE);
 
-        App.getInstance().getMainAPI().getStatRecyclerContents(new WeakReference<>(getActivity()), (recyclerItems, err) -> {
+        App.Companion.getInstance().getMainAPI().getStatRecyclerContents(new WeakReference<>(getActivity()), (recyclerItems, err) -> {
             if (!err.isEmpty() || recyclerItems == null || recyclerItems.isEmpty() ) {
                 changeProgressBarVisibility(mainView, false);
                 changeErrorDialogVisibility(mainView, true);

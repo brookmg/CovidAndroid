@@ -67,7 +67,7 @@ public class NewsFragment extends BaseFragment {
 
     private void onLoadMoreNews() {
         int currentLastNewsId = adapter.idOfLastNews();
-        App.getInstance().getMainAPI().getLatestNews(currentLastNewsId , (item, err) -> {
+        App.Companion.getInstance().getMainAPI().getLatestNews(currentLastNewsId , (item, err) -> {
             if (!err.isEmpty()) Timber.e(err);
             adapter.loadMoreOnBottom(item);
         });
@@ -123,8 +123,8 @@ public class NewsFragment extends BaseFragment {
         changeProgressBarVisibility(mainView , true);
         changeErrorDialogVisibility(mainView, false);
 
-        App.getInstance().getMainAPI().getLatestNews((item, err) -> {
-            int previousLatestNews = PreferenceManager.getDefaultSharedPreferences(App.getInstance())
+        App.Companion.getInstance().getMainAPI().getLatestNews((item, err) -> {
+            int previousLatestNews = PreferenceManager.getDefaultSharedPreferences(App.Companion.getInstance())
                     .getInt(PREFERENCE_LATEST_NEWS , 0);
 
             if (item == null || item.isEmpty()) {
@@ -147,7 +147,7 @@ public class NewsFragment extends BaseFragment {
 
             showBadge(currentNewsPosition);
 
-            PreferenceManager.getDefaultSharedPreferences(App.getInstance())
+            PreferenceManager.getDefaultSharedPreferences(App.Companion.getInstance())
                     .edit().putInt(PREFERENCE_LATEST_NEWS , item.get(0).getId())
                     .apply();
 
