@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.google.firebase.firebase-perf'
 
@@ -89,6 +91,14 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:2.9.5'
     implementation 'im.ene.toro3:toro:3.7.0.2010003'
     implementation 'im.ene.toro3:toro-ext-exoplayer:3.7.0.2010003'
+
+    // KTX
+    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
+    implementation "androidx.preference:preference-ktx:1.1.1"
 
     //FIREBASE
     implementation firebase.core
