@@ -19,40 +19,25 @@
  *           OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *           WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+package ethiopia.covid.android.ui.adapter
 
-package ethiopia.covid.android.ui.adapter;
-
-import android.content.Context;
-import android.graphics.PointF;
-import android.view.View;
-
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearSmoothScroller;
+import android.content.Context
+import android.graphics.PointF
+import androidx.recyclerview.widget.LinearSmoothScroller
 
 /**
  * Created by BrookMG on 3/7/2019 in ethiopia.covid.android.ui.adapters
  * inside the project CovidEt .
  */
-public class SmoothScroller extends LinearSmoothScroller {
+class SmoothScroller(
+        context: Context?,
+        private val distanceInPixel: Int,
+        private val duration: Int)
+    : LinearSmoothScroller(context) {
 
-    private int distanceInPixel;
-    private int duration;
-
-    public SmoothScroller(Context context, int distanceInPixel, int duration) {
-        super(context);
-        this.distanceInPixel = distanceInPixel;
-        this.duration = duration;
+    override fun calculateTimeForScrolling(dx: Int): Int {
+        val propagation = dx / distanceInPixel.toFloat()
+        return (duration * propagation).toInt()
     }
 
-    @Nullable
-    @Override
-    public PointF computeScrollVectorForPosition(int targetPosition) {
-        return super.computeScrollVectorForPosition(targetPosition);
-    }
-
-    @Override
-    protected int calculateTimeForScrolling(int dx) {
-        float propagation = dx / distanceInPixel;
-        return (int) (duration * propagation);
-    }
 }

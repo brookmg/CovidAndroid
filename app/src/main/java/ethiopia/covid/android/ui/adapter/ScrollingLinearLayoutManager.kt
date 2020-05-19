@@ -19,38 +19,29 @@
  *           OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *           WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+package ethiopia.covid.android.ui.adapter
 
-package ethiopia.covid.android.ui.adapter;
-
-import android.content.Context;
-import android.view.View;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.content.Context
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import kotlin.math.abs
 
 /**
  * Created by BrookMG on 3/7/2019 in ethiopia.covid.android.ui.adapters
  * inside the project CovidEt .
  */
-public class ScrollingLinearLayoutManager extends LinearLayoutManager {
+class ScrollingLinearLayoutManager(context: Context?, orientation: Int, reverseLayout: Boolean, private val duration: Int)
+    : LinearLayoutManager(context, orientation, reverseLayout) {
 
-    private int duration;
-
-    public ScrollingLinearLayoutManager(Context context, int orientation, boolean reverseLayout, int duration) {
-        super(context, orientation, reverseLayout);
-        this.duration = duration;
+    override fun smoothScrollToPosition(recyclerView: RecyclerView, state: RecyclerView.State, position: Int) {
+        val firstVisibleChild = recyclerView.getChildAt(0)
+        val itemWidth = firstVisibleChild.width
+        val currentPosition = recyclerView.getChildLayoutPosition(firstVisibleChild)
+        var distanceInPx = abs((currentPosition - position) * itemWidth)
+        distanceInPx = if (distanceInPx == 0) abs(firstVisibleChild.y).toInt() else distanceInPx
+        val smoothScroller = SmoothScroller(recyclerView.context, distanceInPx, duration)
+        smoothScroller.targetPosition = position
+        startSmoothScroll(smoothScroller)
     }
 
-    @Override
-    public void smoothScrollToPosition(RecyclerView recyclerView, RecyclerView.State state, int position) {
-        View firstVisibleChild = recyclerView.getChildAt(0);
-        int itemWidth = firstVisibleChild.getWidth();
-        int currentPosition = recyclerView.getChildLayoutPosition(firstVisibleChild);
-        int distanceInPx = Math.abs((currentPosition - position) * itemWidth);
-
-        distanceInPx = (distanceInPx == 0) ? (int) Math.abs(firstVisibleChild.getY()) : distanceInPx;
-        SmoothScroller smoothScroller = new SmoothScroller(recyclerView.getContext(), distanceInPx, duration);
-        smoothScroller.setTargetPosition(position);
-        startSmoothScroll(smoothScroller);
-    }
 }
