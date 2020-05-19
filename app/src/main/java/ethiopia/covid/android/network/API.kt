@@ -156,7 +156,7 @@ class API {
         }
     }
 
-    private suspend fun blockToRunInBackground(activity: WeakReference<Context>): List<StatRecyclerItem> {
+    private suspend fun blockToRunInBackground(activity: WeakReference<Context>): MutableList<StatRecyclerItem> {
         return withContext(Dispatchers.IO) {
             val returnable: MutableList<StatRecyclerItem> = ArrayList()
 
@@ -316,7 +316,7 @@ class API {
     }
 
     @UiThread
-    fun getStatRecyclerContents(activity: WeakReference<Context>, onItemReady: OnItemReady<List<StatRecyclerItem?>?>) {
+    fun getStatRecyclerContents(activity: WeakReference<Context>, onItemReady: OnItemReady<MutableList<StatRecyclerItem>>) {
         CoroutineScope(Dispatchers.Main).launch {
             val list = blockToRunInBackground(activity)
             onItemReady.onItem(list, "")

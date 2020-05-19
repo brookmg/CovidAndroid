@@ -9,7 +9,7 @@ import java.io.Serializable
 data class QuestionnaireItem(
         var questionType: QuestionType,
         var questionText: String,
-        var questionItems: List<QuestionItem>
+        var questionItems: MutableList<QuestionItem>
 ) : Serializable {
     enum class QuestionType { SINGLE_BLOCK_QUESTION, SINGLE_CHOICE_QUESTION, SINGLE_MULTIPLE_CHOICE_QUESTION }
 }

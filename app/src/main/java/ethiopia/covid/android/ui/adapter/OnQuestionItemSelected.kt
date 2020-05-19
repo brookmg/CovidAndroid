@@ -7,5 +7,5 @@ import ethiopia.covid.android.data.QuestionItem
  * inside the project CoVidEt .
  */
 interface OnQuestionItemSelected {
-    fun onItemSelected(item: QuestionItem?, position: Int)
+    fun onItemSelected(item: QuestionItem, position: Int)
 }

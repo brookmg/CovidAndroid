@@ -118,9 +118,8 @@ class MainActivity : AppCompatActivity() {
                     val questionnaireContent = FirebaseRemoteConfig.getInstance()
                             .getString(getQuestionnaireConstant(LocaleChanger.getLocale().language))
                     val hashOfQuestionnaire = md5(questionnaireContent)
-                    val items = Gson()
-                            .fromJson<List<QuestionnaireItem>>(questionnaireContent, object : TypeToken<List<QuestionnaireItem?>?>() {}
-                                    .type)
+                    val items = Gson().fromJson<MutableList<QuestionnaireItem>>(questionnaireContent, object :
+                            TypeToken<MutableList<QuestionnaireItem>>() {}.type)
                     if (items != null && items.isNotEmpty()) {
                         val baseFragment: BaseFragment = QuestionnaireFragment.newInstance(items, hashOfQuestionnaire)
                         fragStarter(fragmentTag, baseFragment, bundle, view)
