@@ -11,7 +11,7 @@ class StatRecyclerItem {
 
     // Table stuff
     var tableItems: List<CovidStatItem?>? = null
-    var headers: List<String>? = null
+    lateinit var headers: List<String>
     var fixedHeaderCount = 0
     var pieCardTitle: String? = null
     var pieValues: List<Int>? = null
@@ -67,17 +67,17 @@ class StatRecyclerItem {
         this.totalTested = totalTested
     }
 
-    constructor(headers: List<String>?, fixedHeaderCount: Int, patientItems: List<PatientItem>?) {
+    constructor(headers: List<String>, fixedHeaderCount: Int, patientItems: List<PatientItem>?) {
         type = 3
         this.headers = headers
         this.fixedHeaderCount = fixedHeaderCount
         this.patientItems = patientItems
     }
 
-    constructor(tableItems: List<CovidStatItem?>?, headers: List<String>?) : this(0, tableItems, headers, 0)
+    constructor(tableItems: List<CovidStatItem?>?, headers: List<String>) : this(0, tableItems, headers, 0)
 
     @JvmOverloads
-    constructor(type: Int, tableItems: List<CovidStatItem?>?, headers: List<String>?, fixedHeaderCount: Int = 0) {
+    constructor(type: Int, tableItems: List<CovidStatItem?>?, headers: List<String>, fixedHeaderCount: Int = 0) {
         this.type = type
         this.tableItems = tableItems
         this.headers = headers

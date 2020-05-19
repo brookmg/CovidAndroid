@@ -109,12 +109,16 @@ class StatRecyclerAdapter(
             getItemViewType(position) == PATIENT_TABLE -> {
                 position -= 1
                 (holder as CovidStatisticTableViewHolder).mainCardView.setContentPadding(0, 0, 0, 0)
-                val rowItems: MutableList<List<String?>> = ArrayList()
+                val rowItems: MutableList<MutableList<String>> = mutableListOf()
                 for ((id, patient_nationality, location, recent_travel_to, name, age, gender, status) in statRecyclerItemList[position].patientItems
                         ?: listOf()) {
-                    rowItems.add(listOf(id.toString(), name, location, age.toString(), gender, patient_nationality, recent_travel_to,
-                            Constant.statusIdentifierMap[status]
-                    ))
+                    rowItems.add(mutableListOf(
+                            id.toString(),
+                            name, location,
+                            age.toString(), gender,
+                            patient_nationality,
+                            recent_travel_to,
+                            Constant.statusIdentifierMap[status] ?: "Unknown"))
                 }
                 holder.mainTable.populateTable(
                         statRecyclerItemList[position].headers,
