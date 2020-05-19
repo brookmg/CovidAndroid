@@ -171,15 +171,15 @@ object Utils {
     }
 
     @JvmStatic
-    fun openUrlInCustomTab(context: Context?, url: String) {
+    fun openUrlInCustomTab(context: Context, url: String) {
         val customTabsIntent = CustomTabsIntent.Builder()
-                .setToolbarColor(ContextCompat.getColor(context!!, R.color.black_0))
+                .setToolbarColor(ContextCompat.getColor(context, R.color.black_0))
                 .enableUrlBarHiding().setShowTitle(true).build()
         customTabsIntent.launchUrl(context, Uri.parse(url.replace(" ", "")))
     }
 
-    fun bindCustomTabsService(context: Context?, connection: CustomTabsServiceConnection?): Boolean {
-        return CustomTabsClient.bindCustomTabsService(context!!, "com.android.chrome", connection!!)
+    fun bindCustomTabsService(context: Context, connection: CustomTabsServiceConnection): Boolean {
+        return CustomTabsClient.bindCustomTabsService(context, "com.android.chrome", connection)
     }
 
     @JvmStatic

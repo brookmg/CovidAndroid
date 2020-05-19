@@ -109,10 +109,12 @@ class API {
                 val response = contentCovidAPI.getProtectiveMeasures().execute()
                 if (response.body() != null) {
                     val measures = response.body()
-                    val contents = measures!!.content
-                    contents.removeAt(0)
-                    contents.removeAt(contents.size - 1)
-                    measures.content = contents
+                    val contents = measures?.content
+
+                    contents?.removeAt(0)
+                    contents?.removeAt(contents.size - 1)
+                    if (contents != null) measures.content = contents
+
                     mainHandler.post { onItemReady.onItem(measures, "") }
                 } else {
                     mainHandler.post {
