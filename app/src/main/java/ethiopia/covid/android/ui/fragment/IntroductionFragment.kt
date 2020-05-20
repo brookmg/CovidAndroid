@@ -4,8 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ScrollView
-import ethiopia.covid.android.R
+import ethiopia.covid.android.databinding.IntroductionFragmentBinding
 import ethiopia.covid.android.ui.fragment.ContentState.changeErrorDialogVisibility
 import ethiopia.covid.android.ui.fragment.ContentState.changeProgressBarVisibility
 import ethiopia.covid.android.ui.fragment.ContentState.setRefreshButtonAction
@@ -16,29 +15,27 @@ import ethiopia.covid.android.ui.fragment.ContentState.setRefreshButtonAction
  */
 @Suppress("unused")
 class IntroductionFragment : BaseFragment() {
-    private lateinit var mainView: View
-    private lateinit var mainScrollView: ScrollView
+    private lateinit var introductionFragmentBinding: IntroductionFragmentBinding
 
     fun changeProgressState(state: Boolean) {
-        changeProgressBarVisibility(mainView, state)
-        mainScrollView.visibility = if (state) View.GONE else View.VISIBLE
+        changeProgressBarVisibility(introductionFragmentBinding.contentState, state)
+        introductionFragmentBinding.mainScrollView.visibility = if (state) View.GONE else View.VISIBLE
     }
 
     fun showError(error: Boolean) {
-        changeErrorDialogVisibility(mainView, error)
-        mainScrollView.visibility = if (error) View.GONE else View.VISIBLE
+        changeErrorDialogVisibility(introductionFragmentBinding.contentState, error)
+        introductionFragmentBinding.mainScrollView.visibility = if (error) View.GONE else View.VISIBLE
     }
 
     fun setRefreshButtonAction(listener: View.OnClickListener?) {
-        setRefreshButtonAction(mainView, listener)
+        setRefreshButtonAction(introductionFragmentBinding.contentState, listener)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        mainView = inflater.inflate(R.layout.introduction_fragment, container, false)
-        mainScrollView = mainView.findViewById(R.id.main_scroll_view)
+        introductionFragmentBinding = IntroductionFragmentBinding.inflate(layoutInflater)
         changeProgressState(true)
-        return mainView
+        return introductionFragmentBinding.root
     }
 
     companion object {

@@ -7,5 +7,5 @@ import android.widget.ImageView
  * inside the project CoVidEt .
  */
 interface OnImageItemClicked {
-    fun onImageClicked(imageView: ImageView?, clickedImageUri: List<String?>?)
+    fun onImageClicked(imageView: ImageView, clickedImageUri: List<String>)
 }

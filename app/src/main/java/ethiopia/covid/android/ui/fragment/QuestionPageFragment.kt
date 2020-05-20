@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ethiopia.covid.android.R
 import ethiopia.covid.android.data.QuestionItem
 import ethiopia.covid.android.data.QuestionnaireItem.QuestionType
+import ethiopia.covid.android.databinding.QuestionPageFragmentBinding
 import ethiopia.covid.android.ui.adapter.CheckBoxQuestionRecyclerAdapter
 import ethiopia.covid.android.ui.adapter.OnQuestionItemSelected
 import ethiopia.covid.android.ui.adapter.SingleChoiceQuestionRecyclerAdapter
@@ -27,33 +26,28 @@ class QuestionPageFragment(
         private val onQuestionItemSelected: OnQuestionItemSelected?
 ) : BaseFragment() {
 
-    private var mainRecyclerView: RecyclerView? = null
-    private var mainTextView: TextView? = null
-    private var mainContainer: ConstraintLayout? = null
+    private lateinit var questionPageFragmentBinding: QuestionPageFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val mainView = inflater.inflate(R.layout.question_page_fragment, container, false)
-        mainRecyclerView = mainView.findViewById(R.id.recycler_view)
-        mainTextView = mainView.findViewById(R.id.textView_1)
-        mainContainer = mainView.findViewById(R.id.main_container)
-        mainTextView?.setText(questionTitle)
+        questionPageFragmentBinding = QuestionPageFragmentBinding.inflate(layoutInflater)
+        questionPageFragmentBinding.textView1.text = questionTitle
 
         when (type) {
             QuestionType.SINGLE_CHOICE_QUESTION -> {
-                mainRecyclerView?.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                mainRecyclerView?.adapter = CheckBoxQuestionRecyclerAdapter(questionItems, true, onQuestionItemSelected)
+                questionPageFragmentBinding.recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+                questionPageFragmentBinding.recyclerView.adapter = CheckBoxQuestionRecyclerAdapter(questionItems, true, onQuestionItemSelected)
             }
             QuestionType.SINGLE_MULTIPLE_CHOICE_QUESTION -> {
-                mainRecyclerView?.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-                mainRecyclerView?.adapter = CheckBoxQuestionRecyclerAdapter(questionItems, onQuestionItemSelected)
+                questionPageFragmentBinding.recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+                questionPageFragmentBinding.recyclerView.adapter = CheckBoxQuestionRecyclerAdapter(questionItems, onQuestionItemSelected)
             }
             QuestionType.SINGLE_BLOCK_QUESTION -> {
-                mainRecyclerView?.layoutManager = GridLayoutManager(activity, 2)
-                mainRecyclerView?.adapter = SingleChoiceQuestionRecyclerAdapter(questionItems, onQuestionItemSelected)
+                questionPageFragmentBinding.recyclerView.layoutManager = GridLayoutManager(activity, 2)
+                questionPageFragmentBinding.recyclerView.adapter = SingleChoiceQuestionRecyclerAdapter(questionItems, onQuestionItemSelected)
             }
         }
-        return mainView
+        return questionPageFragmentBinding.root
     }
 
     companion object {

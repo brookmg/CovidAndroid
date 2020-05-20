@@ -2,19 +2,14 @@ package ethiopia.covid.android.ui.adapter
 
 import android.graphics.Color
 import android.net.Uri
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.exoplayer2.ui.PlayerView
-import com.google.android.material.button.MaterialButton
 import com.luseen.autolinklibrary.AutoLinkMode
-import com.luseen.autolinklibrary.AutoLinkTextView
-import ethiopia.covid.android.R
 import ethiopia.covid.android.data.NewsItem
+import ethiopia.covid.android.databinding.NewsItemBinding
 import ethiopia.covid.android.util.Utils.getImagesForContent
 import ethiopia.covid.android.util.Utils.openUrlInCustomTab
 import im.ene.toro.ToroPlayer
@@ -23,16 +18,16 @@ import im.ene.toro.exoplayer.ExoPlayerViewHelper
 import im.ene.toro.media.PlaybackInfo
 import im.ene.toro.widget.Container
 import timber.log.Timber
-import java.util.*
 
 /**
  * Created by BrookMG on 3/7/2019 in ethiopia.covid.android.ui.adapters
  * inside the project CovidEt .
  */
-class NewsItemRecyclerAdapter @JvmOverloads constructor(private val newsItems: MutableList<NewsItem>, private val onLastItemReachedListener: OnLastItemReachedListener? = null, private val onImageItemClicked: OnImageItemClicked? = null) : RecyclerView.Adapter<NewsItemRecyclerAdapter.ViewHolder>() {
-    private val scrollSpeed = 5000
-    private val handler = Handler()
-    private val solidTimer: Timer? = null
+class NewsItemRecyclerAdapter @JvmOverloads constructor(
+        private val newsItems: MutableList<NewsItem>,
+        private val onLastItemReachedListener: OnLastItemReachedListener? = null,
+        private val onImageItemClicked: OnImageItemClicked? = null
+) : RecyclerView.Adapter<NewsItemRecyclerAdapter.ViewHolder>() {
 
     interface OnLastItemReachedListener {
         fun onLastItemReached()
@@ -40,7 +35,7 @@ class NewsItemRecyclerAdapter @JvmOverloads constructor(private val newsItems: M
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.news_item, parent, false)
+            NewsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
@@ -80,61 +75,54 @@ class NewsItemRecyclerAdapter @JvmOverloads constructor(private val newsItems: M
         return newsItems.size
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), ToroPlayer {
-
-        var imagesRecyclerView: RecyclerView = itemView.findViewById(R.id.image_recycler_view)
-        var title: AppCompatTextView = itemView.findViewById(R.id.news_title)
-        var content: AutoLinkTextView = itemView.findViewById(R.id.news_payload)
-        var telegram: MaterialButton = itemView.findViewById(R.id.telegram)
-        var playerView: PlayerView = itemView.findViewById(R.id.player_view)
+    inner class ViewHolder(private val newsItemBinding: NewsItemBinding)
+        : RecyclerView.ViewHolder(newsItemBinding.root), ToroPlayer {
 
         var helper: ExoPlayerViewHelper? = null
         private lateinit var mediaUri: Uri
 
         fun bind(item: NewsItem) {
             mediaUri = Uri.parse(item.video)
-            title.text = String.format("%s...", item.content.substring(0, item.content.length / 4))
+            newsItemBinding.newsTitle.text = String.format("%s...", item.content.substring(0, item.content.length / 4))
 
             if (item.image.isNotEmpty()) {
-                imagesRecyclerView.layoutManager = ScrollingLinearLayoutManager(itemView.context,
+                newsItemBinding.imageRecyclerView.layoutManager = ScrollingLinearLayoutManager(
+                        newsItemBinding.root.context,
                         LinearLayoutManager.HORIZONTAL, false, 450)
-                imagesRecyclerView.adapter = ImageListRecyclerAdapter(
+                newsItemBinding.imageRecyclerView.adapter = ImageListRecyclerAdapter(
                         getImagesForContent(item.image), onImageItemClicked
                 )
-                imagesRecyclerView.visibility = View.VISIBLE
-            } else imagesRecyclerView.visibility = View.GONE
+                newsItemBinding.imageRecyclerView.visibility = View.VISIBLE
+            } else newsItemBinding.imageRecyclerView.visibility = View.GONE
 
             if (item.video.isNotEmpty()) {
-                playerView.visibility = View.VISIBLE
-            } else playerView.visibility = View.GONE
+                newsItemBinding.playerView.visibility = View.VISIBLE
+            } else newsItemBinding.playerView.visibility = View.GONE
 
-            content.addAutoLinkMode(AutoLinkMode.MODE_HASHTAG, AutoLinkMode.MODE_MENTION, AutoLinkMode.MODE_URL)
-            content.setMentionModeColor(Color.parseColor("#35F984"))
-            content.setHashtagModeColor(Color.parseColor("#EA4444"))
-            content.setUrlModeColor(Color.parseColor("#CA59EF"))
+            newsItemBinding.newsPayload.addAutoLinkMode(AutoLinkMode.MODE_HASHTAG, AutoLinkMode.MODE_MENTION, AutoLinkMode.MODE_URL)
+            newsItemBinding.newsPayload.setMentionModeColor(Color.parseColor("#35F984"))
+            newsItemBinding.newsPayload.setHashtagModeColor(Color.parseColor("#EA4444"))
+            newsItemBinding.newsPayload.setUrlModeColor(Color.parseColor("#CA59EF"))
 
-            content.setAutoLinkOnClickListener { autoLinkMode: AutoLinkMode?, matchedText: String ->
+            newsItemBinding.newsPayload.setAutoLinkOnClickListener { autoLinkMode: AutoLinkMode?, matchedText: String ->
                 when (autoLinkMode) {
-                    AutoLinkMode.MODE_URL -> openUrlInCustomTab(itemView.context, matchedText)
-                    AutoLinkMode.MODE_MENTION -> openUrlInCustomTab(itemView.context, getTelegramDeepLinkForMention(matchedText))
+                    AutoLinkMode.MODE_URL -> openUrlInCustomTab(newsItemBinding.root.context, matchedText)
+                    AutoLinkMode.MODE_MENTION -> openUrlInCustomTab(newsItemBinding.root.context, getTelegramDeepLinkForMention(matchedText))
                     else -> {}
                 }
             }
 
-            content.setAutoLinkText(item.content)
-            telegram.setOnClickListener {
-                openUrlInCustomTab(itemView.context, getTelegramDeepLinkForMention("@tikvahethiopia&post=" + item.id))
+            newsItemBinding.newsPayload.setAutoLinkText(item.content)
+            newsItemBinding.telegram.setOnClickListener {
+                openUrlInCustomTab(newsItemBinding.root.context,
+                        getTelegramDeepLinkForMention("@tikvahethiopia&post=" + item.id))
             }
 
         }
 
-        override fun getPlayerView(): View {
-            return playerView
-        }
+        override fun getPlayerView(): View = newsItemBinding.playerView
 
-        override fun getCurrentPlaybackInfo(): PlaybackInfo {
-            return helper?.latestPlaybackInfo ?: PlaybackInfo()
-        }
+        override fun getCurrentPlaybackInfo(): PlaybackInfo = helper?.latestPlaybackInfo ?: PlaybackInfo()
 
         override fun initialize(container: Container, playbackInfo: PlaybackInfo) {
             if (helper == null) helper = ExoPlayerViewHelper(this, mediaUri)
@@ -155,17 +143,11 @@ class NewsItemRecyclerAdapter @JvmOverloads constructor(private val newsItems: M
             helper?.pause()
         }
 
-        override fun isPlaying(): Boolean {
-            return helper?.isPlaying ?: false
-        }
+        override fun isPlaying(): Boolean = helper?.isPlaying ?: false
 
-        override fun wantsToPlay(): Boolean {
-            return ToroUtil.visibleAreaOffset(this, itemView.parent) >= 0.85
-        }
+        override fun wantsToPlay(): Boolean = ToroUtil.visibleAreaOffset(this, newsItemBinding.root.parent) >= 0.85
 
-        override fun getPlayerOrder(): Int {
-            return adapterPosition
-        }
+        override fun getPlayerOrder(): Int = adapterPosition
 
     }
 

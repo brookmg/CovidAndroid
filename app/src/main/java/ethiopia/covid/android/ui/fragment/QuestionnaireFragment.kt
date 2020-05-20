@@ -81,7 +81,7 @@ class QuestionnaireFragment private constructor(
     override fun next() {
         if (mainViewPager?.currentItem?.inc() == tabAdapter?.count?.minus(1)) {
             val questionnaireItemListMap: MutableMap<QuestionnaireItem, MutableList<QuestionItem>> = HashMap()
-            for (i in questionnaireItems.indices) questionnaireItemListMap[questionnaireItems[i]] = questionState[i]
+            for (i in questionnaireItems.indices) questionnaireItemListMap[questionnaireItems[i]] = questionState[i] ?: mutableListOf()
 
             resultFragment.setMap(questionnaireItemListMap)
             resultFragment.setCurrentLocation(currentLocation)

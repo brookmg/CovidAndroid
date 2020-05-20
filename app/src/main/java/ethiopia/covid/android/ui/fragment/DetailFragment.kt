@@ -11,9 +11,10 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ethiopia.covid.android.App.Companion.instance
-import ethiopia.covid.android.R
 import ethiopia.covid.android.data.DetailItem
 import ethiopia.covid.android.data.FAQ
+import ethiopia.covid.android.databinding.ContentStateLayoutBinding
+import ethiopia.covid.android.databinding.DetailFragmentBinding
 import ethiopia.covid.android.network.API.OnItemReady
 import ethiopia.covid.android.ui.adapter.DetailRecyclerAdapter
 import ethiopia.covid.android.ui.fragment.ContentState.changeErrorDialogVisibility
@@ -30,7 +31,8 @@ import java.util.*
  * inside the project CoVidEt .
  */
 class DetailFragment : BaseFragment() {
-    private var recyclerView: RecyclerView? = null
+
+    private lateinit var detailFragmentBinding: DetailFragmentBinding
     private var adapter: DetailRecyclerAdapter? = null
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)
@@ -46,28 +48,27 @@ class DetailFragment : BaseFragment() {
     override fun onStart() {
         super.onStart()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            recyclerView?.requestApplyInsets()
-            handleWindowInsets(recyclerView)
+            detailFragmentBinding.recyclerView.requestApplyInsets()
+            handleWindowInsets(detailFragmentBinding.recyclerView)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        recyclerView = null
         adapter = null
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val mainView = inflater.inflate(R.layout.detail_fragment, container, false)
-        recyclerView = mainView.findViewById(R.id.recycler_view)
-        recyclerView?.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        setRefreshButtonAction(mainView, View.OnClickListener { v: View? -> renderPage(mainView) })
-        renderPage(mainView)
-        return mainView
+        detailFragmentBinding = DetailFragmentBinding.inflate(layoutInflater)
+
+        detailFragmentBinding.recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        setRefreshButtonAction(detailFragmentBinding.contentState, View.OnClickListener { renderPage(detailFragmentBinding.contentState) })
+        renderPage(detailFragmentBinding.contentState)
+        return detailFragmentBinding.root
     }
 
-    private fun renderPage(mainView: View) {
+    private fun renderPage(mainView: ContentStateLayoutBinding) {
         adapter = DetailRecyclerAdapter(ArrayList())
         val details: MutableList<DetailItem> = ArrayList()
 
@@ -98,7 +99,7 @@ class DetailFragment : BaseFragment() {
             }
         })
 
-        recyclerView?.adapter = adapter
+        detailFragmentBinding.recyclerView.adapter = adapter
     }
 
     companion object {

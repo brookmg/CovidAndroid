@@ -22,7 +22,6 @@
 package ethiopia.covid.android.ui.adapter
 
 import android.content.Context
-import android.graphics.PointF
 import androidx.recyclerview.widget.LinearSmoothScroller
 
 /**

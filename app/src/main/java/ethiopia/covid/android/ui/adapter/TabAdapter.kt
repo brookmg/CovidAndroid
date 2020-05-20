@@ -6,12 +6,12 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import java.util.*
 
 /**
- * Created by BrookMG on 5/5/2019 in app.kuwas.android.ui.adapters
- * inside the project Kuwas .
+ * Created by BrookMG on 20/6/2020 in ethiopia.covid.android.ui.adapter
+ * inside the project CoVidEt .
  */
 class TabAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-    private val mFragments: MutableList<Fragment> = ArrayList()
-    private val mTabTitles: MutableList<String> = ArrayList()
+    private val mFragments: MutableList<Fragment> = mutableListOf()
+    private val mTabTitles: MutableList<String> = mutableListOf()
 
     fun addFragment(fragment: Fragment, tabTitle: String) {
         mFragments.add(fragment)

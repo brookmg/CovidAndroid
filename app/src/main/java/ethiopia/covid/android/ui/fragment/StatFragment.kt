@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.WindowInsets
 import androidx.annotation.RequiresApi
-import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +17,8 @@ import com.google.android.material.appbar.AppBarLayout
 import ethiopia.covid.android.App.Companion.instance
 import ethiopia.covid.android.R
 import ethiopia.covid.android.data.StatRecyclerItem
+import ethiopia.covid.android.databinding.ContentStateLayoutBinding
+import ethiopia.covid.android.databinding.StatFragmentBinding
 import ethiopia.covid.android.network.API.OnItemReady
 import ethiopia.covid.android.ui.activity.MainActivity
 import ethiopia.covid.android.ui.adapter.StatRecyclerAdapter
@@ -38,10 +39,9 @@ import kotlin.math.roundToInt
  * inside the project CoVidEt .
  */
 class StatFragment : BaseFragment() {
-    private var appBarLayout: AppBarLayout? = null
-    private var recyclerView: RecyclerView? = null
-    private var themeButton: AppCompatImageButton? = null
-    private var langButton: AppCompatImageButton? = null
+
+    private lateinit var statFragmentBinding: StatFragmentBinding
+
     private var statRecyclerAdapter: StatRecyclerAdapter? = null
     private var recyclerViewY = 0
 
@@ -58,32 +58,30 @@ class StatFragment : BaseFragment() {
     override fun onStart() {
         super.onStart()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            appBarLayout?.requestApplyInsets()
-            handleWindowInsets(appBarLayout)
+            statFragmentBinding.appbarLayout.requestApplyInsets()
+            handleWindowInsets(statFragmentBinding.appbarLayout)
         }
     }
 
     private fun computeRecyclerViewScrollForAppbarElevation(yDiff: Int) {
         recyclerViewY += yDiff //not reliable, but it's one way to find scroll position to compute the elevation for the elevation
-        ViewCompat.setElevation(appBarLayout as View, (recyclerViewY * 0.8f).coerceAtMost(19f).roundToInt().toFloat())
+        ViewCompat.setElevation(statFragmentBinding.appbarLayout, (recyclerViewY * 0.8f).coerceAtMost(19f).roundToInt().toFloat())
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val mainView = inflater.inflate(R.layout.stat_fragment, container, false)
-        appBarLayout = mainView.findViewById(R.id.appbar_layout)
-        recyclerView = mainView.findViewById(R.id.stat_recycler_view)
-        themeButton = mainView.findViewById(R.id.theme_btn)
-        langButton = mainView.findViewById(R.id.lang_btn)
-        themeButton?.setImageDrawable(
+
+        statFragmentBinding = StatFragmentBinding.inflate(layoutInflater)
+        statFragmentBinding.themeBtn.setImageDrawable(
                 ContextCompat.getDrawable(
                     requireActivity(),
                     if (getCurrentTheme(activity) == 0) R.drawable.ic_night_theme else R.drawable.ic_light_theme
                 )
         )
-        themeButton?.setOnClickListener { changeTheme() }
-        langButton?.setOnClickListener { if (activity is MainActivity) (activity as MainActivity?)!!.showLanguageDialog() }
-        recyclerView?.layoutManager = object : LinearLayoutManager(activity, RecyclerView.VERTICAL, false) {
+
+        statFragmentBinding.themeBtn.setOnClickListener { changeTheme() }
+        statFragmentBinding.langBtn.setOnClickListener { (activity as? MainActivity?)?.showLanguageDialog() }
+        statFragmentBinding.statRecyclerView.layoutManager = object : LinearLayoutManager(activity, RecyclerView.VERTICAL, false) {
             override fun onLayoutChildren(recycler: Recycler, state: RecyclerView.State) {
                 try {
                     super.onLayoutChildren(recycler, state)
@@ -93,7 +91,7 @@ class StatFragment : BaseFragment() {
             }
         }
 
-        recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        statFragmentBinding.statRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (activity is MainActivity) {
@@ -102,15 +100,15 @@ class StatFragment : BaseFragment() {
             }
         })
 
-        setRefreshButtonAction(mainView, View.OnClickListener { renderPage(mainView) })
-        renderPage(mainView)
-        return mainView
+        setRefreshButtonAction(statFragmentBinding.contentState, View.OnClickListener { renderPage(statFragmentBinding.contentState) })
+        renderPage(statFragmentBinding.contentState)
+        return statFragmentBinding.root
     }
 
-    private fun renderPage(mainView: View) {
+    private fun renderPage(mainView: ContentStateLayoutBinding) {
         changeProgressBarVisibility(mainView, true)
         changeErrorDialogVisibility(mainView, false)
-        recyclerView?.visibility = View.GONE
+        statFragmentBinding.statRecyclerView.visibility = View.GONE
 
         instance.mainAPI.getStatRecyclerContents(
                 WeakReference(requireActivity()),
@@ -136,8 +134,8 @@ class StatFragment : BaseFragment() {
 
                             statRecyclerAdapter = StatRecyclerAdapter(item)
                             withContext(Dispatchers.Main) {
-                                recyclerView?.adapter = statRecyclerAdapter
-                                recyclerView?.visibility = View.VISIBLE
+                                statFragmentBinding.statRecyclerView.adapter = statRecyclerAdapter
+                                statFragmentBinding.statRecyclerView.visibility = View.VISIBLE
                                 changeProgressBarVisibility(mainView, false)
                             }
                         }

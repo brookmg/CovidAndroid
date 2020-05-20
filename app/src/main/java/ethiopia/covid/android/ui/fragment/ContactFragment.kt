@@ -7,24 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.WindowInsets
-import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import ethiopia.covid.android.R
 import ethiopia.covid.android.data.ContactItem
+import ethiopia.covid.android.databinding.ContactFragmentBinding
 import ethiopia.covid.android.ui.activity.MainActivity
 import ethiopia.covid.android.ui.adapter.ContactRecyclerAdapter
 import ethiopia.covid.android.util.Constant.TAG_QUESTIONNAIRE
-import java.util.*
 
 /**
  * Created by BrookMG on 3/23/2020 in ethiopia.covid.android.ui.fragment
  * inside the project CoVidEt .
  */
 class ContactFragment : BaseFragment() {
-    private lateinit var constraintLayout: LinearLayout
-    private lateinit var regionalPhoneNumbers: RecyclerView
+    private lateinit var contactFragmentBinding: ContactFragmentBinding
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)
     private fun handleWindowInsets(view: View?) {
@@ -39,22 +36,23 @@ class ContactFragment : BaseFragment() {
     override fun onStart() {
         super.onStart()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            constraintLayout.requestApplyInsets()
-            handleWindowInsets(constraintLayout)
+            contactFragmentBinding.Holder.requestApplyInsets()
+            handleWindowInsets(contactFragmentBinding.Holder)
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val mainView = inflater.inflate(R.layout.contact_fragment, container, false)
-        constraintLayout = mainView.findViewById(R.id._holder)
-        regionalPhoneNumbers = mainView.findViewById(R.id.regional_phone_numbers_recycler_view)
-        mainView.findViewById<View>(R.id.questionnaire_button).setOnClickListener {
+        contactFragmentBinding = ContactFragmentBinding.inflate(layoutInflater)
+//        constraintLayout = mainView.findViewById(R.id._holder)
+//        regionalPhoneNumbers = mainView.findViewById(R.id.regional_phone_numbers_recycler_view)
+//
+        contactFragmentBinding.questionnaireButton.setOnClickListener {
             (activity as? MainActivity?)
                     ?.changeFragment(TAG_QUESTIONNAIRE, Bundle(), null)
         }
 
-        val contactRecyclerAdapter = ContactRecyclerAdapter(Arrays.asList(
+        val contactRecyclerAdapter = ContactRecyclerAdapter(mutableListOf(
                 ContactItem(R.drawable.tigray, "6244"),
                 ContactItem(R.drawable.afar, "6220"),
                 ContactItem(R.drawable.amhara, "6981"),
@@ -66,10 +64,14 @@ class ContactFragment : BaseFragment() {
                 ContactItem(R.drawable.gambella, "6184"),
                 ContactItem(R.drawable.dire, "6407")
         ))
-        regionalPhoneNumbers.setNestedScrollingEnabled(false)
-        regionalPhoneNumbers.setLayoutManager(GridLayoutManager(activity, 2))
-        regionalPhoneNumbers.setAdapter(contactRecyclerAdapter)
-        return mainView
+
+        contactFragmentBinding.regionalPhoneNumbersRecyclerView.let {
+            it.isNestedScrollingEnabled = false
+            it.layoutManager = GridLayoutManager(activity, 2)
+            it.adapter = contactRecyclerAdapter
+        }
+
+        return contactFragmentBinding.root
     }
 
     companion object {

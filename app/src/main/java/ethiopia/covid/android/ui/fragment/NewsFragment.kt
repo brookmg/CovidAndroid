@@ -21,6 +21,8 @@ import com.stfalcon.imageviewer.loader.ImageLoader
 import ethiopia.covid.android.App.Companion.instance
 import ethiopia.covid.android.R
 import ethiopia.covid.android.data.NewsItem
+import ethiopia.covid.android.databinding.ContentStateLayoutBinding
+import ethiopia.covid.android.databinding.NewsFragmentBinding
 import ethiopia.covid.android.network.API.OnItemReady
 import ethiopia.covid.android.ui.activity.MainActivity
 import ethiopia.covid.android.ui.adapter.NewsItemRecyclerAdapter
@@ -44,7 +46,7 @@ import java.util.*
  * inside the project CoVidEt .
  */
 class NewsFragment : BaseFragment() {
-    private var mainNewsRecycler: RecyclerView? = null
+    private lateinit var newsFragmentBinding: NewsFragmentBinding
     private var adapter: NewsItemRecyclerAdapter? = null
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)
@@ -72,40 +74,39 @@ class NewsFragment : BaseFragment() {
     override fun onStart() {
         super.onStart()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            mainNewsRecycler?.requestApplyInsets()
-            handleWindowInsets(mainNewsRecycler)
+            newsFragmentBinding.recyclerView.requestApplyInsets()
+            handleWindowInsets(newsFragmentBinding.recyclerView)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mainNewsRecycler = null
         adapter = null
     }
 
     override fun onReselect() {
         super.onReselect()
         // Go to the top of the recycler view
-        mainNewsRecycler?.smoothScrollToPosition(0)
+        newsFragmentBinding.recyclerView.smoothScrollToPosition(0)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val mainView = inflater.inflate(R.layout.news_fragment, container, false)
-        mainNewsRecycler = mainView.findViewById(R.id.recycler_view)
-        mainNewsRecycler?.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        setRefreshButtonAction(mainView, View.OnClickListener { v: View? -> renderNews(mainView) })
-        renderNews(mainView)
-        return mainView
+        newsFragmentBinding = NewsFragmentBinding.inflate(layoutInflater)
+
+        newsFragmentBinding.recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        setRefreshButtonAction(newsFragmentBinding.contentState, View.OnClickListener { renderNews(newsFragmentBinding.contentState) })
+        renderNews(newsFragmentBinding.contentState)
+        return newsFragmentBinding.root
     }
 
-    private fun renderNews(mainView: View) {
+    private fun renderNews(mainView: ContentStateLayoutBinding) {
         adapter = NewsItemRecyclerAdapter(ArrayList(), object : OnLastItemReachedListener {
             override fun onLastItemReached() {
                 onLoadMoreNews()
             }
         }, object : OnImageItemClicked {
-            override fun onImageClicked(imageView: ImageView?, clickedImageUri: List<String?>?) {
+            override fun onImageClicked(imageView: ImageView, clickedImageUri: List<String>) {
                 if (activity != null)
                     StfalconImageViewer.Builder(activity, clickedImageUri,
                         ImageLoader { imageViewX: ImageView?, image: String? ->
@@ -156,7 +157,8 @@ class NewsFragment : BaseFragment() {
                 }
             }
         })
-        mainNewsRecycler?.adapter = adapter
+
+        newsFragmentBinding.recyclerView.adapter = adapter
     }
 
     private fun showBadge(numberOfNewNews: Int) {

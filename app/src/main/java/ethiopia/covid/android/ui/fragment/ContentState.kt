@@ -2,6 +2,7 @@ package ethiopia.covid.android.ui.fragment
 
 import android.view.View
 import ethiopia.covid.android.R
+import ethiopia.covid.android.databinding.ContentStateLayoutBinding
 
 /**
  * Created by BrookMG on 4/10/2020 in ethiopia.covid.android.ui.fragment
@@ -9,19 +10,19 @@ import ethiopia.covid.android.R
  */
 object ContentState {
     @JvmStatic
-    fun changeProgressBarVisibility(workingFrom: View, show: Boolean) {
-        workingFrom.findViewById<View>(R.id.main_progress_bar).visibility = if (show) View.VISIBLE else View.GONE
+    fun changeProgressBarVisibility(workingFrom: ContentStateLayoutBinding, show: Boolean) {
+        workingFrom.mainProgressBar.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     @JvmStatic
-    fun changeErrorDialogVisibility(workingFrom: View, show: Boolean) {
-        workingFrom.findViewById<View>(R.id.error_indicator).visibility = if (show) View.VISIBLE else View.GONE
-        workingFrom.findViewById<View>(R.id.refresh_button).visibility = if (show) View.VISIBLE else View.GONE
-        workingFrom.findViewById<View>(R.id.error_text).visibility = if (show) View.VISIBLE else View.GONE
+    fun changeErrorDialogVisibility(workingFrom: ContentStateLayoutBinding, show: Boolean) {
+        workingFrom.errorIndicator.visibility = if (show) View.VISIBLE else View.GONE
+        workingFrom.refreshButton.visibility = if (show) View.VISIBLE else View.GONE
+        workingFrom.errorText.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     @JvmStatic
-    fun setRefreshButtonAction(workingFrom: View, listener: View.OnClickListener?) {
-        workingFrom.findViewById<View>(R.id.refresh_button).setOnClickListener(listener)
+    fun setRefreshButtonAction(workingFrom: ContentStateLayoutBinding, listener: View.OnClickListener?) {
+        workingFrom.refreshButton.setOnClickListener(listener)
     }
 }

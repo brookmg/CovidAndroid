@@ -8,7 +8,6 @@ import android.os.Build
 import android.os.Bundle
 import android.text.format.DateUtils
 import android.view.View
-import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
@@ -22,6 +21,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import ethiopia.covid.android.R
 import ethiopia.covid.android.data.QuestionnaireItem
+import ethiopia.covid.android.databinding.ActivityMainBinding
 import ethiopia.covid.android.ui.fragment.BaseFragment
 import ethiopia.covid.android.ui.fragment.HeatMapFragment
 import ethiopia.covid.android.ui.fragment.HomeFragment
@@ -43,7 +43,8 @@ import java.util.*
 
 @Suppress("unused")
 class MainActivity : AppCompatActivity() {
-    private lateinit var _fragmentContainer: FrameLayout
+    private lateinit var activityMainBinding: ActivityMainBinding
+
     private lateinit var currentFragment: WeakReference<Fragment?>
     private lateinit var airLocation: AirLocation
     private val mainCallbacks: MutableList<AirLocation.Callbacks> = ArrayList()
@@ -92,7 +93,8 @@ class MainActivity : AppCompatActivity() {
         ActivityRecreationHelper.recreate(this, false)
     }
 
-    private fun fragStarter(fragTag: String, baseFragment: BaseFragment, @Suppress("UNUSED_PARAMETER") bundle: Bundle, sharedView: View?) {
+    private fun fragStarter(fragTag: String, baseFragment: BaseFragment,
+                            @Suppress("UNUSED_PARAMETER") bundle: Bundle, sharedView: View?) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragmentContainer, baseFragment, fragTag)
         if (sharedView != null) {
@@ -125,7 +127,8 @@ class MainActivity : AppCompatActivity() {
                         fragStarter(fragmentTag, baseFragment, bundle, view)
                     }
                 } else {
-                    Snackbar.make(_fragmentContainer, getString(R.string.comeback_tmw), Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(activityMainBinding.fragmentContainer ,
+                            getString(R.string.comeback_tmw), Snackbar.LENGTH_SHORT).show()
                 }
             }
 
@@ -144,7 +147,7 @@ class MainActivity : AppCompatActivity() {
                 //there are more items in the back stack. We are not on the home frag
                 supportFragmentManager.popBackStackImmediate()
             } else {
-                Snackbar.make(_fragmentContainer, getString(R.string.exit_text), Snackbar.LENGTH_SHORT)
+                Snackbar.make(activityMainBinding.fragmentContainer , getString(R.string.exit_text), Snackbar.LENGTH_SHORT)
                         .setAction(getString(R.string.exit)) { finish() }.show()
             }
             if (supportFragmentManager.fragments[supportFragmentManager.fragments.size - 1] is BaseFragment) setCurrentFragment(supportFragmentManager.fragments[supportFragmentManager.fragments.size - 1] as BaseFragment)
@@ -156,7 +159,7 @@ class MainActivity : AppCompatActivity() {
             //there are more items in the back stack. We are not on the home frag
             supportFragmentManager.popBackStackImmediate()
         } else {
-            Snackbar.make(_fragmentContainer, "Press back again or 👉🏾 button", Snackbar.LENGTH_SHORT)
+            Snackbar.make(activityMainBinding.fragmentContainer , "Press back again or 👉🏾 button", Snackbar.LENGTH_SHORT)
                     .setAction("Exit") { finish() }.show()
         }
         if (supportFragmentManager.fragments[supportFragmentManager.fragments.size - 1] is BaseFragment)
@@ -206,8 +209,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(if (getCurrentTheme(this) == 0) R.style.LightTheme else R.style.DarkTheme)
-        setContentView(R.layout.activity_main)
-        _fragmentContainer = findViewById(R.id.fragmentContainer)
+        activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(activityMainBinding.root)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) if (getCurrentTheme(this) == 0) window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE or

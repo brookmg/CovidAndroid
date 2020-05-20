@@ -8,9 +8,6 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatButton
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
@@ -19,11 +16,11 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.google.android.material.card.MaterialCardView
 import ethiopia.covid.android.R
 import ethiopia.covid.android.data.DetailItem
+import ethiopia.covid.android.databinding.DetailFaqRecyclerElementBinding
+import ethiopia.covid.android.databinding.DetailRecyclerElementBinding
 import ethiopia.covid.android.util.Utils.getCurrentTheme
-import net.cachapa.expandablelayout.ExpandableLayout
 import kotlin.math.max
 
 /**
@@ -31,6 +28,7 @@ import kotlin.math.max
  * inside the project CoVidEt .
  */
 class DetailRecyclerAdapter(private val details: MutableList<DetailItem>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     fun addContent(items: List<DetailItem>?) {
         val previousPosition = 0.coerceAtLeast(details.size - 1)
         if (items != null) details.addAll(items)
@@ -41,12 +39,12 @@ class DetailRecyclerAdapter(private val details: MutableList<DetailItem>) : Recy
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            TEXT_TYPE -> ViewHolder(LayoutInflater.from(parent.context)
-                    .inflate(R.layout.detail_recycler_element, parent, false))
-            Q_ATYPE -> FAQViewHolder(LayoutInflater.from(parent.context)
-                    .inflate(R.layout.detail_faq_recycler_element, parent, false))
-            else -> ViewHolder(LayoutInflater.from(parent.context)
-                    .inflate(R.layout.detail_recycler_element, parent, false))
+            TEXT_TYPE -> ViewHolder(DetailRecyclerElementBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false))
+            Q_ATYPE -> FAQViewHolder(DetailFaqRecyclerElementBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false))
+            else -> ViewHolder(DetailRecyclerElementBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false))
         }
     }
 
@@ -59,29 +57,26 @@ class DetailRecyclerAdapter(private val details: MutableList<DetailItem>) : Recy
 
     override fun getItemCount(): Int = details.size
 
-    internal class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var textView: AppCompatTextView = itemView.findViewById(R.id.detail_text)
-        var imageView: AppCompatImageView = itemView.findViewById(R.id.image_view)
-        var readMore: AppCompatButton = itemView.findViewById(R.id.read_more)
-        var materialCardView: MaterialCardView = itemView.findViewById(R.id.main_card_view)
+    internal class ViewHolder(private val detailRecyclerElementBinding: DetailRecyclerElementBinding)
+        : RecyclerView.ViewHolder(detailRecyclerElementBinding.root) {
 
         fun bind(item: DetailItem) {
-            textView.text = Html.fromHtml(item.title)
-            readMore.visibility = if (item.isHasMoreButton) View.VISIBLE else View.GONE
-            if (getCurrentTheme(itemView.context) == 0) {
+            detailRecyclerElementBinding.detailText.text = Html.fromHtml(item.title)
+            detailRecyclerElementBinding.readMore.visibility = if (item.isHasMoreButton) View.VISIBLE else View.GONE
+
+            if (getCurrentTheme(detailRecyclerElementBinding.imageView.context) == 0) {
                 // Light theme
-                textView.setTextColor(ContextCompat.getColor(itemView.context, R.color.black_1))
-                materialCardView.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.white_0))
+                detailRecyclerElementBinding.detailText.setTextColor(ContextCompat.getColor(detailRecyclerElementBinding.root.context, R.color.black_1))
+                detailRecyclerElementBinding.mainCardView.setCardBackgroundColor(ContextCompat.getColor(detailRecyclerElementBinding.root.context, R.color.white_0))
             } else {
-                textView.setTextColor(ContextCompat.getColor(itemView.context, R.color.white_1))
-                materialCardView.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.black_2))
+                detailRecyclerElementBinding.detailText.setTextColor(ContextCompat.getColor(detailRecyclerElementBinding.root.context, R.color.white_1))
+                detailRecyclerElementBinding.mainCardView.setCardBackgroundColor(ContextCompat.getColor(detailRecyclerElementBinding.root.context, R.color.black_2))
             }
-            if (item.imageLink == "" &&
-                    item.imageResource == -1) {
-                imageView.visibility = View.GONE
+            if (item.imageLink == "" && item.imageResource == -1) {
+                detailRecyclerElementBinding.imageView.visibility = View.GONE
             } else {
-                imageView.visibility = View.VISIBLE
-                Glide.with(imageView).asBitmap().load(
+                detailRecyclerElementBinding.imageView.visibility = View.VISIBLE
+                Glide.with(detailRecyclerElementBinding.imageView).asBitmap().load(
                         if (item.imageResource != -1) item.imageResource else item.imageLink
                 ).addListener(object : RequestListener<Bitmap?> {
                     override fun onLoadFailed(e: GlideException?, model: Any, target: Target<Bitmap?>, isFirstResource: Boolean): Boolean {
@@ -97,39 +92,38 @@ class DetailRecyclerAdapter(private val details: MutableList<DetailItem>) : Recy
                             var vibrantSwatch = palette?.darkVibrantSwatch
 
                             if (vibrantSwatch == null) vibrantSwatch = palette?.dominantSwatch
-                            if (mutedColor != null) textView.setTextColor(mutedColor.titleTextColor)
-                            materialCardView.setCardBackgroundColor(palette?.getLightMutedColor(Color.BLACK) ?: Color.BLACK)
-                            readMore.supportBackgroundTintList = ColorStateList.valueOf(palette?.getDarkVibrantColor(palette.getDominantColor(Color.BLUE)) ?: Color.BLUE)
-                            if (vibrantSwatch != null) readMore.setTextColor(vibrantSwatch.titleTextColor)
+                            if (mutedColor != null) detailRecyclerElementBinding.detailText.setTextColor(mutedColor.titleTextColor)
+                            detailRecyclerElementBinding.mainCardView.setCardBackgroundColor(palette?.getLightMutedColor(Color.BLACK) ?: Color.BLACK)
+                            detailRecyclerElementBinding.readMore.supportBackgroundTintList = ColorStateList.valueOf(palette?.getDarkVibrantColor(palette.getDominantColor(Color.BLUE)) ?: Color.BLUE)
+                            if (vibrantSwatch != null) detailRecyclerElementBinding.readMore.setTextColor(vibrantSwatch.titleTextColor)
                         }
                         return false
                     }
-                }).into(imageView)
+                }).into(detailRecyclerElementBinding.imageView)
             }
         }
 
     }
 
-    internal class FAQViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var questionText: AppCompatTextView = itemView.findViewById(R.id.question_text)
-        var answerText: AppCompatTextView = itemView.findViewById(R.id.answer_text)
-        var materialCardView: MaterialCardView = itemView.findViewById(R.id.main_card_view)
-        var expandableLayout: ExpandableLayout = itemView.findViewById(R.id.expandable_container)
+    internal class FAQViewHolder(private val faqRecyclerElementBinding: DetailFaqRecyclerElementBinding)
+        : RecyclerView.ViewHolder(faqRecyclerElementBinding.root) {
 
         fun bind(item: DetailItem) {
-            materialCardView.setOnClickListener { expandableLayout.toggle(true) }
-            questionText.text = item.faqItem?.question
-            answerText.text = item.faqItem?.answer
+            faqRecyclerElementBinding.mainCardView.setOnClickListener {
+                faqRecyclerElementBinding.expandableContainer.toggle(true)
+            }
+            faqRecyclerElementBinding.questionText.text = item.faqItem?.question
+            faqRecyclerElementBinding.answerText.text = item.faqItem?.answer
 
             if (getCurrentTheme(itemView.context) == 0) {
                 // Light theme
-                questionText.setTextColor(ContextCompat.getColor(itemView.context, R.color.black_1))
-                answerText.setTextColor(ContextCompat.getColor(itemView.context, R.color.black_1))
-                materialCardView.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.white_0))
+                faqRecyclerElementBinding.questionText.setTextColor(ContextCompat.getColor(itemView.context, R.color.black_1))
+                faqRecyclerElementBinding.answerText.setTextColor(ContextCompat.getColor(itemView.context, R.color.black_1))
+                faqRecyclerElementBinding.mainCardView.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.white_0))
             } else {
-                questionText.setTextColor(ContextCompat.getColor(itemView.context, R.color.white_1))
-                answerText.setTextColor(ContextCompat.getColor(itemView.context, R.color.white_1))
-                materialCardView.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.black_2))
+                faqRecyclerElementBinding.questionText.setTextColor(ContextCompat.getColor(itemView.context, R.color.white_1))
+                faqRecyclerElementBinding.answerText.setTextColor(ContextCompat.getColor(itemView.context, R.color.white_1))
+                faqRecyclerElementBinding.mainCardView.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.black_2))
             }
         }
 

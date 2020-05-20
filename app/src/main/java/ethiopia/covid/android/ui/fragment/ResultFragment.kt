@@ -3,7 +3,6 @@ package ethiopia.covid.android.ui.fragment
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,16 +12,14 @@ import androidx.annotation.RequiresApi
 import androidx.preference.PreferenceManager.getDefaultSharedPreferences
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.button.MaterialButton
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.ExclusionStrategy
 import com.google.gson.FieldAttributes
 import com.google.gson.GsonBuilder
-import ethiopia.covid.android.R
 import ethiopia.covid.android.data.QuestionItem
 import ethiopia.covid.android.data.QuestionnaireItem
 import ethiopia.covid.android.data.Result
+import ethiopia.covid.android.databinding.ResultFragmentBinding
 import ethiopia.covid.android.ui.activity.MainActivity
 import ethiopia.covid.android.ui.adapter.ResultRecyclerAdapter
 import ethiopia.covid.android.util.Constant.PREFERENCE_QTIME
@@ -37,14 +34,14 @@ class ResultFragment private constructor(
         private var questionItems: Map<QuestionnaireItem,
                 List<QuestionItem>>,
         private var hashOfQuestionnaire: String) : BaseFragment() {
-    private var recyclerView: RecyclerView? = null
+
     private var currentLocation: Location? = null
-    private var sendButton: MaterialButton? = null
+    private lateinit var resultFragmentBinding: ResultFragmentBinding
     private val firestore = FirebaseFirestore.getInstance()
 
     fun setMap(items: Map<QuestionnaireItem, List<QuestionItem>>) {
         questionItems = items
-        recyclerView?.adapter = ResultRecyclerAdapter(questionItems)
+        resultFragmentBinding.resultRecycler.adapter = ResultRecyclerAdapter(questionItems)
     }
 
     fun setCurrentLocation(currentLocation: Location?) {
@@ -64,8 +61,8 @@ class ResultFragment private constructor(
     override fun onStart() {
         super.onStart()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            recyclerView?.requestApplyInsets()
-            handleWindowInsets(recyclerView)
+            resultFragmentBinding.resultRecycler.requestApplyInsets()
+            handleWindowInsets(resultFragmentBinding.resultRecycler)
         }
     }
 
@@ -75,21 +72,22 @@ class ResultFragment private constructor(
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val mainView = inflater.inflate(R.layout.result_fragment, container, false)
-        recyclerView = mainView.findViewById(R.id.result_recycler)
-        sendButton = mainView.findViewById(R.id.questionnaire_button)
+        resultFragmentBinding = ResultFragmentBinding.inflate(layoutInflater)
+        resultFragmentBinding.resultRecycler.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        resultFragmentBinding.resultRecycler.adapter = ResultRecyclerAdapter(questionItems)
 
-        recyclerView?.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        recyclerView?.adapter = ResultRecyclerAdapter(questionItems)
+        resultFragmentBinding.backButton.setOnClickListener {
+            if (activity is MainActivity) (activity as? MainActivity)?.callBackOnParentFragment()
+        }
 
-        mainView.findViewById<View>(R.id.back_button).setOnClickListener { v: View? -> if (activity is MainActivity) (activity as MainActivity?)!!.callBackOnParentFragment() }
-        sendButton?.setOnClickListener {
+        resultFragmentBinding.questionnaireButton.setOnClickListener {
             val result = Result(
                     questionItems,
                     currentLocation?.longitude ?: 0.0,
                     currentLocation?.latitude ?: 0.0,
                     currentLocation?.accuracy?.toDouble() ?: 0.0
             )
+
             val resultJson = GsonBuilder().enableComplexMapKeySerialization()
                     .addSerializationExclusionStrategy(object : ExclusionStrategy {
                         override fun shouldSkipField(field: FieldAttributes): Boolean {
@@ -117,7 +115,8 @@ class ResultFragment private constructor(
                 (activity as MainActivity?)!!.forcefulOnBackPressed()
             }
         }
-        return mainView
+
+        return resultFragmentBinding.root
     }
 
     companion object {

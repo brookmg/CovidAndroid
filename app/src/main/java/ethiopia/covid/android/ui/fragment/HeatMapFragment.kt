@@ -45,7 +45,7 @@ class HeatMapFragment : BaseFragment() {
         val mainView = inflater.inflate(R.layout.heat_map_fragment, container, false)
         mainMapView = mainView.findViewById(R.id.main_map_view)
         backButton = mainView.findViewById(R.id.back_button)
-        MapsInitializer.initialize(activity)
+        CoroutineScope(Dispatchers.Default).launch { MapsInitializer.initialize(activity) }
 
         mainMapView?.getMapAsync { googleMap: GoogleMap ->
             val success = googleMap.setMapStyle(
