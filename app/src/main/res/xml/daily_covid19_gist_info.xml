@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialKeyguardLayout="@layout/daily_covid19_gist_light"
+    android:initialLayout="@layout/daily_covid19_gist_light"
+    android:minWidth="280dp"
+    android:minHeight="80dp"
+    android:previewImage="@drawable/daily_gist_widget_preview"
+    android:resizeMode="horizontal"
+    android:updatePeriodMillis="60000"
+    android:widgetCategory="home_screen"></appwidget-provider>
