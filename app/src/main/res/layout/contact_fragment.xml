@@ -59,6 +59,15 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_marginHorizontal="16dp"
+            android:paddingHorizontal="16dp"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:text="@string/regional_phone_numbers"
+            android:textColor="?appTextColorPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:layout_margin="16dp"
             android:id="@+id/regional_phone_numbers_recycler_view"
