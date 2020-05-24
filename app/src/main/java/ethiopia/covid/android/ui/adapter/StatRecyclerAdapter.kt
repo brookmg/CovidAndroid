@@ -22,6 +22,7 @@ import ethiopia.covid.android.data.StatRecyclerItem
 import ethiopia.covid.android.databinding.*
 import ethiopia.covid.android.ui.widget.Table
 import ethiopia.covid.android.util.Constant
+import ethiopia.covid.android.util.Utils
 import ethiopia.covid.android.util.Utils.formatNumber
 import ethiopia.covid.android.util.Utils.getCurrentTheme
 import java.util.*
@@ -335,14 +336,14 @@ class StatRecyclerAdapter(
         override fun bind(bindWith: StatRecyclerItem) {
             super.bind(bindWith)
             statusCardRecyclerElementBinding.countryName.text = bindWith.country
-            statusCardRecyclerElementBinding.tested.text = String.format(Locale.US, "%d",
-                    bindWith.totalTested)
-            statusCardRecyclerElementBinding.infected.text = String.format(Locale.US, "%d",
-                    bindWith.totalInfected)
-            statusCardRecyclerElementBinding.recovered.text = String.format(Locale.US, "%d",
-                    bindWith.totalRecovered)
-            statusCardRecyclerElementBinding.death.text = String.format(Locale.US, "%d",
-                    bindWith.totalDeath)
+            statusCardRecyclerElementBinding.tested.text = String.format(Locale.US, "%s",
+                    formatNumber(bindWith.totalTested.toLong()))
+            statusCardRecyclerElementBinding.infected.text = String.format(Locale.US, "%s",
+                    formatNumber(bindWith.totalInfected.toLong()))
+            statusCardRecyclerElementBinding.recovered.text = String.format(Locale.US, "%s",
+                    formatNumber(bindWith.totalRecovered.toLong()))
+            statusCardRecyclerElementBinding.death.text = String.format(Locale.US, "%s",
+                    formatNumber(bindWith.totalDeath.toLong()))
         }
     }
 
