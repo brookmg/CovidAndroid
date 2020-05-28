@@ -29,7 +29,7 @@
                 app:layout_constraintStart_toEndOf="@id/country_text"
                 android:textSize="18sp"
                 android:paddingVertical="8dp"
-                android:textColor="@color/black_1"
+                android:textColor="@color/white_0"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

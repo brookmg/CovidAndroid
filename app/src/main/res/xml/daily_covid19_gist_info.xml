@@ -6,5 +6,5 @@
     android:minHeight="80dp"
     android:previewImage="@drawable/daily_gist_widget_preview"
     android:resizeMode="horizontal"
-    android:updatePeriodMillis="60000"
-    android:widgetCategory="home_screen"></appwidget-provider>
+    android:updatePeriodMillis="1800000"
+    android:widgetCategory="home_screen" />
