@@ -6,6 +6,7 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.text.format.DateUtils
 import android.util.DisplayMetrics
@@ -22,6 +23,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import ethiopia.covid.android.R
 import ethiopia.covid.android.data.NewsItem
+import ethiopia.covid.android.util.Constant.MATERIAL_COLORS
 import timber.log.Timber
 import java.io.BufferedReader
 import java.io.IOException
@@ -30,6 +32,8 @@ import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.*
+import kotlin.collections.HashMap
+import kotlin.collections.HashSet
 import kotlin.experimental.and
 import kotlin.math.floor
 import kotlin.math.roundToInt
@@ -122,12 +126,20 @@ object Utils {
     @JvmStatic
     fun generateColors(number: Int): List<Int> {
         val returnable: MutableList<Int> = ArrayList()
-        val hsl = floatArrayOf(0f, 0.7f, 0.5f)
-        for (i in 0 until number) {
-            hsl[0] = Random().nextFloat() * 360f
-            if (hsl[1] < 0.2) hsl[1] -= 0.1f else hsl[1] = 0.7f
-            returnable.add(ColorUtils.HSLToColor(hsl))
+        val duplicationControl: HashSet<Int> = hashSetOf()
+
+        var i = 0
+        while (i in 0 .. number) {
+            val randomIndex = (Random().nextFloat() * MATERIAL_COLORS.size).toInt()
+            if (duplicationControl.contains(Color.parseColor(MATERIAL_COLORS[randomIndex]))) continue
+            else {
+                val color = Color.parseColor(MATERIAL_COLORS[randomIndex]);
+                duplicationControl.add(color)
+                returnable.add(color)
+                i++
+            }
         }
+
         return returnable
     }
 
