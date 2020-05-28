@@ -60,5 +60,6 @@
     <string name="tig" translatable="false">ትግርኛ</string>
     <string name="next_page">Next Page</string>
     <string name="comeback_tmw" translatable="false">You have filled in the questionnaire for today. Please comeback tommorrow.</string>
+    <string name="regional_phone_numbers">Regional Phone Numbers</string>
 
 </resources>

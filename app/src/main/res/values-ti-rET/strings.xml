@@ -52,4 +52,5 @@
     <string name="language">ቋንቋ</string>
     <string name="id">መለያ</string>
     <string name="exit_questionnaire">ከመጠይቁ ይውጡ?</string>
+    <string name="regional_phone_numbers">የያካባቢው የመረጃ መስጫ ቁጥር</string>
 </resources>
