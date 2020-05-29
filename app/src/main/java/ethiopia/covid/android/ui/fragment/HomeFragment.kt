@@ -16,8 +16,13 @@ import me.ibrahimsn.lib.Badge
  * inside the project CoVidEt .
  */
 class HomeFragment : BaseFragment() {
-    private lateinit var tabAdapter: TabAdapter
-    private lateinit var homeFragmentBinding: HomeFragmentBinding
+    private var _tabAdapter: TabAdapter? = null
+    private val tabAdapter: TabAdapter
+        get() = _tabAdapter!!
+
+    private var _homeFragmentBinding: HomeFragmentBinding? = null
+    private val homeFragmentBinding: HomeFragmentBinding
+        get() = _homeFragmentBinding!!
 
     fun showBadge(position: Int, badge: Badge?) {
         homeFragmentBinding.bottomBar.setBadge(position, badge!!)
@@ -29,9 +34,9 @@ class HomeFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        homeFragmentBinding = HomeFragmentBinding.inflate(layoutInflater)
+        _homeFragmentBinding = HomeFragmentBinding.inflate(layoutInflater)
 
-        tabAdapter = TabAdapter(childFragmentManager)
+        _tabAdapter = TabAdapter(childFragmentManager)
         tabAdapter.addFragment(StatFragment.newInstance(), getString(R.string.statistics_menu_title))
         tabAdapter.addFragment(DetailFragment.newInstance(), getString(R.string.covid19_menu_title))
         tabAdapter.addFragment(NewsFragment.newInstance(), getString(R.string.news_menu_title))
@@ -51,6 +56,12 @@ class HomeFragment : BaseFragment() {
         homeFragmentBinding.bottomBar.onItemReselected = { i: Int -> (tabAdapter.getItem(i) as? BaseFragment)?.onReselect() }
         ViewCompat.setElevation(homeFragmentBinding.bottomBar, 16f)
         return homeFragmentBinding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _homeFragmentBinding = null
+        _tabAdapter = null
     }
 
     companion object {

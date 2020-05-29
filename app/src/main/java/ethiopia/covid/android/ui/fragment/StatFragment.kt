@@ -40,7 +40,9 @@ import kotlin.math.roundToInt
  */
 class StatFragment : BaseFragment() {
 
-    private lateinit var statFragmentBinding: StatFragmentBinding
+    private var _statFragmentBinding: StatFragmentBinding? = null
+    private val statFragmentBinding: StatFragmentBinding
+        get() = _statFragmentBinding!!
 
     private var statRecyclerAdapter: StatRecyclerAdapter? = null
     private var recyclerViewY = 0
@@ -68,10 +70,16 @@ class StatFragment : BaseFragment() {
         ViewCompat.setElevation(statFragmentBinding.appbarLayout, (recyclerViewY * 0.8f).coerceAtMost(19f).roundToInt().toFloat())
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _statFragmentBinding = null
+        statRecyclerAdapter = null
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        statFragmentBinding = StatFragmentBinding.inflate(layoutInflater)
+        _statFragmentBinding = StatFragmentBinding.inflate(layoutInflater)
         statFragmentBinding.themeBtn.setImageDrawable(
                 ContextCompat.getDrawable(
                     requireActivity(),

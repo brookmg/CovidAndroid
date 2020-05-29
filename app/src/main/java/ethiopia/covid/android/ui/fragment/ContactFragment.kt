@@ -21,7 +21,9 @@ import ethiopia.covid.android.util.Constant.TAG_QUESTIONNAIRE
  * inside the project CoVidEt .
  */
 class ContactFragment : BaseFragment() {
-    private lateinit var contactFragmentBinding: ContactFragmentBinding
+    private var _contactFragmentBinding: ContactFragmentBinding? = null
+    private val contactFragmentBinding: ContactFragmentBinding
+        get() = _contactFragmentBinding!!
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)
     private fun handleWindowInsets(view: View?) {
@@ -41,9 +43,14 @@ class ContactFragment : BaseFragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _contactFragmentBinding = null
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        contactFragmentBinding = ContactFragmentBinding.inflate(layoutInflater)
+        _contactFragmentBinding = ContactFragmentBinding.inflate(layoutInflater)
 //        constraintLayout = mainView.findViewById(R.id._holder)
 //        regionalPhoneNumbers = mainView.findViewById(R.id.regional_phone_numbers_recycler_view)
 //

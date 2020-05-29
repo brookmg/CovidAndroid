@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var activityMainBinding: ActivityMainBinding
 
     private lateinit var currentFragment: WeakReference<Fragment?>
+    private var airLocationCallbackIndividual: AirLocation.Callbacks? = null
     private lateinit var airLocation: AirLocation
     private val mainCallbacks: MutableList<AirLocation.Callbacks> = ArrayList()
 
@@ -192,16 +193,21 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    fun unregisterIndividualLocationCallback() {
+        airLocationCallbackIndividual = null
+    }
+
     fun requestLocationIndividually(callbacks: AirLocation.Callbacks) {
+        airLocationCallbackIndividual = callbacks
         airLocation = AirLocation(
                 this, true,
                 shouldWeRequestOptimization = true, callbacks = object : AirLocation.Callbacks {
             override fun onSuccess(location: Location) {
-                callbacks.onSuccess(location)
+                airLocationCallbackIndividual?.onSuccess(location)
             }
 
             override fun onFailed(locationFailedEnum: LocationFailedEnum) {
-                callbacks.onFailed(locationFailedEnum)
+                airLocationCallbackIndividual?.onFailed(locationFailedEnum)
             }
         })
     }

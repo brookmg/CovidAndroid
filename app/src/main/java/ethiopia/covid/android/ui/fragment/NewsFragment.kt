@@ -46,7 +46,10 @@ import java.util.*
  * inside the project CoVidEt .
  */
 class NewsFragment : BaseFragment() {
-    private lateinit var newsFragmentBinding: NewsFragmentBinding
+    private var _newsFragmentBinding: NewsFragmentBinding? = null
+    private val newsFragmentBinding: NewsFragmentBinding
+        get() = _newsFragmentBinding!!
+
     private var adapter: NewsItemRecyclerAdapter? = null
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)
@@ -81,6 +84,7 @@ class NewsFragment : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        _newsFragmentBinding = null
         adapter = null
     }
 
@@ -92,13 +96,15 @@ class NewsFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        newsFragmentBinding = NewsFragmentBinding.inflate(layoutInflater)
+        _newsFragmentBinding = NewsFragmentBinding.inflate(layoutInflater)
 
         newsFragmentBinding.recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         setRefreshButtonAction(newsFragmentBinding.contentState, View.OnClickListener { renderNews(newsFragmentBinding.contentState) })
         renderNews(newsFragmentBinding.contentState)
         return newsFragmentBinding.root
     }
+
+
 
     private fun renderNews(mainView: ContentStateLayoutBinding) {
         adapter = NewsItemRecyclerAdapter(ArrayList(), object : OnLastItemReachedListener {
