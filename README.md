@@ -27,6 +27,7 @@
 * [X] Questionnaire to check how you are feeling
 * [X] SOS button for calling ambulance _ish_
 * [X] Heat map to show cases per country
+* [X] Widget to display COVID19 status
 
 ## Contributors
 - **Bereket Terefe** @rav3n11 : Icon and beta testing
