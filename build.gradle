@@ -28,10 +28,10 @@ buildscript {
         maven { url 'https://jitpack.io' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.3'
+        classpath 'com.android.tools.build:gradle:4.0.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath 'com.google.gms:google-services:4.3.3'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.1.0'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.1.1'
         classpath 'com.google.firebase:perf-plugin:1.3.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -46,7 +46,7 @@ allprojects {
     }
 }
 
-def versionPropsFile = rootProject.file("version.properties");
+def versionPropsFile = rootProject.file("version.properties")
 if (versionPropsFile.canRead()) {
     def versionProps = new Properties()
     versionProps.load(new FileInputStream(versionPropsFile))
