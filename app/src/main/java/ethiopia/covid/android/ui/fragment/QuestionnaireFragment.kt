@@ -185,6 +185,11 @@ class QuestionnaireFragment private constructor(
         }
     }
 
+    override fun onDestroy() {
+        (activity as? MainActivity)?.unregisterIndividualLocationCallback()
+        super.onDestroy()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val mainView = inflater.inflate(R.layout.questionnaire_fragment, container, false)

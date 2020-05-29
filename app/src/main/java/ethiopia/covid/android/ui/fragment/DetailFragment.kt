@@ -32,7 +32,10 @@ import java.util.*
  */
 class DetailFragment : BaseFragment() {
 
-    private lateinit var detailFragmentBinding: DetailFragmentBinding
+    private var _detailFragmentBinding: DetailFragmentBinding? = null
+    private val detailFragmentBinding: DetailFragmentBinding
+        get() = _detailFragmentBinding!!
+
     private var adapter: DetailRecyclerAdapter? = null
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)
@@ -56,11 +59,12 @@ class DetailFragment : BaseFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         adapter = null
+        _detailFragmentBinding = null
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        detailFragmentBinding = DetailFragmentBinding.inflate(layoutInflater)
+        _detailFragmentBinding = DetailFragmentBinding.inflate(layoutInflater)
 
         detailFragmentBinding.recyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         setRefreshButtonAction(detailFragmentBinding.contentState, View.OnClickListener { renderPage(detailFragmentBinding.contentState) })
