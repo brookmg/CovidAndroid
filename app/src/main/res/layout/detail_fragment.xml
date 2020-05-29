@@ -15,6 +15,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_height="0dp" />
 
-    <include layout="@layout/content_state_layout" />
+    <include android:id="@+id/content_state" layout="@layout/content_state_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

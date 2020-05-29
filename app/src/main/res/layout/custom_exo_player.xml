@@ -9,7 +9,7 @@
     android:orientation="vertical">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@id/exo_play"
+        android:id="@+id/exo_play"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -50,36 +50,6 @@
         android:tint="?appTextColorPrimary"
         style="@style/ExoMediaButton.FastForward"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/bar_holder"
-        android:paddingTop="4dp"
-        android:orientation="horizontal">
-
-        <!--<ImageButton android:id="@id/exo_prev"-->
-        <!--style="@style/ExoMediaButton.Previous"/>-->
-
-        <androidx.appcompat.widget.AppCompatImageButton android:id="@id/exo_rew"
-            android:tint="?appTextColorPrimary"
-            style="@style/ExoMediaButton.Rewind"/>
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@id/exo_pause"
-            android:tint="?appTextColorPrimary"
-            style="@style/ExoMediaButton.Pause"/>
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@id/exo_ffwd"
-            android:tint="?appTextColorPrimary"
-            style="@style/ExoMediaButton.FastForward"/>
-
-        <!--<ImageButton android:id="@id/exo_next"-->
-        <!--style="@style/ExoMediaButton.Next"/>-->
-
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/bar_holder"

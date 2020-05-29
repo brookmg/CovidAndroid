@@ -1,39 +1,23 @@
-# CovidAndroid
-`Android application for tracking and getting informed about the COVID19 virus`
+<p align="center">
+    <img src="screenshots/ic_launcher.png" width="150" />
+    <h2 align="center"> CoVidAndroid </h2>
+    <p align="center"> <code> Android application for tracking and getting informed about the COVID19 virus </code> </p>
+</p>
 
 # Screenshots
 <p align="center">
-<table border="1">
-<tr>
-<td><img src="screenshots/1.jpg" width="150" /></td>
-<td><img src="screenshots/2.jpg" width="150" /></td>
-<td><img src="screenshots/6.jpg" width="150" /></td>
-<td><img src="screenshots/3.jpg" width="150" /></td>
-<td><img src="screenshots/4.jpg" width="150" /></td>
-</tr>
-<tr>
-<td><p align="center">Dark - Current cases and affected regions from PMO API</p></td>
-<td><p align="center">Dark - Current cases worldwide and historical data</p></td>
-<td><p align="center">Dark - FAQs about COVID19 from WHO website</p></td>
-<td><p align="center">Light - Current cases and affected regions from PMO API</p></td>
-<td><p align="center">Light - Current cases worldwide and historical data</p></td>
-</tr>
-
-<tr>
-<td><img src="screenshots/5.jpg" width="150" /></td>
-<td><img src="screenshots/7.jpg" width="150" /></td>
-<td><img src="screenshots/8.jpg" width="150" /></td>
-<td><img src="screenshots/9.jpg" width="150" /></td>
-<td><img src="screenshots/10.jpg" width="150" /></td>
-</tr>
-<tr>
-<td><p align="center">Light - FAQs about COVID19 from WHO website</p></td>
-<td><p align="center">Lang - Language support for some Ethiopian languages</p></td>
-<td><p align="center">News - Realtime news from trusted sources</p></td>
-<td><p align="center">Contact - Phone numbers for regions for COVID19 related case</p></td>
-<td><p align="center">Questionnaire - Collecting data from users with their consent.</p></td>
-</tr>
+<table border="0">
+    <tr>
+        <td><img src="screenshots/1.png" width="150" /></td>
+        <td><img src="screenshots/2.png" width="150" /></td>
+        <td><img src="screenshots/3.png" width="150" /></td>
+        <td><img src="screenshots/4.png" width="150" /></td>
+        <td><img src="screenshots/5.png" width="150" /></td>
+        <td><img src="screenshots/6.png" width="150" /></td>
+        <td><img src="screenshots/7.png" width="150" /></td>
+    </tr>
 </table>
+</p>
 
 ## Features
 
@@ -42,15 +26,22 @@
 * [X] News about COVID19 from valid sources
 * [X] Questionnaire to check how you are feeling
 * [X] SOS button for calling ambulance _ish_
+* [X] Heat map to show cases per country
+* [X] Widget to display COVID19 status
+
+## Contributors
+- **Bereket Terefe** @rav3n11 : Icon and beta testing
+- **Bontu Girma** @bonitaproudy : Affan Oromo translation
+- **Lidya Bereket** @lidyabekele3 (Twitter) : Tigregnya translation
+- **Azaria Gebremichael** @Azariagmt : Tigregnya translation
 
 ## Contribution
 
-* You can join the trello board made for managing this project using the link https://trello.com/b/4dE9nqno
-
-* Fork the repo
-* Checkout the `dev` branch ‼
-* Create a new branch `git checkout -b 'feat/$feature_name'`
-* Open a pull request to `dev` branch of this repo
+- You can join the trello board made for managing this project using the link https://trello.com/b/4dE9nqno
+- Fork the repo
+- Checkout the `dev` branch ‼
+- Create a new branch `git checkout -b 'feat/$feature_name'`
+- Open a pull request to `dev` branch of this repo
 
 ## License
 ```

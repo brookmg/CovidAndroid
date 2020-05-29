@@ -1,0 +1,189 @@
+ <LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black_1"
+    android:padding="@dimen/widget_margin">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/country_text"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="18sp"
+                android:textColor="@color/white_0"
+                android:text="@string/status_for"
+                android:padding="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/country_name"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/country_text"
+                android:textSize="18sp"
+                android:paddingVertical="8dp"
+                android:textColor="@color/white_0"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tested"
+                    app:layout_constraintTop_toBottomOf="@id/country_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/infected"
+                    android:textSize="13pt"
+                    android:textStyle="bold"
+                    android:layout_marginTop="0dp"
+                    android:textColor="@color/white_0"
+                    android:padding="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tested_text"
+                    app:layout_constraintTop_toBottomOf="@id/tested"
+                    app:layout_constraintStart_toStartOf="@id/tested"
+                    app:layout_constraintEnd_toEndOf="@id/tested"
+                    android:textSize="14sp"
+                    android:textColor="@color/white_0"
+                    android:alpha="0.8"
+                    android:text="@string/tested"
+                    android:paddingBottom="16dp"
+                    android:paddingHorizontal="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/infected"
+                    app:layout_constraintTop_toBottomOf="@id/country_text"
+                    app:layout_constraintStart_toEndOf="@+id/tested"
+                    app:layout_constraintEnd_toStartOf="@+id/recovered"
+                    android:textSize="13pt"
+                    android:textStyle="bold"
+                    android:layout_marginTop="0dp"
+                    android:textColor="@color/white_0"
+                    android:padding="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/infected_text"
+                    app:layout_constraintTop_toBottomOf="@id/infected"
+                    app:layout_constraintStart_toStartOf="@id/infected"
+                    app:layout_constraintEnd_toEndOf="@id/infected"
+                    android:textSize="14sp"
+                    android:textColor="@color/white_0"
+                    android:alpha="0.8"
+                    android:text="@string/infected"
+                    android:paddingBottom="16dp"
+                    android:paddingHorizontal="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/recovered"
+                    app:layout_constraintTop_toBottomOf="@id/country_text"
+                    app:layout_constraintStart_toEndOf="@+id/infected"
+                    app:layout_constraintEnd_toStartOf="@+id/death"
+                    android:textSize="13pt"
+                    android:textColor="@color/white_0"
+                    android:textStyle="bold"
+                    android:padding="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/recovered_text"
+                    app:layout_constraintTop_toBottomOf="@id/recovered"
+                    app:layout_constraintStart_toStartOf="@id/recovered"
+                    app:layout_constraintEnd_toEndOf="@id/recovered"
+                    android:textSize="14sp"
+                    android:textColor="@color/white_0"
+                    android:alpha="0.8"
+                    android:text="@string/recovered"
+                    android:paddingBottom="16dp"
+                    android:paddingHorizontal="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/death"
+                    app:layout_constraintTop_toBottomOf="@id/country_text"
+                    app:layout_constraintStart_toEndOf="@+id/recovered"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:textSize="13pt"
+                    android:textColor="@color/white_0"
+                    android:textStyle="bold"
+                    android:padding="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/death_text"
+                    app:layout_constraintTop_toBottomOf="@id/death"
+                    app:layout_constraintStart_toStartOf="@id/death"
+                    app:layout_constraintEnd_toEndOf="@id/death"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="8dp"
+                    android:textColor="@color/white_0"
+                    android:alpha="0.8"
+                    android:text="@string/death"
+                    android:paddingBottom="16dp"
+                    android:paddingHorizontal="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+ </LinearLayout>
