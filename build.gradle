@@ -94,7 +94,7 @@ ext {
     firebaseDatabase = '18.0.0'
     firebasePref = '19.0.6'
     firebaseMessaging = '20.1.5'
-    firebaseAds = '18.3.0'
+    firebaseAds = '19.5.0'
     firebaseInappMessaging = '18.0.1'
     firebaseFirestore = '21.4.3'
     firebaseCrash = '16.2.1'
