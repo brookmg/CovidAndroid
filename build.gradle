@@ -102,7 +102,7 @@ ext {
     firebaseAuth = '18.0.0'
     firebaseDeepLinks = '18.0.0'
     firebaseCrashlytics = '17.0.0-beta04'
-    googleServicesAds = '18.3.0'
+    googleServicesAds = '19.5.0'
 
     firebase = [
             invites: "com.google.firebase:firebase-invites:$firebaseInvite",
