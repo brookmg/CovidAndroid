@@ -99,7 +99,7 @@ ext {
     firebaseFirestore = '21.4.3'
     firebaseCrash = '16.2.1'
     firebaseInvite = '17.0.0'
-    firebaseAuth = '18.0.0'
+    firebaseAuth = '20.0.2'
     firebaseDeepLinks = '18.0.0'
     firebaseCrashlytics = '17.0.0-beta04'
     googleServicesAds = '18.3.0'
